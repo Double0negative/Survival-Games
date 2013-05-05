@@ -1,0 +1,158 @@
+################################################
+#               Survival Games                 #
+#                                              #
+#                Developed by                  #
+#    Beechboy200, Double0negative, Jazed       #
+#                                              #
+#                                              #
+#               Skitscape.com                  #
+#                 voidmc.com                   #
+################################################
+
+
+#set how many players are needed for the game
+#to auto-start. Once the player limit is reached
+#it will wait for x amount of seconds for 
+#additional players. Auto start vote means that
+#x percent of players need to vote with /sg vote
+#for the game to begin
+auto-start-players: 20
+auto-start-time: 20
+auto-start-vote: 75
+
+#If the player queue is enabled the if a player 
+#tries to join a game that is not joinable
+#(ie ingame) the player will be added to a 
+#queue line to join the next time the game
+#is open
+enable-player-queue: false
+
+#if set to true, commands not associated with
+#the survival games will not be allowed to 
+#players in-game
+disallow-commands: true
+
+#set how long each player should
+#be invincible for after the start of 
+#the game in seconds
+grace-period: 20
+
+#Sets if chest should be restocked on the first 
+#night. If set to true this will also have the side
+#effect of setting the world time to Day at the start
+#of the game. This is only temporary until per-arena time
+#has been implemented
+restock-chest: true
+
+
+
+block:
+  place:
+    whitelist:
+    - 18
+    - 105
+    - 31
+    - 37
+    - 38
+    - 50
+    - 103
+    - 43
+  break:
+    whitelist:
+    - 18
+    - 105
+    - 31
+    - 37
+    - 38
+    - 50
+    - 103
+    - 43
+
+
+
+#if mob-progression is enabled, then the 
+#difficulty of mobs and amount of mobs
+#spawning will increase with a decrease 
+#of players. The ratio defines how much 
+#harder it should get for every person 
+#out. a ratio of 2 whould mean 2x harder
+#The mob blacklist definesmobs that should 
+#not spawn. 
+
+##________NOT IMPLEMETED____________
+mob-progression:
+  enabled: true
+  ratio: 2
+  mob-blacklist:
+  - slime
+  
+#if set to true, the arena will be logged
+#and auto rolled back and the end of the 
+#game
+
+#Note: dosent actualy do anything at this
+#point. Loggin is always enabled.
+logging:
+  enabled: true
+  
+#settings for the endgame. This enables
+#when there are only x amount of players
+#remaining. If place chest is enabled then
+#when the player limit is reached, a chest
+#will be placed inside the radius of every 
+#remain player contianing random items for 
+#that player. If fire-lighting is enabled
+#the a lighting strike will be fired at the
+#location of each player every x seconds to
+#notify the other players of their location
+
+endgame:
+  players: 3
+  fire-lighting:
+    enabled: true
+    interval: 20
+
+#settings for connecting to the 
+#sql server. These settings will
+#be used for both the online webstats
+#and for logging block changes for the 
+#automated rollback. Prefix is what all
+#tables used for surivalgames will be
+#prefixed with. This should stay the same
+# for most cases.
+sql:
+  host: 'localhost'
+  port: 3306
+  user: 'root'
+  pass: ''
+  database: 'survivalgames'
+  prefix: 'sg_'
+
+#Settings for the webstats. If enabled, stats 
+#such as k/d record, wins, win streaks, kill
+#streaks etc will be saved.  If webserver is 
+#enabled then a webserver will be started on the
+#<yourserverip>:<port> and allow people to view
+#the stats online.
+
+##_______Online webserver not implemented. Use the 
+#PHP backend instead. ______________
+stats:
+  enabled: true
+  webserver:
+    enabled: true
+    port: 880
+  points:
+    kill: 10
+    win: 100
+    position: 7
+    killstreak:
+      base: 10
+      multiplier: 2
+  killstreak:
+    level1: '&e{player}&7 Double Kill!'
+    level2: '&e{player}&9 Multi Kill!'
+    level3: '&e{player}&5 Ultra Kill!'
+    level4: '&e{player}&4 Unbelievable Kill!'
+    level5: '&e{player}&a&kii&4&l Unbelievable+!&a&kii'
+    

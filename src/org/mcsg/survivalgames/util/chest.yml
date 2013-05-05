@@ -1,0 +1,66 @@
+#Configuration for the chest item ratios
+#this system works by levels. Level 1 aka lvl1 
+#is the most common stuff whereas lvl5 is the least 
+#common. You can set what will spawn at each level below.
+#The ratio setting determines how likley the next level is
+#to spawn in. a ratio of 2 means that it is twice as unlikley
+#for the next level to spawn in.
+##FORMAT
+# <itemid>,<max amount per slot>
+
+
+
+chest:
+  ratio: 2
+  lvl1:
+  - 268,1
+  - 298,1
+  - 299,1
+  - 300,1
+  - 301,1
+  - 319,3
+  - 349,3
+  - 260,3
+  - 262,5
+  lvl2:
+  - 268,1
+  - 314,1
+  - 315,1
+  - 316,1
+  - 317,1
+  - 320,3
+  - 281,4
+  - 260,2
+  - 363,4
+  - 364,2
+  - 365,4
+  - 366,2
+  - 368,2
+  - 282,1
+  lvl3:
+  - 283,1
+  - 103,4
+  - 306,1
+  - 307,1
+  - 308,1
+  - 309,1
+  - 302,1
+  - 303,1
+  - 305,1
+  - 322,2
+  - 259,1
+  - 283,1
+  lvl4:
+  - 267,1
+  lvl5:
+  - 276,1
+  - 310,1
+  - 311,1
+  - 312,1
+  - 313,1
+  - 354,2
+
+  
+  
+  
+  

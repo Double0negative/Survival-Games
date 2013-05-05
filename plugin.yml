@@ -1,0 +1,11 @@
+name: SurvivalGames
+version: DEV 0.5.8
+main: org.mcsg.survivalgames.SurvivalGames
+authors: [Double0negative]
+description: Fully Automated Hunger Games Plugin!
+
+commands:
+    survivalgames:
+        description: Survival Games Command
+        usage: /sg <command> <args>
+        aliases: [sg, hungergames, hg]

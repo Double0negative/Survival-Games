@@ -1,0 +1,95 @@
+#This file has all the settings for sponsoring players.
+#As of right now, all you can do is define a list of items
+#and their prices. You define the item ID and the price like this:
+#items:
+#  1: 20
+#This makes the item with the ID of 1 be worth $20 each.
+items:
+  297: 10
+  
+  
+  
+permissions:
+    sg.player.*:
+        default: true
+        description: SurvivalGames Player Commands
+        children:
+            sg.player.play: true
+            sg.player.vote: true
+            sg.player.spectate: true
+            sg.player.joinlobby: true
+            sg.player.sponsor: true
+            sg.player.listarenas: true
+    sg.player.play:
+        description: Allows the user to click a sign to join a game.
+        default: true
+    sg.player.vote:
+        description: Allows the user to vote to start a game.
+        default: true
+    sg.player.spectate:
+        description:  Allows the user to spectate a game.
+        default: true
+    sg.player.joinlobby:
+        description: Allows the use of /sg join to join the lobby.
+        default: true
+    sg.player.sponsor:
+        description: Sponsor a player!
+        default: true
+    sg.player.listarenas:
+        description: List all arenas set up.
+        default: true
+    sg.player.list:
+        description: List all players in the arena you are playing in.
+        default: true
+    
+    sg.staff.*:
+        default: op
+        description: SurvivalGames Staff Commands
+        children:
+            sg.player.*: true
+            sg.staff.forcestart: true
+            sg.staff.disablearena: true
+            sg.staff.enablearena: true
+            sg.staff.nocmdblock: true
+    sg.staff.forcestart:
+        description: Allows the user to force start a game.
+        default: op
+    sg.staff.disablearena:
+        description: Allows the user to disable an arena.
+        default: op
+    sg.staff.enablearena:
+        description: Allows the user to enable an arena.
+        default: op
+    sg.staff.nocmdblock:
+        description: Allows user to bypass in-game command block.
+        default: op
+        
+    sg.admin.*:
+        default: op
+        description: SurvivalGames Admin Commands
+        children:
+            sg.staff.*: true
+            sg.admin.createarena: true
+            sg.admin.setarenaspawns: true
+            sg.admin.resetspawns: true
+            sg.admin.deletearena: true
+            sg.admin.setlobby: true
+            sg.admin.flag: true
+    sg.admin.createarena:
+        description: Allows the user to create an arena.
+        default: op
+    sg.admin.setarenaspawns:
+        description: Allows user to set arena spawns.
+        default: op
+    sg.admin.resetspawns:
+        description: Allows the user to reset all spawnpoints.
+        default: op
+    sg.admin.deletearena:
+        description: Allows a user to delete an arena.
+        default: op
+    sg.admin.setlobby:
+        description: Allows the user to set the lobby spawn and wall.
+        default: op
+    sg.admin.flag:
+        description: Allows the user to modify per-arena flags.
+        default: op
