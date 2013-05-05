@@ -1,6 +1,9 @@
 package org.mcsg.survivalgames.util;
 
 import java.util.HashMap;
+import java.util.logging.Level;
+
+import org.mcsg.survivalgames.SurvivalGames;
 
 public class MessageUtil {
 
@@ -17,7 +20,7 @@ public class MessageUtil {
 			try{
 				msg.replace("{$"+s+"}", vars.get(s));
 			}catch(Exception e){
-				System.out.println("Failed to replace string vars. Error on "+s);
+				SurvivalGames.$(Level.WARNING, "Failed to replace string vars. Error on "+s);
 			}
 		}
 		return msg;
@@ -32,7 +35,7 @@ public class MessageUtil {
 			try{
 				msg = msg.replace("{$"+str+"}", varcache.get(str));
 			}catch(Exception e){
-				System.out.println("Failed to replace string vars. Error on "+str);
+				SurvivalGames.$(Level.WARNING,"Failed to replace string vars. Error on "+str);
 			}
 		}
 

@@ -60,7 +60,6 @@ public class GameManager {
 
 	public void LoadKits(){
 		Set<String> kits1 = SettingsManager.getInstance().getKits().getConfigurationSection("kits").getKeys(false);
-		System.out.println(kits1);
 		for(String s:kits1){
 			kits.add(new Kit(s));
 		}
@@ -76,9 +75,9 @@ public class GameManager {
 			if (c.isSet("sg-system.arenas." + a + ".x1")) {
 				//c.set("sg-system.arenas."+a+".enabled",c.getBoolean("sg-system.arena."+a+".enabled", true));
 				if (c.getBoolean("sg-system.arenas." + a + ".enabled")) {
-					//System.out.println(c.getString("sg-system.arenas."+a+".enabled"));
+					//SurvivalGames.$(c.getString("sg-system.arenas."+a+".enabled"));
 					//c.set("sg-system.arenas."+a+".vip",c.getBoolean("sg-system.arenas."+a+".vip", false));
-					System.out.println("Loading Arena: " + a);
+					SurvivalGames.$("Loading Arena: " + a);
 					loaded++;
 					games.add(new Game(a));
 					StatsManager.getInstance().addArena(a);
@@ -314,7 +313,7 @@ public class GameManager {
 		Game game = new Game(no);
 		games.add(game);
 		StatsManager.getInstance().addArena(no);
-		//System.out.println("game added "+ games.size()+" "+SettingsManager.getInstance().getSystemConfig().getInt("gs-system.arenano"));
+		//SurvivalGames.$("game added "+ games.size()+" "+SettingsManager.getInstance().getSystemConfig().getInt("gs-system.arenano"));
 	}
 
 	public void hotRemoveArena(int no) {

@@ -70,21 +70,29 @@ public class Game {
 		s = SettingsManager.getInstance().getSystemConfig();
 		setup();
 	}
+	
+	public void $(String msg){
+		SurvivalGames.$(msg);
+	}
+	
+	public void debug(String msg){
+		SurvivalGames.debug(msg);
+	}
 
 	public void setup() {
 		mode = GameMode.LOADING;
 		int x = s.getInt("sg-system.arenas." + gameID + ".x1");
 		int y = s.getInt("sg-system.arenas." + gameID + ".y1");
 		int z = s.getInt("sg-system.arenas." + gameID + ".z1");
-		System.out.println(x + " " + y + " " + z);
+		$(x + " " + y + " " + z);
 		int x1 = s.getInt("sg-system.arenas." + gameID + ".x2");
 		int y1 = s.getInt("sg-system.arenas." + gameID + ".y2");
 		int z1 = s.getInt("sg-system.arenas." + gameID + ".z2");
-		System.out.println(x1 + " " + y1 + " " + z1);
+		$(x1 + " " + y1 + " " + z1);
 		Location max = new Location(SettingsManager.getGameWorld(gameID), Math.max(x, x1), Math.max(y, y1), Math.max(z, z1));
-		System.out.println(max.toString());
+		$(max.toString());
 		Location min = new Location(SettingsManager.getGameWorld(gameID), Math.min(x, x1), Math.min(y, y1), Math.min(z, z1));
-		System.out.println(min.toString());
+		$(min.toString());
 
 		arena = new Arena(min, max);
 
@@ -175,7 +183,7 @@ public class Game {
 
 	public boolean addPlayer(Player p) {
 		if(!p.hasPermission("sg.arena.join."+gameID)){
-			System.out.println("permission needed: " + "sg.arena.join."+gameID);
+			debug("permission needed: " + "sg.arena.join."+gameID);
 			msgmgr.sendFMessage(PrefixType.WARNING, "game.nopermission", p);
 			return false;
 		}
@@ -279,7 +287,7 @@ public class Game {
 			ItemStack i1 = k.getIcon();
 			ItemMeta im = i1.getItemMeta();
 
-			System.out.println(k.getName()+" "+i1+" "+im);
+			debug(k.getName()+" "+i1+" "+im);
 
 			im.setDisplayName(ChatColor.GOLD+""+ChatColor.BOLD+k.getName());
 			i1.setItemMeta(im);
@@ -297,7 +305,7 @@ public class Game {
 			b++;
 		}
 		p.openInventory(i);
-		System.out.println("Showing menu");
+		debug("Showing menu");
 	}
 
 
@@ -471,7 +479,7 @@ public class Game {
 
 	public void removePlayer(Player p, boolean b) {
 		p.teleport(SettingsManager.getInstance().getLobbySpawn());
-		///System.out.println("Teleporting to lobby");
+		///$("Teleporting to lobby");
 		if (mode == GameMode.INGAME) {
 			killPlayer(p, b);
 		} else {

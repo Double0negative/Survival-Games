@@ -167,7 +167,7 @@ public class QueueManager {
 				int a = data.size()-1;
 				int rb = 0;
 				while(a>=0 && (rb < 100 || shutdown)){
-					System.out.println("Restting "+a);
+					SurvivalGames.debug("Reseting "+a);
 					BlockData result = data.get(a);
 					if(result.getGameId() == game.getID()){
 
@@ -194,11 +194,11 @@ public class QueueManager {
 							new Rollback(id, shutdown), 1);
 				}
 				else{
-					System.out.println("[SG] Arena "+id+" reset. ");
+					SurvivalGames.$ ("Arena "+id+" reset. ");
 					game.resetCallback();
 				}
 			}else{
-				System.out.println("[SG] Arena "+id+" reset. ");
+				SurvivalGames.$ (" Arena "+id+" reset. ");
 				game.resetCallback();
 			}
 		}

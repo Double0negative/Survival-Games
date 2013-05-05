@@ -32,7 +32,6 @@ public class Kit {
 		System.out.println(icon);
 		List<String>cont = c.getStringList("kits."+name+".contents");
 		for(String s:cont){
-			System.out.println(s);
 			items.add(ItemReader.read(s));
 		}
 		

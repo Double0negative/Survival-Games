@@ -44,7 +44,7 @@ public class LobbyManager {
 
 	public void loadSign(int a) {
 		try{
-		System.out.println("sg-system.lobby.signs." + a + ".world");
+		SurvivalGames.debug("sg-system.lobby.signs." + a + ".world");
 		World w = Bukkit.getWorld(s.getString("sg-system.lobby.signs." + a + ".world"));
 		int x1 = s.getInt("sg-system.lobby.signs." + a + ".x1");
 		int y1 = s.getInt("sg-system.lobby.signs." + a + ".y1");

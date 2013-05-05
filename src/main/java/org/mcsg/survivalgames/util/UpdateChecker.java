@@ -6,11 +6,13 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.mcsg.survivalgames.SurvivalGames;
 
 public class UpdateChecker {
 
@@ -31,7 +33,7 @@ public class UpdateChecker {
             data += "&"+ URLEncoder.encode("port", "UTF-8") + "=" + URLEncoder.encode(""+port, "UTF-8");
             //data += "&"+ URLEncoder.encode("a", "UTF-8") + "=" + URLEncoder.encode(""+arenas, "UTF-8");
 
-            URL url = new URL("http://mc-sg.org/plugins/sg/assets/updater/updatecheck.php");
+            URL url = new URL("http://mc-sg.org/plugins/SurvivalGames/assets/updater/updatecheck.php");
             URLConnection conn = url.openConnection();
             conn.setDoOutput(true);
             OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
@@ -59,14 +61,13 @@ public class UpdateChecker {
                 player.sendMessage(ChatColor.DARK_AQUA    + in[2]);
                 player.sendMessage(ChatColor.AQUA+""+ChatColor.UNDERLINE+in[3]);
                 player.sendMessage(ChatColor.DARK_BLUE+"--------------------------------------");
-                System.out.println("[SG][info]Updates found!");
+                SurvivalGames.$("[Updates found!");
 
             }else{
-                System.out.println("[SG][info]No updates found!");
+            	SurvivalGames.$("[SG][info]No updates found!");
             }   
         }catch(Exception e){
-            e.printStackTrace();
-            System.out.println("[SurvivalGames] could not check for updates.");
+        	SurvivalGames.$(Level.WARNING, "[SurvivalGames] could not check for updates.");
         }
     }
 }

@@ -153,4 +153,11 @@ public class SurvivalGames extends JavaPlugin {
     	logger.log(l, msg);
     }
 
+    public static void debug(String msg){
+    	$(msg);
+    }
+
+	public static void debug(int a) {
+		debug(a+"");
+	}
 }

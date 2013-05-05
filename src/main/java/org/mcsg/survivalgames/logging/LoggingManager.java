@@ -60,7 +60,7 @@ public class LoggingManager implements  Listener{
 		if(e.isCancelled())return;
 		logBlockDestoryed(e.getBlock());
 		i.put("BCHANGE", i.get("BCHANGE")+1);
-		//    System.out.println(1);
+		//    Sur(1);
 	}
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void blockChanged(BlockPlaceEvent e){
@@ -133,8 +133,6 @@ public class LoggingManager implements  Listener{
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void blockChanged(BlockFormEvent e){
 		logBlockCreated(e.getBlock());
-		System.out.println(77);
-
 	}
 
 	/*@EventHandler(priority = EventPriority.MONITOR)
