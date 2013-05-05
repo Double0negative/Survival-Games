@@ -52,10 +52,10 @@ public class SettingsManager {
 		f4 = new File(p.getDataFolder(), "messages.yml");
 		
 		try {
-			if (!f.exists()) f.createNewFile();
-			if (!f2.exists()) f2.createNewFile();
-			if (!f3.exists()) loadFile("kits.yml");
-			if (!f4.exists()){loadFile("messages.yml");}
+			if (!f.exists()) 	f.createNewFile();
+			if (!f2.exists())	f2.createNewFile();
+			if (!f3.exists()) 	loadFile("kits.yml");
+			if (!f4.exists()) 	loadFile("messages.yml");
 
 		} 
 		catch (Exception e) {
@@ -69,7 +69,7 @@ public class SettingsManager {
 		saveSpawns();
 		
 		reloadKits();
-		saveKits();
+		//saveKits();
 		
 		reloadMessages();
 		saveMessages();
