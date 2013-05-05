@@ -14,8 +14,12 @@
         <url>http://repo.mcstats.org/content/repositories/public</url>
     </repository> -->
     <repository>
+      <id>drtshock-repo</id>
+      <url>http://ci.drtshock.com/plugin/repository/everything</url>
+    </repository>
+    <repository>
       <id>sk89q-repo</id>
-      <url>http://maven.sk89q.com/repo</url>
+      <url>http://repo.sk89q.com/repo</url>
     </repository>
   </repositories>
   <build>
@@ -99,7 +103,7 @@
     <dependency>
       <groupId>net.milkbowl.vault</groupId>
       <artifactId>Vault</artifactId>
-      <version>LATEST</version>
+      <version>1.2.26-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>
