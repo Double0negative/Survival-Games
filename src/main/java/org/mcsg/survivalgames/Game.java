@@ -62,9 +62,10 @@ public class Game {
 	private HashMap < String, String > hookvars = new HashMap < String, String > ();
 	private MessageManager msgmgr = MessageManager.getInstance();
 
+	
 	public Game(int gameid) {
 		gameID = gameid;
-		config = config;
+		config = SettingsManager.getInstance().getConfig();
 
 		s = SettingsManager.getInstance().getSystemConfig();
 		setup();

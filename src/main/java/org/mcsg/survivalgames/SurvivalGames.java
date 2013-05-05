@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -25,7 +26,7 @@ import org.mcsg.survivalgames.util.DatabaseManager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 public class SurvivalGames extends JavaPlugin {
-    Logger logger;
+    public static Logger logger;
     private static File datafolder;
     private static boolean disabling = false;
     public static boolean dbcon = false;
@@ -53,8 +54,10 @@ public class SurvivalGames extends JavaPlugin {
     }
 
     public void onEnable() {
+        logger = p.getLogger();
+
         //ensure that all worlds are loaded. Fixes some issues with Multiverse loading after this plugin had started
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Startup(), 10);
+       getServer().getScheduler().scheduleSyncDelayedTask(this, new Startup(), 10);
         try {
             new Metrics(this).start();
         } catch (IOException e) {
@@ -67,7 +70,6 @@ public class SurvivalGames extends JavaPlugin {
 
     class Startup implements Runnable {
         public void run() {
-            logger = p.getLogger();
             datafolder = p.getDataFolder();
             
             PluginManager pm = getServer().getPluginManager();
@@ -77,7 +79,7 @@ public class SurvivalGames extends JavaPlugin {
             MessageManager.getInstance().setup();
             GameManager.getInstance().setup(p);
 
-            try {
+            try { // try loading everything that uses SQL. 
                 FileConfiguration c = SettingsManager.getInstance().getConfig();
                 if (c.getBoolean("stats.enabled")) DatabaseManager.getInstance().setup(p);
                 QueueManager.getInstance().setup();
@@ -143,5 +145,12 @@ public class SurvivalGames extends JavaPlugin {
         }
     }
 
+    public static void $(String msg){
+    	logger.log(Level.INFO, msg);
+    }
+    
+    public static void $(Level l, String msg){
+    	logger.log(l, msg);
+    }
 
 }
