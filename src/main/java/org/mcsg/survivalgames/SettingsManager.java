@@ -299,7 +299,7 @@ public class SettingsManager {
 				t.createNewFile();
 				FileWriter out = new FileWriter(t);
 				System.out.println(file);
-				InputStream is = getClass().getResourceAsStream(file);
+				InputStream is = getClass().getResourceAsStream("/"+file);
 				InputStreamReader isr = new InputStreamReader(is);
 				BufferedReader br = new BufferedReader(isr);
 				String line;
