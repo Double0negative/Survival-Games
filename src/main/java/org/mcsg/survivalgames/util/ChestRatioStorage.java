@@ -13,6 +13,7 @@ import java.util.Random;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
+import org.mcsg.survivalgames.SettingsManager;
 import org.mcsg.survivalgames.SurvivalGames;
 
 
@@ -31,31 +32,7 @@ public class ChestRatioStorage {
 
 	public void setup(){
 
-
-		File f = new File(SurvivalGames.getPluginDataFolder()+"/chest.yml");
-		if(!f.exists()){
-			try {f.createNewFile();
-			FileWriter out = new FileWriter(f);
-			InputStream is = getClass().getResourceAsStream("chest.yml");
-			InputStreamReader isr = new InputStreamReader(is);
-			BufferedReader br = new BufferedReader(isr);
-			String line;
-			while ((line = br.readLine()) != null) {
-				out.write(line+"\n");
-				//  System.out.println(line+"\n");
-			}
-
-
-			is.close();
-			isr.close();
-			br.close();
-			out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		FileConfiguration conf = YamlConfiguration.loadConfiguration(f);
+		FileConfiguration conf = SettingsManager.getInstance().getChest();
 
 		for(int a = 1; a<5;a++){
 			ArrayList<ItemStack> lvl = new ArrayList<ItemStack>();

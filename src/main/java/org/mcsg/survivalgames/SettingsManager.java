@@ -26,13 +26,14 @@ public class SettingsManager {
 	private FileConfiguration system;
 	private FileConfiguration sponsor;
 	private FileConfiguration messages;
+	private FileConfiguration chest;
 
 
-	private File f;
-	private File f2;
-	private File f3;
-	private File f4;
-
+	private File f; //spawns
+	private File f2; //system
+	private File f3; //kits
+	private File f4; //messages
+	private File f5; //chest
 	private SettingsManager() {
 
 	}
@@ -50,12 +51,14 @@ public class SettingsManager {
 		f2 = new File(p.getDataFolder(), "system.yml");
 		f3 = new File(p.getDataFolder(), "kits.yml");
 		f4 = new File(p.getDataFolder(), "messages.yml");
-		
+		f5 = new File(p.getDataFolder(), "chest.yml");
+
 		try {
 			if (!f.exists()) 	f.createNewFile();
 			if (!f2.exists())	f2.createNewFile();
 			if (!f3.exists()) 	loadFile("kits.yml");
 			if (!f4.exists()) 	loadFile("messages.yml");
+			if (!f5.exists()) 	loadFile("chest.yml");
 
 		} 
 		catch (Exception e) {
@@ -70,6 +73,8 @@ public class SettingsManager {
 		
 		reloadKits();
 		//saveKits();
+		
+		reloadChest();
 		
 		reloadMessages();
 		saveMessages();
@@ -99,6 +104,10 @@ public class SettingsManager {
 
 	public FileConfiguration getKits() {
 		return sponsor;
+	}
+	
+	public FileConfiguration getChest() {
+		return chest;
 	}
 	
 	public FileConfiguration getMessageConfig() {
@@ -131,11 +140,13 @@ public class SettingsManager {
 	public void reloadKits() {
 		sponsor = YamlConfiguration.loadConfiguration(f3);
 	}
+	
+	public void reloadChest() {
+		sponsor = YamlConfiguration.loadConfiguration(f5);
+	}
 
 	public void reloadMessages() {
-		System.out.println(f4);
 		messages = YamlConfiguration.loadConfiguration(f4);
-		System.out.println(messages.getString("prefix.main"));
 	}
 
 
@@ -170,6 +181,15 @@ public class SettingsManager {
 	public void saveMessages() {
 		try {
 			messages.save(f4);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveChest() {
+		try {
+			messages.save(f5);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
