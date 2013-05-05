@@ -19,7 +19,7 @@
     </repository>
     <repository>
       <id>sk89q-repo</id>
-      <url>http://repo.sk89q.com/repo</url>
+      <url>http://maven.sk89q.com/repo</url>
     </repository>
   </repositories>
   <build>
