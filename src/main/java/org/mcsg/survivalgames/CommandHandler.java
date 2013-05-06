@@ -59,6 +59,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("vote", new Vote());
         commands.put("leave", new Leave());
         commands.put("setlobbyspawn", new SetLobbySpawn());
+        commands.put("setlobbywall", new SetLobbyWall());
         commands.put("resetspawns", new ResetSpawns());
         commands.put("delarena", new DelArena());
         commands.put("flag", new Flag());
