@@ -282,7 +282,7 @@ public class Game {
 		int b = 0;
 
 		ArrayList<Kit>kits = GameManager.getInstance().getKits(p);
-		if(kits == null || kits.size() == 0){
+		if(kits == null || kits.size() == 0 || !SettingsManager.getInstance().getKits().getBoolean("enabled")){
 			GameManager.getInstance().leaveKitMenu(p);
 			return;
 		}

@@ -23,6 +23,7 @@
 #     276, 1, 0, sharpness: 4 knockback: 2, killer
 #
 
+enabled: false
 
 
 ## Kit Display Mode 
