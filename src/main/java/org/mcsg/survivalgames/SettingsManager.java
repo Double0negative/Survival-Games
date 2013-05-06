@@ -24,7 +24,7 @@ public class SettingsManager {
 	private static Plugin p;
 	private FileConfiguration spawns;
 	private FileConfiguration system;
-	private FileConfiguration sponsor;
+	private FileConfiguration kits;
 	private FileConfiguration messages;
 	private FileConfiguration chest;
 
@@ -103,7 +103,7 @@ public class SettingsManager {
 	}
 
 	public FileConfiguration getKits() {
-		return sponsor;
+		return kits;
 	}
 	
 	public FileConfiguration getChest() {
@@ -138,11 +138,11 @@ public class SettingsManager {
 	}
 
 	public void reloadKits() {
-		sponsor = YamlConfiguration.loadConfiguration(f3);
+		kits = YamlConfiguration.loadConfiguration(f3);
 	}
 	
 	public void reloadChest() {
-		sponsor = YamlConfiguration.loadConfiguration(f5);
+		chest = YamlConfiguration.loadConfiguration(f5);
 	}
 
 	public void reloadMessages() {
@@ -171,7 +171,7 @@ public class SettingsManager {
 
 	public void saveKits() {
 		try {
-			sponsor.save(f3);
+			kits.save(f3);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -189,7 +189,7 @@ public class SettingsManager {
 	
 	public void saveChest() {
 		try {
-			messages.save(f5);
+			chest.save(f5);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
