@@ -12,6 +12,9 @@
 #Do NOT touch this!
 config-version: 3
 
+#Enable debug messages
+debug: false
+
 #Enables the udpdate checker. This will enabled
 #anyone with the perm sg.system.updatenotify to
 #be notified when a new update is avalible

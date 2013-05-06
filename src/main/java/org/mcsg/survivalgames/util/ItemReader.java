@@ -7,6 +7,7 @@ import java.util.jar.Attributes.Name;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.mcsg.survivalgames.SurvivalGames;
 
 public class ItemReader {
 
@@ -37,7 +38,7 @@ public class ItemReader {
 			loadIds();
 		}
 		String split[] = str.split(",");
-		System.out.println("reading : "+Arrays.toString(split));
+		SurvivalGames.debug("ItemReader: reading : "+Arrays.toString(split));
 		for(int a = 0; a < split.length; a++){
 			split[a] = split[a].toLowerCase().trim();
 		}

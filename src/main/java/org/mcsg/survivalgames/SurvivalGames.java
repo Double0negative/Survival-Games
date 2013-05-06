@@ -158,6 +158,7 @@ public class SurvivalGames extends JavaPlugin {
     }
 
 	public static void debug(int a) {
-		debug(a+"");
+		if(SettingsManager.getInstance().getConfig().getBoolean("debug", false))
+			debug(a+"");
 	}
 }
