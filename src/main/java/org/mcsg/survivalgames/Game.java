@@ -187,7 +187,7 @@ public class Game {
 			return false;
 		}
 		if(!p.hasPermission("sg.arena.join."+gameID)){
-			debug("permission needed: " + "sg.arena.join."+gameID);
+			debug("permission needed to join arena: " + "sg.arena.join."+gameID);
 			msgmgr.sendFMessage(PrefixType.WARNING, "game.nopermission", p);
 			return false;
 		}
