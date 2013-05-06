@@ -4,6 +4,13 @@
   <artifactId>survivalgames</artifactId>
   <version>0.5.6</version>
   <name>SurvivalGames</name>
+      <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <upload.dbo.category>server-mods</upload.dbo.category>
+        <upload.dbo.slug>survival-games</upload.dbo.slug>
+
+    </properties>
   <repositories>
     <repository>
       <id>bukkit-repo</id>
