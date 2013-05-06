@@ -229,6 +229,9 @@ public class Game {
 						showMenu(p);
 						HookManager.getInstance().runHook("GAME_POST_ADDPLAYER", "activePlayers-"+activePlayers.size());
 
+						if(spawns.size() == activePlayers.size()){
+							countdown(5);
+						}
 						break;
 					}
 				}
