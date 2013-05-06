@@ -6,7 +6,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class BlockData implements Serializable {
 
-    private String world;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String world;
     private int previd;
     private int newid;
     private byte prevdata,newdata;

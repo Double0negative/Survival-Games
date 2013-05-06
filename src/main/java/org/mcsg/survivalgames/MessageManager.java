@@ -72,11 +72,12 @@ public class MessageManager {
 	
 	public void logMessage(PrefixType type, String msg) {
 		Logger logger = Bukkit.getServer().getLogger();
-		ChatColor color = ChatColor.BLUE;
 		switch (type) {
 		case INFO:  logger.info(prefix.get(type)+ msg); break;
 		case WARNING: logger.warning(prefix.get(type) + msg); break;
 		case ERROR: logger.severe(prefix.get(type) + msg); break;
+		default:
+			break;
 		}
 	}
 	

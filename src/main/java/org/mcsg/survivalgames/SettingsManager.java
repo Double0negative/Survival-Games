@@ -43,7 +43,7 @@ public class SettingsManager {
 	}
 
 	public void setup(Plugin p) {
-		this.p = p;
+		SettingsManager.p = p;
 		p.getConfig().options().copyDefaults(true);
 		p.saveDefaultConfig();
 		

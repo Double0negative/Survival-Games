@@ -1,6 +1,5 @@
 package org.mcsg.survivalgames.events;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;

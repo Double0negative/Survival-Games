@@ -32,7 +32,6 @@ public class StatsManager {
     
     private HashMap<Integer, HashMap<Player, PlayerStatsSession>>arenas  = new HashMap<Integer, HashMap<Player, PlayerStatsSession>>();
     
-    private Plugin plugin;
     
     private boolean enabled = true;
     
@@ -49,7 +48,6 @@ public class StatsManager {
     public void setup(Plugin p, boolean b){
         enabled = b;
         if(b){
-            plugin = p;
             try{
                 PreparedStatement s = dbman.createStatement(" CREATE TABLE "+SettingsManager.getSqlPrefix() + 
                         "playerstats(id int NOT NULL AUTO_INCREMENT PRIMARY KEY, gameno int,arenaid int, player text, points int,position int," +

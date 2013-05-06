@@ -55,5 +55,7 @@ public class Kit {
 		return icon;
 	}
 	
-	
+	public double getCost(){
+		return cost;
+	}
 }

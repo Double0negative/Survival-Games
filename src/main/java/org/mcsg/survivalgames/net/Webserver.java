@@ -21,6 +21,7 @@ public class Webserver extends Thread {
                 c.start();
                // st.close();
             }
+            st.close();
         }catch (Exception e) {
 
             e.printStackTrace();

@@ -1,28 +1,5 @@
 package org.mcsg.survivalgames.logging;
 
-import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Logger;
-
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.plugin.Plugin;
-import org.mcsg.survivalgames.Game;
-import org.mcsg.survivalgames.GameManager;
-import org.mcsg.survivalgames.SettingsManager;
-import org.mcsg.survivalgames.util.DatabaseManager;
-
 
 
 

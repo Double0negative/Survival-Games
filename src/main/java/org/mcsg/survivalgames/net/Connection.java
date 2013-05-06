@@ -60,7 +60,7 @@ public class Connection extends Thread{
         
         
         String[] args = header.split(" ")[1].trim().split("/");
-       // System.out.print(args[1]);
+        System.out.print(args[1]);
         
         String page     = template; //.replace("{#page}", FileCache.getHTML(args[1], false));
         

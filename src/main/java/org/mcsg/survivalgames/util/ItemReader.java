@@ -2,8 +2,6 @@ package org.mcsg.survivalgames.util;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.jar.Attributes.Name;
-
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

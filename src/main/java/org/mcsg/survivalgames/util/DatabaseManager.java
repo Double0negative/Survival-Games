@@ -63,14 +63,12 @@ public class DatabaseManager {
 
     public PreparedStatement createStatement(String query)
     {
-        boolean created = false;
         int times = 0;
         PreparedStatement p = null;
             try
             {
                 times ++;
                 p =  conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-                created = true;
             }
             catch (SQLException e)
             {

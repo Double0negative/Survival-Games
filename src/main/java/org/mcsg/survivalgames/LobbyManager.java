@@ -9,7 +9,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
@@ -50,7 +49,7 @@ public class LobbyManager {
 		int y1 = s.getInt("sg-system.lobby.signs." + a + ".y1");
 		int z1 = s.getInt("sg-system.lobby.signs." + a + ".z1");
 		int x2 = s.getInt("sg-system.lobby.signs." + a + ".x2");
-		int y2 = s.getInt("sg-system.lobby.signs." + a + ".y2");
+		//int y2 = s.getInt("sg-system.lobby.signs." + a + ".y2");
 		int z2 = s.getInt("sg-system.lobby.signs." + a + ".z2");
 		int gameid = s.getInt("sg-system.lobby.signs." + a + ".id");
 

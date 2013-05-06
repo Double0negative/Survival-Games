@@ -22,7 +22,6 @@ public class LobbyManagerOld implements Listener {
     //TODO: Possibly clean up
     Sign[][] signs;
     SurvivalGames p;
-    private int runningThread = 0;
     private static LobbyManagerOld instance = new LobbyManagerOld();
     public HashSet < Chunk > lobbychunks = new HashSet < Chunk > ();
 
@@ -104,7 +103,6 @@ public class LobbyManagerOld implements Listener {
                 l.setZ(z2);
             }
         }
-        runningThread++;
         showMessage(new String[] {
             "", "Survival Games", "", "Double0negative", "iMalo", "mc-sg.org", ""
         });
@@ -187,8 +185,6 @@ public class LobbyManagerOld implements Listener {
 
     int tid = 0;
     public void signShowMessage(String[] msg9, long wait) {
-
-        runningThread++;
 
         messagequeue.add(msg9);
         if (showingMessage) return;

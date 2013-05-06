@@ -4,7 +4,6 @@ package org.mcsg.survivalgames.util;
 import java.lang.management.ManagementFactory;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
@@ -15,10 +14,18 @@ import org.mcsg.survivalgames.SettingsManager;
 
 
 public class ArenaDuplicator {
-/*
+
     background background;
 
-
+/*
+ * NOT USED
+ * 
+ * Experimental Arena duplicator using multiple threads to copy the arena faster
+ * 
+ * Unfortunately it just crashes once its finished due to bukkit not being thread safe.
+ */
+    
+    
     public void startDupe(Vector v1, Vector v2){
 
         int factor =  ManagementFactory.getOperatingSystemMXBean().getAvailableProcessors();
@@ -95,10 +102,10 @@ public class ArenaDuplicator {
                         try{
                             if(l1.getBlock().getTypeId() != l2.getBlock().getTypeId()){
 
-                                Chunk c = l2.getChunk();
-                                net.minecraft.server.Chunk chunk = ((CraftChunk) c).getHandle();
+            //                    Chunk c = l2.getChunk();
+            //                    net.minecraft.server.Chunk chunk = ((CraftChunk) c).getHandle();
 
-                                chunk.a(l2.getBlockX() & 15, l2.getBlockY() , l2.getBlockZ() & 15, l1.getBlock().getTypeId(), l1.getBlock().getData());
+            //                    chunk.a(l2.getBlockX() & 15, l2.getBlockY() , l2.getBlockZ() & 15, l1.getBlock().getTypeId(), l1.getBlock().getData());
                                 // w.getBlockAt(l2).setTypeId(w.getBlockTypeIdAt(l1));
                                 // w.getBlockAt(l2).setData(w.getBlockAt(l1).getData());
 
@@ -136,5 +143,5 @@ public class ArenaDuplicator {
             }
         }
     }
-    */
+    
 }
