@@ -62,7 +62,7 @@ public class Game {
 	private HashMap < String, String > hookvars = new HashMap < String, String > ();
 	private MessageManager msgmgr = MessageManager.getInstance();
 
-	
+
 	public Game(int gameid) {
 		gameID = gameid;
 		config = SettingsManager.getInstance().getConfig();
@@ -70,11 +70,11 @@ public class Game {
 		s = SettingsManager.getInstance().getSystemConfig();
 		setup();
 	}
-	
+
 	public void $(String msg){
 		SurvivalGames.$(msg);
 	}
-	
+
 	public void debug(String msg){
 		SurvivalGames.debug(msg);
 	}
@@ -786,17 +786,15 @@ public class Game {
 	}
 
 	public void clearSpecs() {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable() {
-			public void run() {
-				for (int a = 0; a < spectators.size(); a = 0) {
-					removeSpectator(Bukkit.getPlayerExact(spectators.get(0)));
-				}
-				spectators.clear();
-				nextspec.clear();
-			}
-		}, 100L);
 
+		for (int a = 0; a < spectators.size(); a = 0) {
+			removeSpectator(Bukkit.getPlayerExact(spectators.get(0)));
+		}
+		spectators.clear();
+		nextspec.clear();
 	}
+
+
 	public HashMap < Player, Integer > getNextSpec() {
 		return nextspec;
 	}

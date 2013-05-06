@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.mcsg</groupId>
   <artifactId>survivalgames</artifactId>
-  <version>0.5.6</version>
+  <version>0.5.8</version>
   <name>SurvivalGames</name>
       <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
