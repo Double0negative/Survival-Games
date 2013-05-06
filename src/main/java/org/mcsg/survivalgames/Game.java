@@ -182,6 +182,10 @@ public class Game {
 
 
 	public boolean addPlayer(Player p) {
+		if(SettingsManager.getInstance().getLobbySpawn() == null){
+			msgmgr.sendFMessage(PrefixType.WARNING, "error.nolobbyspawn", p);
+			return false;
+		}
 		if(!p.hasPermission("sg.arena.join."+gameID)){
 			debug("permission needed: " + "sg.arena.join."+gameID);
 			msgmgr.sendFMessage(PrefixType.WARNING, "game.nopermission", p);
