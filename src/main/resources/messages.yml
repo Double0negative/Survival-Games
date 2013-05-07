@@ -13,7 +13,7 @@ messages:
     countdown: '&6Game starting in {$t}'
     goodluck: '&6Good luck!'
     playersremaining: '&2There are &e{$activeplayers} &2remaining!'
-    playerwin: '&e{$player} &3beaten&e {$victim} &3to win the Survival Games on &3arena {$arena}'
+    playerwin: '&e{$player} &3defeated&e {$victim} &3to win the Survival Games on &3arena {$arena}'
     disablegame: '&cGame disabled!'
     spectate: '&aYou are now spectating! Use /sg leave to return to the lobby'
     graceperiodend: '&5Grace period has ended!'
