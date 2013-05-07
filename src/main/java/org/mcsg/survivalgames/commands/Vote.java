@@ -1,18 +1,20 @@
 package org.mcsg.survivalgames.commands;
 
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.GameManager;
-
+import org.mcsg.survivalgames.MessageManager;
 
 public class Vote implements SubCommand {
-    
+
     public boolean onCommand(Player player, String[] args) {
-        if(!(player.hasPermission("sg.player.vote"))) return false;
+        if (!player.hasPermission(permission()) && !player.isOp()) {
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.nopermission", player);
+            return true;
+        }
         int game = GameManager.getInstance().getPlayerGameId(player);
-        if(game == -1){
-            player.sendMessage(ChatColor.RED+"Must be in a game!");
+        if (game == -1) {
+            player.sendMessage(ChatColor.RED + "Must be in a game!");
             return true;
         }
 
@@ -20,14 +22,14 @@ public class Vote implements SubCommand {
 
         return true;
     }
-    
+
     @Override
     public String help(Player p) {
         return "/sg vote - Votes to start the game";
     }
 
-	@Override
-	public String permission() {
-		return "sg.player.vote";
-	}
+    @Override
+    public String permission() {
+        return "sg.player.vote";
+    }
 }

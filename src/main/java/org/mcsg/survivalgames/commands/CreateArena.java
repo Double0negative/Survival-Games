@@ -3,14 +3,13 @@ package org.mcsg.survivalgames.commands;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.GameManager;
+import org.mcsg.survivalgames.MessageManager;
 
-
-
-public class CreateArena implements SubCommand{
+public class CreateArena implements SubCommand {
 
     public boolean onCommand(Player player, String[] args) {
-        if(!player.hasPermission("sg.admin.createarena") && !player.isOp()){
-            player.sendMessage(ChatColor.RED+"No Permission");
+        if (!player.hasPermission(permission()) && !player.isOp()) {
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.nopermission", player);
             return true;
         }
         GameManager.getInstance().createArenaFromSelection(player);
@@ -22,8 +21,8 @@ public class CreateArena implements SubCommand{
         return "/sg createarena - Create a new arena with the current WorldEdit selection";
     }
 
-	@Override
-	public String permission() {
-		return "sg.admin.createarena";
-	}
+    @Override
+    public String permission() {
+        return "sg.admin.createarena";
+    }
 }

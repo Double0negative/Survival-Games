@@ -7,60 +7,58 @@ import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
 
-
-
 public class ForceStart implements SubCommand {
-	
-	MessageManager msgmgr = MessageManager.getInstance();
-	
+
+    MessageManager msgmgr = MessageManager.getInstance();
+
     public boolean onCommand(Player player, String[] args) {
-        
-        if(!player.hasPermission("sg.staff.forcestart") && !player.isOp()){
-            player.sendMessage(ChatColor.RED+ "No Permission");
+
+        if (!player.hasPermission(permission()) && !player.isOp()) {
+            MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.nopermission", player);
             return true;
         }
         int game = -1;
         int seconds = 10;
-        if(args.length == 2){
+        if (args.length == 2) {
             seconds = Integer.parseInt(args[1]);
         }
-        if(args.length >= 1){
+        if (args.length >= 1) {
             game = Integer.parseInt(args[0]);
-            
+
+        } else {
+            game = GameManager.getInstance().getPlayerGameId(player);
         }
-        else
-            game  = GameManager.getInstance().getPlayerGameId(player);
-        if(game == -1){
-            player.sendMessage(ChatColor.RED+"Must be in a game!");
+        if (game == -1) {
+            player.sendMessage(ChatColor.RED + "Must be in a game!");
             return true;
         }
-        if(GameManager.getInstance().getGame(game).getActivePlayers() < 2){
-            player.sendMessage(ChatColor.RED+"Needs at least 2 players to start!");
+        if (GameManager.getInstance().getGame(game).getActivePlayers() < 2) {
+            player.sendMessage(ChatColor.RED + "Needs at least 2 players to start!");
             return true;
         }
-        
-        
-		Game g = GameManager.getInstance().getGame(game);
-		if(g.getMode() != Game.GameMode.WAITING && !player.hasPermission("sg.arena.restart")){
-		    player.sendMessage(ChatColor.RED+"Game Already Starting!");
-		    return true;
-		}
-		g.countdown(seconds);
-		for (Player pl : g.getAllPlayers()) {
-        	msgmgr.sendMessage(PrefixType.INFO, "Game starting in " + seconds + " seconds!", pl);
+
+
+        Game g = GameManager.getInstance().getGame(game);
+        if (g.getMode() != Game.GameMode.WAITING && !player.hasPermission("sg.arena.restart")) {
+            player.sendMessage(ChatColor.RED + "Game Already Starting!");
+            return true;
         }
-		player.sendMessage(ChatColor.GREEN+"Started arena "+game);
-		
-		return true;
-	}
-    
+        g.countdown(seconds);
+        for (Player pl : g.getAllPlayers()) {
+            msgmgr.sendMessage(PrefixType.INFO, "Game starting in " + seconds + " seconds!", pl);
+        }
+        player.sendMessage(ChatColor.GREEN + "Started arena " + game);
+
+        return true;
+    }
+
     @Override
     public String help(Player p) {
         return "/sg forcestart - Force starts a game";
     }
 
-	@Override
-	public String permission() {
-		return "sg.staff.forcestart";
-	}
+    @Override
+    public String permission() {
+        return "sg.staff.forcestart";
+    }
 }
