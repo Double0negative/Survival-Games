@@ -8,7 +8,8 @@
 ##FORMAT
 # <itemid>,<max amount per slot>
 
-
+#DONT TOUCH THIS
+version: 0
 
 chest:
   ratio: 2

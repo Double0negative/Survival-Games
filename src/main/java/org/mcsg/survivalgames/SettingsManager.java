@@ -34,6 +34,14 @@ public class SettingsManager {
 	private File f3; //kits
 	private File f4; //messages
 	private File f5; //chest
+	
+	private static final int KIT_VERSION = 0;
+	private static final int MESSAGE_VERSION = 0;
+	private static final int CHEST_VERSION = 0;
+	private static final int SPAWN_VERSION = 0;
+	private static final int SYSTEM_VERSION = 0;
+	
+	
 	private SettingsManager() {
 
 	}
@@ -44,6 +52,13 @@ public class SettingsManager {
 
 	public void setup(Plugin p) {
 		SettingsManager.p = p;
+		if (p.getConfig().getInt("config-version") == SurvivalGames.config_version) {
+			SurvivalGames.config_todate = true;
+		}else{
+			File config = new File(p.getDataFolder(), "config.yml");
+			config.delete();
+		}
+		
 		p.getConfig().options().copyDefaults(true);
 		p.saveDefaultConfig();
 		
@@ -79,11 +94,7 @@ public class SettingsManager {
 		reloadMessages();
 		saveMessages();
 		
-		System.out.println(SurvivalGames.config_version + "     " + p.getConfig().getInt("config-version"));
-		if (p.getConfig().getInt("config-version") == SurvivalGames.config_version) {
-			SurvivalGames.config_todate = true;
-		}
-		SurvivalGames.config_todate = true;
+		
 	}
 
 	public void set(String arg0, Object arg1) {
@@ -131,23 +142,60 @@ public class SettingsManager {
 
 	public void reloadSpawns() {
 		spawns = YamlConfiguration.loadConfiguration(f);
+		if(spawns.getInt("version", 0) != SPAWN_VERSION){
+			SurvivalGames.$("Deleting outdated config file. "+f.getName());
+			f.delete();
+			reloadSpawns();
+		}
+		spawns.set("version", SPAWN_VERSION);
+		saveSpawns();
 	}
 
 	public void reloadSystem() {
 		system = YamlConfiguration.loadConfiguration(f2);
+		if(system.getInt("version", 0) != SYSTEM_VERSION){
+			SurvivalGames.$("Deleting outdated config file. "+f2.getName());
+			f2.delete();
+			reloadSystem();
+		}
+		system.set("version", SYSTEM_VERSION);
+		saveSystemConfig();
 	}
 
 	public void reloadKits() {
 		kits = YamlConfiguration.loadConfiguration(f3);
+		if(kits.getInt("version", 0) != KIT_VERSION){
+			SurvivalGames.$("Deleting outdated config file. "+f3.getName());
+			f3.delete();
+			loadFile("kits.yml");
+			reloadKits();
+		}
+	}
+	
+	
+	public void reloadMessages() {
+		messages = YamlConfiguration.loadConfiguration(f4);
+		if(messages.getInt("version", 0) != MESSAGE_VERSION){
+			SurvivalGames.$("Deleting outdated config file. "+f4.getName());
+			f4.delete();
+			loadFile("messages.yml");
+			reloadKits();
+		}
+		messages.set("version", MESSAGE_VERSION);
+		saveMessages();
 	}
 	
 	public void reloadChest() {
 		chest = YamlConfiguration.loadConfiguration(f5);
+		if(chest.getInt("version", 0) != CHEST_VERSION){
+			SurvivalGames.$("Deleting outdated config file. "+f5.getName());
+			f5.delete();
+			loadFile("chest.yml");
+			reloadKits();
+		}
 	}
 
-	public void reloadMessages() {
-		messages = YamlConfiguration.loadConfiguration(f4);
-	}
+
 
 
 

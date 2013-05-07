@@ -23,6 +23,10 @@
 #     276, 1, 0, sharpness: 4 knockback: 2, killer
 #
 
+#DONT TOUCH THIS
+version: 0
+
+
 enabled: false
 
 
