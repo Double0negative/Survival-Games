@@ -40,7 +40,7 @@ public class Spectate implements SubCommand{
 
     @Override
     public String help(Player p) {
-        return "/sg sepctate <id> - Spectate a running arena";
+        return "/sg spectate <id> - Spectate a running arena";
     }
 
 	@Override
