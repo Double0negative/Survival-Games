@@ -608,7 +608,6 @@ public class Game {
 			List<Integer> amount = config.getIntegerList("reward.amount");
 			for(int i=0; i<=(item.size()-1); i++){
 				win.getInventory().addItem(new ItemStack(item.get(i), amount.get(i)));
-				win.getInventory();
 			}
 		}
 		clearSpecs();
