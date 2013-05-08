@@ -26,7 +26,7 @@ public class AddHead implements SubCommand {
         }
         Block bl = player.getTargetBlock(null, 0);
         if (bl != null && bl.getType() == Material.SKULL) {
-            if (SettingsManager.getInstance().addToList("head", bl.getLocation(), pos)) {
+            if (SettingsManager.getInstance().modifyList("head", bl.getLocation(), pos)) {
                 MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.INFO, "info.success", player, "command-'add head'");
             } else {
                 MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "info.unsuccess", player, "command-'add head'");

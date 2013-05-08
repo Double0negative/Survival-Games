@@ -36,7 +36,6 @@ public class DatabaseManager {
             return true;
         } catch (ClassNotFoundException e) {
             log.log(Level.WARNING, "Couldn''t start MySQL Driver. Stopping...\n{0}", e.getMessage());
-
             return false;
         } catch (SQLException e) {
             log.log(Level.WARNING, "Couldn''t connect to MySQL database. Stopping...\n{0}", e.getMessage());
@@ -76,6 +75,6 @@ public class DatabaseManager {
         String db = c.getString("sql.database", "SurvivalGames");
         String user = c.getString("sql.user", "root");
         String pass = c.getString("sql.pass", "");
-        return this.connectToDB(host, port, db, user, pass);
+        return connectToDB(host, port, db, user, pass);
     }
 }

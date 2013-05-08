@@ -61,7 +61,6 @@ public class StatsManager {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
     }
 

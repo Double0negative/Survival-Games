@@ -52,7 +52,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("addsign", new AddSign());
         commands.put("delsign", new DelSign());
         commands.put("addhead", new AddHead());
-        commands.put("addhead", new DelHead());
+        commands.put("delhead", new DelHead());
 
         // commands.put("sponsor", new Sponsor());
     }

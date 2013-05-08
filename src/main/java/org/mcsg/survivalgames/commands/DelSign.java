@@ -18,8 +18,8 @@ public class DelSign implements SubCommand {
             return true;
         }
         Block bl = player.getTargetBlock(null, 0);
-        if (bl != null && (bl.getType() == Material.SIGN || bl.getType() == Material.SIGN_POST)) {
-            if (SettingsManager.getInstance().delFromList("sign", bl.getLocation())) {
+        if (bl != null && (bl.getType() == Material.WALL_SIGN || bl.getType() == Material.SIGN_POST)) {
+            if (SettingsManager.getInstance().modifyList("sign", bl.getLocation(), 0)) {
                 MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.INFO, "info.success", player, "command-'delete sign'");
             } else {
                 MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "info.unsuccess", player, "command-'delete sign'");

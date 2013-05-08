@@ -131,7 +131,7 @@ public class SettingsManager {
     }
 
     public void saveConfig() {
-        // p.saveConfig();
+        p.saveConfig();
     }
 
     public static World getGameWorld(int game) {
@@ -363,31 +363,28 @@ public class SettingsManager {
         }
     }
 
-    public boolean addToList(String type, Location loc, int pos) {
-        FileConfiguration cfg = getInstance().getConfig();
-        List<String> objs = cfg.getStringList(type);
-        String conStr = loc.getWorld().getName() + ";" + loc.getX() + ";" + loc.getY() + ";" + loc.getZ() + ";" + pos;
-        if (objs.contains(conStr)) {
-            return false;
-        }
-        objs.add(conStr);
-        cfg.set(type, objs);
-        getInstance().saveConfig();
-        return true;
-    }
-
-    public boolean delFromList(String type, Location loc) {
+    public boolean modifyList(String type, Location loc, int pos) {
         FileConfiguration cfg = getInstance().getConfig();
         List<String> objs = cfg.getStringList(type);
         String conStr = loc.getWorld().getName() + ";" + loc.getX() + ";" + loc.getY() + ";" + loc.getZ();
         for (String str : objs) {
             if (str.startsWith(conStr)) {
-                objs.remove(str);
-                cfg.set(type, objs);
-                getInstance().saveConfig();
-                return true;
+                if (pos == 0) {
+                    objs.remove(str);
+                    cfg.set(type, objs);
+                    getInstance().saveConfig();
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
-        return false;
+        if (pos == 0) {
+            return false;
+        }
+        objs.add(conStr + ";" + pos);
+        cfg.set(type, objs);
+        getInstance().saveConfig();
+        return true;
     }
 }

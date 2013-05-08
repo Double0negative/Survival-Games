@@ -1,12 +1,12 @@
 package org.mcsg.survivalgames;
 
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -21,8 +21,6 @@ import org.mcsg.survivalgames.logging.QueueManager;
 import org.mcsg.survivalgames.stats.StatsManager;
 import org.mcsg.survivalgames.util.ChestRatioStorage;
 import org.mcsg.survivalgames.util.DatabaseManager;
-
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 public class SurvivalGames extends JavaPlugin {
 
@@ -69,8 +67,6 @@ public class SurvivalGames extends JavaPlugin {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-
     }
 
     class Startup implements Runnable {
@@ -101,9 +97,11 @@ public class SurvivalGames extends JavaPlugin {
             } finally {
                 LobbyManager.getInstance().setup(p);
             }
-
             ChestRatioStorage.getInstance().setup();
             HookManager.getInstance().setup();
+            if (dbcon) {
+                HofManager.getInstance().setup();
+            }
             pm.registerEvents(new PlaceEvent(), p);
             pm.registerEvents(new BreakEvent(), p);
             pm.registerEvents(new DeathEvent(), p);

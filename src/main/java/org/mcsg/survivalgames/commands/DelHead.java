@@ -18,14 +18,14 @@ public class DelHead implements SubCommand {
             return true;
         }
         Block bl = player.getTargetBlock(null, 0);
-        if (bl != null && (bl.getType() == Material.SIGN || bl.getType() == Material.SIGN_POST)) {
-            if (SettingsManager.getInstance().delFromList("head", bl.getLocation())) {
+        if (bl != null && bl.getType() == Material.SKULL) {
+            if (SettingsManager.getInstance().modifyList("head", bl.getLocation(), 0)) {
                 MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.INFO, "info.success", player, "command-'delete head'");
             } else {
                 MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "info.unsuccess", player, "command-'delete head'");
             }
         } else {
-            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.wrongtarget", player, "type-sign");
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.wrongtarget", player, "type-head");
             return true;
         }
         return true;

@@ -25,8 +25,8 @@ public class AddSign implements SubCommand {
             return true;
         }
         Block bl = player.getTargetBlock(null, 0);
-        if (bl != null && (bl.getType() == Material.SIGN || bl.getType() == Material.SIGN_POST)) {
-            if (SettingsManager.getInstance().addToList("sign", bl.getLocation(), pos)) {
+        if (bl != null && (bl.getType() == Material.WALL_SIGN || bl.getType() == Material.SIGN_POST)) {
+            if (SettingsManager.getInstance().modifyList("sign", bl.getLocation(), pos)) {
                 MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.INFO, "info.success", player, "command-'add sign'");
             } else {
                 MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "info.unsuccess", player, "command-'add sign'");
