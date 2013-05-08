@@ -111,6 +111,13 @@ deathmatch:
   time: 30
   killtime: 5
   
+
+#If enabled, winner gets the specified reward
+reward:
+ enabled: false
+ item: 20
+ amount: 1
+
   
 #Settings for connecting to and 
 #SQL server. These settings will
