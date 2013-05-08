@@ -3,13 +3,11 @@ package org.mcsg.survivalgames;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -23,8 +21,6 @@ import org.mcsg.survivalgames.logging.QueueManager;
 import org.mcsg.survivalgames.stats.StatsManager;
 import org.mcsg.survivalgames.util.ItemReader;
 import org.mcsg.survivalgames.util.Kit;
-
-
 
 //Data container for a game
 
@@ -43,7 +39,6 @@ public class Game {
 	private HashMap < String, Object > flags = new HashMap < String, Object > ();
 	HashMap < Player, Integer > nextspec = new HashMap < Player, Integer > ();
 	private ArrayList<Integer>tasks = new ArrayList<Integer>();
-	
 	private Arena arena;
 	private int gameID;
 	private int gcount = 0;
@@ -607,11 +602,9 @@ public class Game {
 		}, gameID);
 
 		mode = GameMode.FINISHING;
-		
 		if(config.getBoolean("reward.enabled", false)){
 			win.getInventory().addItem(new ItemStack(config.getInt("reward.item"), config.getInt("reward.amount")));
 		}
-		
 		clearSpecs();
 		win.setHealth(p.getMaxHealth());
 		win.setFoodLevel(20);
