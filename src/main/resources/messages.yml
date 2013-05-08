@@ -1,4 +1,4 @@
-version: 1
+version: 2
 prefix:
   main: '&6[&4&lSG&6]'
   states:
@@ -24,6 +24,12 @@ messages:
   info:
     success: '&e{$command} &aexecuted successfuly'
     unsuccess: '&e{$command} &cexecuted unsuccessfuly'
+    stats: '&9Your SurvivalGames stats so far'
+  words:
+    points: 'Points'
+    kills: 'Kills'
+    deaths: 'Deaths'
+    killstreaks: 'KillStreaks'
   error: 
     gamefull: '&cArena {$arena} is full!'
     alreadyingame: '&cArena already ingame'

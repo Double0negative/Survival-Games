@@ -364,7 +364,7 @@ public class SettingsManager {
     }
 
     public boolean modifyList(String type, Location loc, int pos) {
-        FileConfiguration cfg = getInstance().getConfig();
+        FileConfiguration cfg = SettingsManager.getInstance().getSystemConfig();
         List<String> objs = cfg.getStringList(type);
         String conStr = loc.getWorld().getName() + ";" + loc.getX() + ";" + loc.getY() + ";" + loc.getZ();
         for (String str : objs) {

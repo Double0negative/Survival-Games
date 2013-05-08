@@ -49,11 +49,13 @@ public class CommandHandler implements CommandExecutor {
         commands.put("lq", new LeaveQueue());
         commands.put("leavequeue", new LeaveQueue());
         commands.put("list", new ListPlayers());
-        commands.put("addsign", new AddSign());
-        commands.put("delsign", new DelSign());
-        commands.put("addhead", new AddHead());
-        commands.put("delhead", new DelHead());
-
+        if (SurvivalGames.dbcon) {
+            commands.put("addsign", new AddSign());
+            commands.put("delsign", new DelSign());
+            commands.put("addhead", new AddHead());
+            commands.put("delhead", new DelHead());
+            commands.put("stats", new Stats());
+        }
         // commands.put("sponsor", new Sponsor());
     }
 
@@ -68,10 +70,6 @@ public class CommandHandler implements CommandExecutor {
         helpinfo.put("resetspawns", 3);
         helpinfo.put("delarena", 3);
         helpinfo.put("flag", 3);
-        helpinfo.put("addsign", 3);
-        helpinfo.put("delsign", 3);
-        helpinfo.put("addhead", 3);
-        helpinfo.put("delhead", 3);
         helpinfo.put("disable", 2);
         helpinfo.put("start", 2);
         helpinfo.put("enable", 2);
@@ -80,8 +78,14 @@ public class CommandHandler implements CommandExecutor {
         helpinfo.put("leave", 1);
         helpinfo.put("spectate", 1);
         helpinfo.put("lq", 1);
-        helpinfo.put("leavequeue", 1);
         helpinfo.put("list", 1);
+        if (SurvivalGames.dbcon) {
+            helpinfo.put("addsign", 3);
+            helpinfo.put("delsign", 3);
+            helpinfo.put("addhead", 3);
+            helpinfo.put("delhead", 3);
+            helpinfo.put("stats", 1);
+        }
         //helpinfo.put("sponsor", 1);
     }
 
@@ -166,7 +170,7 @@ public class CommandHandler implements CommandExecutor {
         }
 
         for (String command : commands.keySet()) {
-            if (helpinfo.get(command) == page) {
+            if (helpinfo.get(command) != null ? (helpinfo.get(command) == page ? true : false) : false) {
                 msgmgr.sendMessage(PrefixType.INFO, commands.get(command).help(p), p);
             }
         }

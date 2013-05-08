@@ -81,10 +81,6 @@ block:
     - 103
     - 43
 
-#Player heads and signs location and settings
-sign: []
-head: []
-
 #Settings for when the game nears end. This runs
 #when there are only x amount of players
 #remaining. If place chest is enabled then

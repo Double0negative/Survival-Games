@@ -20,6 +20,9 @@ public class AddSign implements SubCommand {
         int pos = 0;
         try {
             pos = Integer.parseInt(args[0]);
+            if (pos <= 0) {
+                return false;
+            }
         } catch (NumberFormatException e) {
             MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.input", player, "message-Position is not a number");
             return true;

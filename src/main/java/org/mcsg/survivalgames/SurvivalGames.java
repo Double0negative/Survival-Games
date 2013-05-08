@@ -3,11 +3,25 @@ package org.mcsg.survivalgames;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import java.io.File;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
+import org.bukkit.block.Skull;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -35,6 +49,7 @@ public class SurvivalGames extends JavaPlugin {
                 "KiwiPantz", "blackracoon", "CuppingCakes", "4rr0ws", "Fawdz", "Timothy13", "rich91", "ModernPrestige", "Snowpool", "egoshk",
                 "nickm140", "chaseoes", "Oceangrass", "GrailMore", "iAngelic", "Lexonia", "ChaskyT", "Anon232", "DragonCz"
             });
+    public static ResultSet rs;
     SurvivalGames p = this;
 
     @Override
@@ -75,7 +90,6 @@ public class SurvivalGames extends JavaPlugin {
             datafolder = p.getDataFolder();
 
             PluginManager pm = getServer().getPluginManager();
-            setCommands();
 
             SettingsManager.getInstance().setup(p);
             MessageManager.getInstance().setup();
@@ -97,10 +111,11 @@ public class SurvivalGames extends JavaPlugin {
             } finally {
                 LobbyManager.getInstance().setup(p);
             }
+            setCommands();
             ChestRatioStorage.getInstance().setup();
             HookManager.getInstance().setup();
             if (dbcon) {
-                HofManager.getInstance().setup();
+                getServer().getScheduler().runTaskTimerAsynchronously(p, new HofUpdater(), 10, 100);
             }
             pm.registerEvents(new PlaceEvent(), p);
             pm.registerEvents(new BreakEvent(), p);
@@ -165,6 +180,109 @@ public class SurvivalGames extends JavaPlugin {
     public static void debug(int a) {
         if (SettingsManager.getInstance().getConfig().getBoolean("debug", false)) {
             debug(a + "");
+        }
+    }
+
+    public static Map<String, Integer[]> sortByValue(Map<String, Integer[]> map) {
+        List<Map.Entry<String, Integer[]>> list = new LinkedList<Map.Entry<String, Integer[]>>(map.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer[]>>() {
+            public int compare(Map.Entry<String, Integer[]> m1, Map.Entry<String, Integer[]> m2) {
+                return (m2.getValue()[2]).compareTo(m1.getValue()[2]);
+            }
+        });
+        Map<String, Integer[]> result = new LinkedHashMap<String, Integer[]>();
+        for (Map.Entry<String, Integer[]> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
+    }
+
+    public void updateHof(ResultSet rs) {
+        Map<String, Integer[]> stats = new HashMap<String, Integer[]>();
+        try {
+            while (rs.next()) {
+                if (stats.containsKey(rs.getString("player"))) {
+                    stats.put(rs.getString("player"), new Integer[]{
+                                stats.get(rs.getString("player"))[0] + rs.getInt("kills"),
+                                stats.get(rs.getString("player"))[1] + rs.getInt("death"),
+                                stats.get(rs.getString("player"))[2] + rs.getInt("points")
+                            });
+                } else {
+                    stats.put(rs.getString("player"), new Integer[]{rs.getInt("kills"), rs.getInt("death"), rs.getInt("points")});
+                }
+            }
+        } catch (SQLException ex) {
+            MessageManager.getInstance().logMessage(MessageManager.PrefixType.WARNING, ex.getMessage());
+        }
+        FileConfiguration cfg = SettingsManager.getInstance().getSystemConfig();
+        stats = sortByValue(stats);
+        if (cfg.contains("head")) {
+            for (String str : cfg.getStringList("head")) {
+                World w = Bukkit.getServer().getWorld(str.split(";")[0]);
+                if (w == null) {
+                    continue;
+                }
+                Integer pos = Integer.decode(str.split(";")[4]);
+                if (stats.keySet().toArray().length < pos) {
+                    continue;
+                }
+                double x = Double.parseDouble(str.split(";")[1]);
+                double y = Double.parseDouble(str.split(";")[2]);
+                double z = Double.parseDouble(str.split(";")[3]);
+                Block bl = w.getBlockAt(new Location(w, x, y, z));
+                if (bl == null) {
+                    continue;
+                } else if (!(bl.getState() instanceof Skull)) {
+                    continue;
+                }
+                Skull s = (Skull) bl.getState();
+                s.setOwner(stats.keySet().toArray()[pos - 1].toString());
+                s.update();
+            }
+        }
+        if (cfg.contains("sign")) {
+            for (String str : cfg.getStringList("sign")) {
+                World w = Bukkit.getServer().getWorld(str.split(";")[0]);
+                if (w == null) {
+                    continue;
+                }
+                Integer pos = Integer.decode(str.split(";")[4]);
+                if (stats.keySet().toArray().length < pos) {
+                    continue;
+                }
+                double x = Double.parseDouble(str.split(";")[1]);
+                double y = Double.parseDouble(str.split(";")[2]);
+                double z = Double.parseDouble(str.split(";")[3]);
+                Block bl = w.getBlockAt(new Location(w, x, y, z));
+                if (bl == null) {
+                    continue;
+                } else if (!(bl.getState() instanceof Sign)) {
+                    continue;
+                }
+                Sign s = (Sign) bl.getState();
+                String playerName = stats.keySet().toArray()[pos - 1].toString();
+                s.setLine(0, "Position: " + pos);
+                s.setLine(1, playerName);
+                s.setLine(2, "K/D : " + stats.get(playerName)[0] + "/" + stats.get(playerName)[1]);
+                s.setLine(3, "Points: " + stats.get(playerName)[2]);
+                s.update();
+            }
+        }
+    }
+
+    public class HofUpdater implements Runnable {
+
+        public void run() {
+            try {
+                PreparedStatement st = DatabaseManager.getInstance().createStatement("SELECT player, kills, death, points FROM " + SettingsManager.getSqlPrefix() + "playerstats;");
+                ResultSet rs2 = st.executeQuery();
+                if (rs2 != rs) {
+                    updateHof(rs2);
+                    rs = rs2;
+                }
+            } catch (SQLException ex) {
+                MessageManager.getInstance().logMessage(MessageManager.PrefixType.WARNING, ex.getMessage());
+            }
         }
     }
 }
