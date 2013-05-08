@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -605,11 +604,11 @@ public class Game {
 
 		mode = GameMode.FINISHING;
 		if(config.getBoolean("reward.enabled", false)){
-			//win.getInventory().addItem(new ItemStack(config.getInt("reward.item"), config.getInt("reward.amount")));
 			List<Integer> item = config.getIntegerList("reward.item");
 			List<Integer> amount = config.getIntegerList("reward.amount");
 			for(int i=0; i<=(item.size()-1); i++){
 				win.getInventory().addItem(new ItemStack(item.get(i), amount.get(i)));
+				win.getInventory();
 			}
 		}
 		clearSpecs();
