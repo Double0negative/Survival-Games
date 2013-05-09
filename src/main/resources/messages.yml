@@ -1,4 +1,4 @@
-version: 2
+version: 3
 prefix:
   main: '&6[&4&lSG&6]'
   states:
@@ -70,7 +70,7 @@ messages:
     PLAYER: '&e{$player} &2was killed by &e{$killer} &2with a {$item}!'
   killstreak:
     level1: '&e{$player}&7 got a Double Kill!'
-    level2: '&e{$player}&9 got a Multi Kill!'
-    level3: '&e{$player}&5 got an Ultra Kill!'
-    level4: '&e{$player}&4 got an Unbelievable Kill!'
-    level5: '&a7l{$player} Unbelievable+!'
+    level2: '&e{$player}&9 got a Triple Kill!'
+    level3: '&e{$player}&5 got a Quadra Kill!'
+    level4: '&e{$player}&4 got a Penta Kill!'
+    level5: '&a7l{$player} got a Legendary Kill!'
