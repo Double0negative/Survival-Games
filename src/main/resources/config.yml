@@ -113,12 +113,14 @@ deathmatch:
   
 
 #If enabled, winner gets the specified reward
+# Items are defined as 
+#    itemnumber, amount, durabilty, enchantments, name
+# Example: diamond sword with 1 item, full durabilty, shaprness 4, knockback 2 and the name killer
+#     276, 1, 0, sharpness: 4 knockback: 2, killer
 reward:
  enabled: false
- item:
-  - 20
- amount:
-  - 1
+ contents:
+  - '267,1, 0, sharpness:4, Blade'
 
   
 #Settings for connecting to and 

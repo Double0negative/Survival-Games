@@ -604,10 +604,10 @@ public class Game {
 
 		mode = GameMode.FINISHING;
 		if(config.getBoolean("reward.enabled", false)){
-			List<Integer> item = config.getIntegerList("reward.item");
-			List<Integer> amount = config.getIntegerList("reward.amount");
-			for(int i=0; i<=(item.size()-1); i++){
-				win.getInventory().addItem(new ItemStack(item.get(i), amount.get(i)));
+			List<String> items = config.getStringList("reward.contents");
+			for(int i=0; i<=(items.size()-1); i++){
+				ItemStack item = ItemReader.read(items.get(i));
+				win.getInventory().addItem(item);
 			}
 		}
 		clearSpecs();
