@@ -32,7 +32,7 @@ public class Stats implements SubCommand {
             }
             String prefix = SettingsManager.getInstance().getMessageConfig().getString("prefix.main").replace("&", "§");
             player.sendMessage(new String[]{
-                        prefix + " §9Your SurvivalGames stats so far",
+                        prefix + " §9Your SurvivalGames Stats",
                         prefix + " §9" + SettingsManager.getInstance().getMessageConfig().getString("messages.words.points") + "§7: §e" + points,
                         prefix + " §a" + SettingsManager.getInstance().getMessageConfig().getString("messages.words.kills") + "§7/§c" + SettingsManager.getInstance().getMessageConfig().getString("messages.words.deaths") + " §7: §a" + kills + "§7/§c" + death + "§7§l(§e" + (death == 0 ? 0 : kills / death) + "§7§l)",
                         prefix + " §9" + SettingsManager.getInstance().getMessageConfig().getString("messages.words.killstreaks") + "§7: §1" + ks1 + "§7/§2" + ks2 + "§7/§a" + ks3 + "§7/§b" + ks4 + "§7/§c" + ks5
@@ -45,7 +45,7 @@ public class Stats implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg stats - Shows you your own stats";
+        return "/sg stats - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.stats", "Shows you your own stats");
     }
 
     public String permission() {

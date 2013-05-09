@@ -3,7 +3,7 @@ package org.mcsg.survivalgames.commands;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;
-import org.mcsg.survivalgames.MessageManager.PrefixType;
+import org.mcsg.survivalgames.SettingsManager;
 
 public class ListPlayers implements SubCommand {
 
@@ -16,21 +16,20 @@ public class ListPlayers implements SubCommand {
             } else {
                 gid = Integer.parseInt(args[0]);
             }
-
             String[] msg = GameManager.getInstance().getStringList(gid).split("\n");
             player.sendMessage(msg);
             return false;
         } catch (NumberFormatException e) {
-            MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input", player, "message-Game must be a number!");
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.notanumber", player, "input-Arena");
         } catch (NullPointerException e) {
-            MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input", player, "message-No game by this ID exist!");
+            MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.gamenoexist", player);
         }
         return false;
     }
 
     @Override
     public String help(Player p) {
-        return "/list - List all players in the arena you are playing in";
+        return "/list - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.listplayers","List all players in the arena you are playing in");
     }
 
     @Override

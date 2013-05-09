@@ -1,6 +1,7 @@
 package org.mcsg.survivalgames.commands;
 
 import org.bukkit.entity.Player;
+import org.mcsg.survivalgames.SettingsManager;
 
 public class SetStatsWall implements SubCommand {
 
@@ -11,7 +12,7 @@ public class SetStatsWall implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg setstatswall - Sets the stats wall";
+        return "/sg setstatswall - "+ SettingsManager.getInstance().getMessageConfig().getString("messages.help.setstatswall", "Sets the stats wall");
     }
 
     @Override

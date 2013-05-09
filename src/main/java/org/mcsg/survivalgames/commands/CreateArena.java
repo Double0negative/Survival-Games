@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;
+import org.mcsg.survivalgames.SettingsManager;
 
 public class CreateArena implements SubCommand {
 
@@ -18,7 +19,7 @@ public class CreateArena implements SubCommand {
 
     @Override
     public String help(Player p) {
-        return "/sg createarena - Create a new arena with the current WorldEdit selection";
+        return "/sg createarena - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.createarena", "Create a new arena with the current WorldEdit selection");
     }
 
     @Override

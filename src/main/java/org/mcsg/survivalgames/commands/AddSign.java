@@ -43,7 +43,7 @@ public class AddSign implements SubCommand {
 
     @Override
     public String help(Player p) {
-        return "/sg addsign <pos> - The sign you are lookin at will show stats of player on <pos> position";
+        return "/sg addsign <pos> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.addsign", "The sign you are lookin at will show stats of player on <pos> position");
     }
 
     @Override

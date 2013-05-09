@@ -14,7 +14,7 @@ public class DelHead implements SubCommand {
             return true;
         }
         if (args.length != 0) {
-            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.input", player, "message-This command does not require any arguments");
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.input", player, "message-" + SettingsManager.getInstance().getMessageConfig().getString("messages.error.argumentsnotneeded", "§cArguments not needed!"));
             return true;
         }
         Block bl = player.getTargetBlock(null, 0);
@@ -33,7 +33,7 @@ public class DelHead implements SubCommand {
 
     @Override
     public String help(Player p) {
-        return "/sg delsign - Stops the head from updating the player skin";
+        return "/sg delsign - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.delhead", "Stops the head from updating the player skin");
     }
 
     @Override

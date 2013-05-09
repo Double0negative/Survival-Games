@@ -6,6 +6,7 @@ import org.mcsg.survivalgames.Game;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
+import org.mcsg.survivalgames.SettingsManager;
 
 public class ForceStart implements SubCommand {
 
@@ -24,37 +25,34 @@ public class ForceStart implements SubCommand {
         }
         if (args.length >= 1) {
             game = Integer.parseInt(args[0]);
-
         } else {
             game = GameManager.getInstance().getPlayerGameId(player);
         }
         if (game == -1) {
-            player.sendMessage(ChatColor.RED + "Must be in a game!");
+            MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.notingame", player);
             return true;
         }
         if (GameManager.getInstance().getGame(game).getActivePlayers() < 2) {
-            player.sendMessage(ChatColor.RED + "Needs at least 2 players to start!");
+            MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.notenoughtplayers", player);
             return true;
         }
-
-
         Game g = GameManager.getInstance().getGame(game);
         if (g.getMode() != Game.GameMode.WAITING && !player.hasPermission("sg.arena.restart")) {
-            player.sendMessage(ChatColor.RED + "Game Already Starting!");
+            MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.alreadyingame", player);
             return true;
         }
-        g.countdown(seconds);
+        g.countdown(seconds - 1);
         for (Player pl : g.getAllPlayers()) {
-            msgmgr.sendMessage(PrefixType.INFO, "Game starting in " + seconds + " seconds!", pl);
+            msgmgr.sendFMessage(PrefixType.INFO, "game.countdown", player, "t-" + seconds);
         }
-        player.sendMessage(ChatColor.GREEN + "Started arena " + game);
+        msgmgr.sendFMessage(PrefixType.INFO, "game.started", player, "arena-" + game);
 
         return true;
     }
 
     @Override
     public String help(Player p) {
-        return "/sg forcestart - Force starts a game";
+        return "/sg forcestart - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.forcestart", "Forces the game to start");
     }
 
     @Override

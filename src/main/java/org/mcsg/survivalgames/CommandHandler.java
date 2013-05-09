@@ -32,7 +32,7 @@ public class CommandHandler implements CommandExecutor {
     private void loadCommands() {
         commands.put("createarena", new CreateArena());
         commands.put("join", new Join());
-        commands.put("addwall", new SetLobbyWall());
+        commands.put("addwall", new AddLobbyWall());
         commands.put("setspawn", new SetSpawn());
         commands.put("getcount", new ListArenas());
         commands.put("disable", new Disable());
@@ -41,7 +41,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("vote", new Vote());
         commands.put("leave", new Leave());
         commands.put("setlobbyspawn", new SetLobbySpawn());
-        commands.put("setlobbywall", new SetLobbyWall());
+        commands.put("setlobbywall", new AddLobbyWall());
         commands.put("resetspawns", new ResetSpawns());
         commands.put("delarena", new DelArena());
         commands.put("flag", new Flag());

@@ -7,7 +7,7 @@ import org.mcsg.survivalgames.MessageManager;
 import org.mcsg.survivalgames.SettingsManager;
 
 public class AddHead implements SubCommand {
-
+    
     public boolean onCommand(Player player, String[] args) {
         if (!player.hasPermission(permission()) && !player.isOp()) {
             MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.nopermission", player);
@@ -40,12 +40,12 @@ public class AddHead implements SubCommand {
         }
         return true;
     }
-
+    
     @Override
     public String help(Player p) {
-        return "/sg addhead <pos> - The head you are lookin at will show skin of player on <pos>. position";
+        return "/sg addhead <pos> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.addhead", "The head you are lookin at will show skin of player on position <pos>");
     }
-
+    
     @Override
     public String permission() {
         return "sg.admin.addhead";

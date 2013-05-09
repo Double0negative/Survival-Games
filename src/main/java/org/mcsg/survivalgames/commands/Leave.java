@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;
+import org.mcsg.survivalgames.SettingsManager;
 
 public class Leave implements SubCommand {
 
@@ -18,7 +19,7 @@ public class Leave implements SubCommand {
 
     @Override
     public String help(Player p) {
-        return "/sg leave - Leaves the game";
+        return "/sg leave - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.leave", "Leaves the game");
     }
 
     @Override

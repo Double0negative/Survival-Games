@@ -2,6 +2,7 @@ package org.mcsg.survivalgames.commands;
 
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.GameManager;
+import org.mcsg.survivalgames.SettingsManager;
 
 public class LeaveQueue implements SubCommand {
 
@@ -13,7 +14,7 @@ public class LeaveQueue implements SubCommand {
 
     @Override
     public String help(Player p) {
-        return "/sg lq - Leave the queue for any queued games";
+        return "/sg lq - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.leavequeue", "Leave the queue for any queued games");
     }
 
     @Override

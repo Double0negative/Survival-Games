@@ -18,16 +18,16 @@ public class ResetSpawns implements SubCommand {
             SettingsManager.getInstance().getSpawns().set("spawns." + Integer.parseInt(args[0]), null);
             return true;
         } catch (NumberFormatException e) {
-            MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input", player, "message-Game must be a number!");
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.notanumber", player, "input-Arena");
         } catch (NullPointerException e) {
-            MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input", player, "message-No game by this ID exist!");
+            MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.gamenoexist", player);
         }
         return true;
     }
 
     @Override
     public String help(Player p) {
-        return "/sg resetspawns <id> - Resets spawns for Arena <id>";
+        return "/sg resetspawns <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.resetspawns", "Resets spawns for Arena <id>");
     }
 
     @Override
