@@ -214,9 +214,9 @@ public class Game {
 					if (spawns.get(a) == null) {
 						placed = true;
 						spawns.put(a, p);
+						p.setGameMode(org.bukkit.GameMode.SURVIVAL);
 
 						p.teleport(SettingsManager.getInstance().getLobbySpawn());
-						p.setGameMode(org.bukkit.GameMode.SURVIVAL);
 						saveInv(p);clearInv(p);	
 						p.teleport(SettingsManager.getInstance().getSpawnPoint(gameID, a));
 
