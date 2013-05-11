@@ -1,5 +1,6 @@
 package org.mcsg.survivalgames.util;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Level;
 
@@ -16,12 +17,19 @@ public class MessageUtil {
 	}
 
 	public static String replaceVars(String msg, HashMap<String, String>vars){
+		boolean error = false;
 		for(String s:vars.keySet()){
 			try{
 				msg.replace("{$"+s+"}", vars.get(s));
 			}catch(Exception e){
 				SurvivalGames.$(Level.WARNING, "Failed to replace string vars. Error on "+s);
+				error = true;
 			}
+		}
+		if(error){
+			SurvivalGames.$(Level.SEVERE, "Error replacing vars in message: "+msg);
+			SurvivalGames.$(Level.SEVERE, "Vars: "+vars.toString());
+			SurvivalGames.$(Level.SEVERE, "Vars Cache: "+varcache.toString());
 		}
 		return msg;
 	}
@@ -31,12 +39,19 @@ public class MessageUtil {
 			String[] s = str.split("-");
 			varcache.put(s[0], s[1]);
 		}
+		boolean error = false;
 		for(String str: varcache.keySet()){
 			try{
 				msg = msg.replace("{$"+str+"}", varcache.get(str));
 			}catch(Exception e){
 				SurvivalGames.$(Level.WARNING,"Failed to replace string vars. Error on "+str);
+				error = true;
 			}
+		}
+		if(error){
+			SurvivalGames.$(Level.SEVERE, "Error replacing vars in message: "+msg);
+			SurvivalGames.$(Level.SEVERE, "Vars: "+Arrays.toString(vars));
+			SurvivalGames.$(Level.SEVERE, "Vars Cache: "+varcache.toString());
 		}
 
 		return msg;
