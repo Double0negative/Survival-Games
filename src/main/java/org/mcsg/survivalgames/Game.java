@@ -209,8 +209,9 @@ public class Game {
 				PlayerJoinArenaEvent joinarena = new PlayerJoinArenaEvent(p, GameManager.getInstance().getGame(gameID));
 				Bukkit.getServer().getPluginManager().callEvent(joinarena);
 				boolean placed = false;
+				int spawnCount = SettingsManager.getInstance().getSpawnCount(gameID);
 
-				for (int a = 1; a <= SettingsManager.getInstance().getSpawnCount(gameID); a++) {
+				for (int a = 1; a <= spawnCount; a++) {
 					if (spawns.get(a) == null) {
 						placed = true;
 						spawns.put(a, p);
@@ -229,7 +230,7 @@ public class Game {
 						showMenu(p);
 						HookManager.getInstance().runHook("GAME_POST_ADDPLAYER", "activePlayers-"+activePlayers.size());
 
-						if(spawns.size() == activePlayers.size()){
+						if(spawnCount == activePlayers.size()){
 							countdown(5);
 						}
 						break;
