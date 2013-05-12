@@ -3,7 +3,6 @@ package org.mcsg.survivalgames;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Vector;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -49,6 +48,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("lq", new LeaveQueue());
         commands.put("leavequeue", new LeaveQueue());
         commands.put("list", new ListPlayers());
+        commands.put("tp", new Teleport());
         if (SurvivalGames.dbcon) {
             commands.put("addsign", new AddSign());
             commands.put("delsign", new DelSign());

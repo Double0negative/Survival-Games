@@ -58,7 +58,7 @@ messages:
     between: '&cSpawn must be between 1 & {$num}.'
     badinput: '&cInput must be "next" or number.'
     notinside: '&cYou are not inside an arena!'
-    nospawns: '&cNo spawns yet.'
+    nospawns: '&cNo spawns for this arena yet.'
     specingame: '&cCannot spectate while ingame!'
     nogame: '&cNo game to join!'
   death:
@@ -116,3 +116,4 @@ messages:
     spectate: 'Spectate a running arena'
     stats: 'Shows you your own stats'
     vote: 'Votes to start the game'
+    teleport: 'Teleports you to arena <arenaid>'
