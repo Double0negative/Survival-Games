@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
+import org.mcsg.survivalgames.commands.AddWall;
 import org.mcsg.survivalgames.commands.CreateArena;
 import org.mcsg.survivalgames.commands.DelArena;
 import org.mcsg.survivalgames.commands.Disable;
@@ -50,7 +51,7 @@ public class CommandHandler implements CommandExecutor {
 	private void loadCommands() {
 		commands.put("createarena", new CreateArena());
 		commands.put("join", new Join());
-		commands.put("addwall", new SetLobbyWall());
+		commands.put("addwall", new AddWall());
 		commands.put("setspawn", new SetSpawn());
 		commands.put("getcount", new ListArenas());
 		commands.put("disable", new Disable());
