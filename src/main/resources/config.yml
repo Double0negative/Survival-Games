@@ -81,10 +81,6 @@ block:
     - 103
     - 43
 
-
-
- 
-
 #Settings for when the game nears end. This runs
 #when there are only x amount of players
 #remaining. If place chest is enabled then

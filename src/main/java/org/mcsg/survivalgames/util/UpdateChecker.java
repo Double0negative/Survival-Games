@@ -17,20 +17,19 @@ import org.mcsg.survivalgames.SurvivalGames;
 public class UpdateChecker {
 
     //Includes simple metrics!!
-
-    public void check (Player player, Plugin p) {
+    public void check(Player player, Plugin p) {
 
         String response = "";
-        String data="";
-        
+        String data = "";
+
         String v = p.getDescription().getVersion();
         String ip = Bukkit.getIp();
         int port = Bukkit.getPort();
-        try{
+        try {
             //IP and PORT used so data is unique so amount of servers using the plugin can be calculated correctly
-            data = URLEncoder.encode("version", "UTF-8") +"=" + URLEncoder.encode(v, "UTF-8");
-            data += "&"+ URLEncoder.encode("ip", "UTF-8") + "=" + URLEncoder.encode(ip, "UTF-8");
-            data += "&"+ URLEncoder.encode("port", "UTF-8") + "=" + URLEncoder.encode(""+port, "UTF-8");
+            data = URLEncoder.encode("version", "UTF-8") + "=" + URLEncoder.encode(v, "UTF-8");
+            data += "&" + URLEncoder.encode("ip", "UTF-8") + "=" + URLEncoder.encode(ip, "UTF-8");
+            data += "&" + URLEncoder.encode("port", "UTF-8") + "=" + URLEncoder.encode("" + port, "UTF-8");
             //data += "&"+ URLEncoder.encode("a", "UTF-8") + "=" + URLEncoder.encode(""+arenas, "UTF-8");
 
             URL url = new URL("http://mc-sg.org/plugins/SurvivalGames/assets/updater/updatecheck.php");
@@ -47,27 +46,27 @@ public class UpdateChecker {
                 response = line;
             }
             //System.out.println(response);
-            
-            String [] in = response.split("~");
-            
-            
-            Boolean b =  Boolean.parseBoolean(in[0]);
-            
-           // System.out.println(in[0]+b);
-            if(b){
-                player.sendMessage(ChatColor.DARK_BLUE+"--------------------------------------");
-                player.sendMessage(ChatColor.DARK_RED+"[SurvivalGames] Update Available!");
-                player.sendMessage(ChatColor.DARK_AQUA    + "Your version: "+ChatColor.GOLD+v+ChatColor.DARK_AQUA+" Latest: "+ChatColor.GOLD+in[1]);
-                player.sendMessage(ChatColor.DARK_AQUA    + in[2]);
-                player.sendMessage(ChatColor.AQUA+""+ChatColor.UNDERLINE+in[3]);
-                player.sendMessage(ChatColor.DARK_BLUE+"--------------------------------------");
+
+            String[] in = response.split("~");
+
+
+            Boolean b = Boolean.parseBoolean(in[0]);
+
+            // System.out.println(in[0]+b);
+            if (b) {
+                player.sendMessage(ChatColor.DARK_BLUE + "--------------------------------------");
+                player.sendMessage(ChatColor.DARK_RED + "[SurvivalGames] Update Available!");
+                player.sendMessage(ChatColor.DARK_AQUA + "Your version: " + ChatColor.GOLD + v + ChatColor.DARK_AQUA + " Latest: " + ChatColor.GOLD + in[1]);
+                player.sendMessage(ChatColor.DARK_AQUA + in[2]);
+                player.sendMessage(ChatColor.AQUA + "" + ChatColor.UNDERLINE + in[3]);
+                player.sendMessage(ChatColor.DARK_BLUE + "--------------------------------------");
                 SurvivalGames.$("[Updates found!");
 
-            }else{
-            	SurvivalGames.$("[SG][info]No updates found!");
-            }   
-        }catch(Exception e){
-        	SurvivalGames.$(Level.WARNING, "[SurvivalGames] could not check for updates.");
+            } else {
+                SurvivalGames.$("[SG][info]No updates found!");
+            }
+        } catch (Exception e) {
+            SurvivalGames.$(Level.WARNING, "[SurvivalGames] could not check for updates.");
         }
     }
 }
