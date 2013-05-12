@@ -29,6 +29,7 @@ import org.mcsg.survivalgames.commands.SetLobbyWall;
 import org.mcsg.survivalgames.commands.SetSpawn;
 import org.mcsg.survivalgames.commands.Spectate;
 import org.mcsg.survivalgames.commands.SubCommand;
+import org.mcsg.survivalgames.commands.Teleport;
 import org.mcsg.survivalgames.commands.Vote;
 
 
@@ -66,6 +67,8 @@ public class CommandHandler implements CommandExecutor {
         commands.put("lq", new LeaveQueue());
         commands.put("leavequeue", new LeaveQueue());
         commands.put("list", new ListPlayers());
+        commands.put("tp", new Teleport());
+
        // commands.put("sponsor", new Sponsor());
     }
     
@@ -176,7 +179,9 @@ public class CommandHandler implements CommandExecutor {
     	}
     	
 		for (String command : commands.keySet()) {
+			
     		if (helpinfo.get(command) == page) {
+    			
     			msgmgr.sendMessage(PrefixType.INFO, commands.get(command).help(p), p);
     		}
     	}
