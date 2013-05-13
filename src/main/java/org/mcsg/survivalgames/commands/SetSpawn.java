@@ -61,7 +61,7 @@ public class SetSpawn implements SubCommand{
             }
         }
         if(i == -1){
-            player.sendMessage(ChatColor.RED+"You must be inside an arnea");
+            player.sendMessage(ChatColor.RED+"You must be inside an arena");
             return true;
         }
         SettingsManager.getInstance().setSpawn(game, i, l.toVector());
