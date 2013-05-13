@@ -17,7 +17,7 @@ public class Teleport implements SubCommand{
 					try{
 						player.teleport(SettingsManager.getInstance().getSpawnPoint(a, 1));
 					}catch(Exception e){
-						MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-No spanws set for this arena!");
+						MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-No spawns set for this arena!");
 					}
 				}catch(NumberFormatException e){
 					MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Game must be a number!");
