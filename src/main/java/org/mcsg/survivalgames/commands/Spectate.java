@@ -3,6 +3,7 @@ package org.mcsg.survivalgames.commands;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.GameManager;
+import org.mcsg.survivalgames.MessageManager;
 import org.mcsg.survivalgames.SettingsManager;
 
 
@@ -11,8 +12,8 @@ public class Spectate implements SubCommand{
 
     @Override
     public boolean onCommand(Player player, String[] args) {
-        if(!player.hasPermission("sg.player.spectate") && !player.isOp()){
-            player.sendMessage(ChatColor.RED+"No Permission");
+        if (!player.hasPermission(permission()) && !player.isOp()) {
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.nopermission", player);
             return true;
         }
         
@@ -22,16 +23,16 @@ public class Spectate implements SubCommand{
                 return true;
             }
             else{
-                player.sendMessage(ChatColor.RED+"You are not spectating a game. Use /sg spectate <arenaid> to spectate!");
+                MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.notspecified", player, "input-Game ID");
                 return true;
             }
         }
         if(SettingsManager.getInstance().getSpawnCount(Integer.parseInt(args[0])) == 0){
-            player.sendMessage(ChatColor.RED+"No spawns set!");
+            MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.nospawns", player);
             return true;
         }
         if(GameManager.getInstance().isPlayerActive(player)){
-            player.sendMessage(ChatColor.RED+"Cannot spectate while ingame!");
+            MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.specingame", player);
             return true;
         }
         GameManager.getInstance().getGame(Integer.parseInt(args[0])).addSpectator(player);
@@ -40,7 +41,7 @@ public class Spectate implements SubCommand{
 
     @Override
     public String help(Player p) {
-        return "/sg spectate <id> - Spectate a running arena";
+        return "/sg spectate <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.spectate", "Spectate a running arena");
     }
 
 	@Override
