@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.Game;
 import org.mcsg.survivalgames.GameManager;
+import org.mcsg.survivalgames.MessageManager;
 import org.mcsg.survivalgames.SettingsManager;
 
 
@@ -26,8 +27,8 @@ public class SetSpawn implements SubCommand{
     }
     
     public boolean onCommand(Player player, String[] args) {
-        if(!player.hasPermission("sg.admin.setarenaspawns") && !player.isOp()){
-            player.sendMessage(ChatColor.RED+"No Permission");
+        if (!player.hasPermission(permission()) && !player.isOp()) {
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.nopermission", player);
             return true;
         }
         
@@ -37,7 +38,7 @@ public class SetSpawn implements SubCommand{
         int game = GameManager.getInstance().getBlockGameId(l);
         System.out.println(game+" "+next.size());
         if(game == -1){
-            player.sendMessage(ChatColor.RED+"Must be in an arena!");
+            MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.notinarena", player);
             return true;
         }
         int i = 0;
@@ -49,30 +50,29 @@ public class SetSpawn implements SubCommand{
             try{
             i = Integer.parseInt(args[0]);
             if(i>next.get(game)+1 || i<1){
-                player.sendMessage(ChatColor.RED+"Spawn must be between 1 & "+next.get(game));
+                    MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.between", player, "num-" + next.get(game));
                 return true;
             }
             if(i == next.get(game)){
                 next.put(game, next.get(game)+1);
             }
             }catch(Exception e){
-                player.sendMessage(ChatColor.RED+"Malformed input. Must be \"next\" or a number");
+                MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.badinput", player);
                 return false;
             }
         }
         if(i == -1){
-            player.sendMessage(ChatColor.RED+"You must be inside an arnea");
+            MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.notinside", player);
             return true;
         }
         SettingsManager.getInstance().setSpawn(game, i, l.toVector());
-        player.sendMessage(ChatColor.GREEN+"Spawn "+i +" in arena "+game+" set!");
-
+        MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.INFO, "info.spawnset", player, "num-" + i, "arena-" + game);
         return true;
     }
     
     @Override
     public String help(Player p) {
-        return "/sg setspawn next - Sets a spawn for the arena you are located in";
+        return "/sg setspawn next - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.setspawn", "Sets a spawn for the arena you are located in");
     }
 
 	@Override
