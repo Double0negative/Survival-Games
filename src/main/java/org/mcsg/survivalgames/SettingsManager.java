@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -369,4 +370,29 @@ public class SettingsManager {
 			}
 		
 	}
+        
+    public boolean modifyList(String type, Location loc, int pos) {
+        FileConfiguration cfg = SettingsManager.getInstance().getSystemConfig();
+        List<String> objs = cfg.getStringList(type);
+        String conStr = loc.getWorld().getName() + ";" + loc.getX() + ";" + loc.getY() + ";" + loc.getZ();
+        for (String str : objs) {
+            if (str.startsWith(conStr)) {
+                if (pos == 0) {
+                    objs.remove(str);
+                    cfg.set(type, objs);
+                    getInstance().saveConfig();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        if (pos == 0) {
+            return false;
+        }
+        objs.add(conStr + ";" + pos);
+        cfg.set(type, objs);
+        getInstance().saveConfig();
+        return true;
+    }
 }

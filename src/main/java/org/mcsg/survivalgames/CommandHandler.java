@@ -12,26 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
-import org.mcsg.survivalgames.commands.AddWall;
-import org.mcsg.survivalgames.commands.CreateArena;
-import org.mcsg.survivalgames.commands.DelArena;
-import org.mcsg.survivalgames.commands.Disable;
-import org.mcsg.survivalgames.commands.Enable;
-import org.mcsg.survivalgames.commands.Flag;
-import org.mcsg.survivalgames.commands.ForceStart;
-import org.mcsg.survivalgames.commands.Join;
-import org.mcsg.survivalgames.commands.Leave;
-import org.mcsg.survivalgames.commands.LeaveQueue;
-import org.mcsg.survivalgames.commands.ListArenas;
-import org.mcsg.survivalgames.commands.ListPlayers;
-import org.mcsg.survivalgames.commands.ResetSpawns;
-import org.mcsg.survivalgames.commands.SetLobbySpawn;
-import org.mcsg.survivalgames.commands.SetLobbyWall;
-import org.mcsg.survivalgames.commands.SetSpawn;
-import org.mcsg.survivalgames.commands.Spectate;
-import org.mcsg.survivalgames.commands.SubCommand;
-import org.mcsg.survivalgames.commands.Teleport;
-import org.mcsg.survivalgames.commands.Vote;
+import org.mcsg.survivalgames.commands.*;
 
 
 
@@ -69,6 +50,12 @@ public class CommandHandler implements CommandExecutor {
 		commands.put("leavequeue", new LeaveQueue());
 		commands.put("list", new ListPlayers());
 		commands.put("tp", new Teleport());
+                if(SurvivalGames.dbcon2){
+                    commands.put("addsign", new AddSign());
+                    commands.put("addhead", new AddHead());
+                    commands.put("delsign", new DelSign());
+                    commands.put("delhead", new DelHead());
+                }
 
 		// commands.put("sponsor", new Sponsor());
 	}
@@ -94,6 +81,13 @@ public class CommandHandler implements CommandExecutor {
 		helpinfo.put("lq", 1);
 		helpinfo.put("leavequeue", 1);
 		helpinfo.put("list", 1);
+                if(SurvivalGames.dbcon2){
+                    helpinfo.put("addsign", 3);
+                    helpinfo.put("addhead", 3);
+                    helpinfo.put("delsign", 3);
+                    helpinfo.put("delhead", 3);
+                }
+                               
 		//helpinfo.put("sponsor", 1);
 	}
 
