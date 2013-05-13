@@ -45,6 +45,9 @@ public class LobbyManager {
 		try{
 		SurvivalGames.debug("sg-system.lobby.signs." + a + ".world");
 		World w = Bukkit.getWorld(s.getString("sg-system.lobby.signs." + a + ".world"));
+                if(!s.getBoolean("sg-system.lobby.signs." + a+ ".enabled", true)){
+                    return;
+                }
 		int x1 = s.getInt("sg-system.lobby.signs." + a + ".x1");
 		int y1 = s.getInt("sg-system.lobby.signs." + a + ".y1");
 		int z1 = s.getInt("sg-system.lobby.signs." + a + ".z1");
