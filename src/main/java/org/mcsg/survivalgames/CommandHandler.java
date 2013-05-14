@@ -50,6 +50,7 @@ public class CommandHandler implements CommandExecutor {
 		commands.put("leavequeue", new LeaveQueue());
 		commands.put("list", new ListPlayers());
 		commands.put("tp", new Teleport());
+                commands.put("delwall", new DelWall());
                 if(SurvivalGames.dbcon2){
                     commands.put("addsign", new AddSign());
                     commands.put("addhead", new AddHead());
@@ -81,6 +82,8 @@ public class CommandHandler implements CommandExecutor {
 		helpinfo.put("lq", 1);
 		helpinfo.put("leavequeue", 1);
 		helpinfo.put("list", 1);
+                helpinfo.put("tp", 2);
+                helpinfo.put("delwall", 3);
                 if(SurvivalGames.dbcon2){
                     helpinfo.put("addsign", 3);
                     helpinfo.put("addhead", 3);
