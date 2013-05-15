@@ -1,6 +1,5 @@
 package org.mcsg.survivalgames.commands;
 
-import com.sun.xml.internal.ws.api.config.management.policy.ManagementAssertion;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;
