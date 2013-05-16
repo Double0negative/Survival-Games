@@ -1,8 +1,6 @@
 package org.mcsg.survivalgames.commands;
 
-import com.sun.xml.internal.ws.api.config.management.policy.ManagementAssertion;
 import org.bukkit.entity.Player;
-import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
 import org.mcsg.survivalgames.SettingsManager;
@@ -18,14 +16,14 @@ public class Teleport implements SubCommand{
 					try{
 						player.teleport(SettingsManager.getInstance().getSpawnPoint(a, 1));
 					}catch(Exception e){
-                                            MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.nospawns", player);
+						MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.nospawns", player);
 					}
 				}catch(NumberFormatException e){
-                                    MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.notanumber", player, "input-" + args[0]);
+					MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.notanumber", player, "input-" + args[0]);
 				}
 			}
 			else{
-                                MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.notspecified", player, "input-Game ID");
+				MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.notspecified", player, "input-Game ID");
 			}
 		}
 		else {
