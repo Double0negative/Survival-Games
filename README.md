@@ -7,11 +7,13 @@ Requirments
 Before installing this plugin, a few things are required.
  - [WorldEdit](http://dev.bukkit.org/server-mods/worldedit/)
  - MySQL Database (**optional**) - If you wish to use stats, you must have an SQL database.
+
 Conflicts
 ---------
  - Any plugin that modifies damage amounts by applying more damage can sometimes cause issues and make the player actually die (ie McMMO).
  - Some locking plugins such as LWC have been reported to have issues with the lobby signs, but should work normally if protection is turned of for those signs.
- - WORLD PORTAL will make this plugin completely break if the lobby is not in a world that is loaded at start!
+ - WORLD PORTAL will make this plugin completely break if the lobby is not in a world that is loaded at start!  
+
 Features
 --------
 This is not just another Hunger Games plugin. This plugin aims to bring a fully automated, fully fledged gaming system to your server.
@@ -30,6 +32,7 @@ This is not just another Hunger Games plugin. This plugin aims to bring a fully 
  - Multiworld Support
  - Events API - Economy, Kits + More!
 Plus many, many more features included in this plugin!
+
 Next Update
 -----------
  - All known bugs, fixed.
@@ -37,6 +40,7 @@ Next Update
  - Death match
  - and more!
 Note: Devs and important people of this plugin have colored names on lobby signs
+
 Read Before Posting!
 --------------------
  - A full tutorial on kits, economy and new features will be released soon!
