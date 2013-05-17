@@ -3,14 +3,16 @@ package org.mcsg.survivalgames.commands;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.GameManager;
+import org.mcsg.survivalgames.MessageManager;
+import org.mcsg.survivalgames.SettingsManager;
 
 
 
 public class Leave implements SubCommand {
 	
     public boolean onCommand(Player player, String[] args) {
-        if(GameManager.getInstance().getPlayerGameId(player) == -1){
-            player.sendMessage(ChatColor.RED+"Not in a game!");
+        if (GameManager.getInstance().getPlayerGameId(player) == -1) {
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.nopermission", player);
         }
         else{
             GameManager.getInstance().removePlayer(player, false);
@@ -20,7 +22,7 @@ public class Leave implements SubCommand {
 
     @Override
     public String help(Player p) {
-        return "/sg leave - Leaves the game";
+        return "/sg leave - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.leave", "Leaves the game");
     }
 
 	@Override

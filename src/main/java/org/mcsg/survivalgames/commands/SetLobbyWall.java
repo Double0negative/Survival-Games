@@ -3,6 +3,7 @@ package org.mcsg.survivalgames.commands;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.LobbyManager;
+import org.mcsg.survivalgames.SettingsManager;
 
 
 
@@ -26,7 +27,7 @@ public class SetLobbyWall implements SubCommand{
 
     @Override
     public String help(Player p) {
-        return "/sg addwall <id> - Add a lobby stats wall for Arena <id>";
+        return "/sg addwall <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.addwall", "Add a lobby stats wall for Arena <id>");
     }
 
 	@Override

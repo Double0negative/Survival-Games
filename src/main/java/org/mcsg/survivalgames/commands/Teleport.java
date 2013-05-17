@@ -1,7 +1,6 @@
 package org.mcsg.survivalgames.commands;
 
 import org.bukkit.entity.Player;
-import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
 import org.mcsg.survivalgames.SettingsManager;
@@ -17,14 +16,14 @@ public class Teleport implements SubCommand{
 					try{
 						player.teleport(SettingsManager.getInstance().getSpawnPoint(a, 1));
 					}catch(Exception e){
-						MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-No spanws set for this arena!");
+						MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.nospawns", player);
 					}
 				}catch(NumberFormatException e){
-					MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Game must be a number!");
+					MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.notanumber", player, "input-" + args[0]);
 				}
 			}
 			else{
-				MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.input",player, "message-Must Specify an arena id!");
+				MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.notspecified", player, "input-Game ID");
 			}
 		}
 		else {
@@ -35,7 +34,7 @@ public class Teleport implements SubCommand{
 
 	@Override
 	public String help(Player p) {
-		return "/sg tp <arenaid> Teleport to an arena";
+		return "/sg tp <arenaid> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.teleport","Teleport to an arena");
 	}
 
 	@Override
