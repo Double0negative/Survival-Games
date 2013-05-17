@@ -847,7 +847,6 @@ public class Game {
 	}
 
 	class EndgameManager implements Runnable {
-		@Override
 		public void run() {
 			for (Player player: activePlayers.toArray(new Player[0])) {
 				Location l = player.getLocation();

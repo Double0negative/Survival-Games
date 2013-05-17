@@ -13,7 +13,7 @@ import org.mcsg.survivalgames.SettingsManager;
 
 public class Enable implements SubCommand{
 
-	@Override
+	
 	public boolean onCommand(Player player, String[] args) {        
 		if(!player.hasPermission(permission()) && !player.isOp()){
                         MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.nopermission", player);
@@ -41,12 +41,12 @@ public class Enable implements SubCommand{
 	}
 
 
-	@Override
+	
 	public String help(Player p) {
                 return "/sg enable <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.enable", "Enables arena <id>");
 	}
 
-	@Override
+	
 	public String permission() {
 		return "sg.staff.enablearena";
 	}

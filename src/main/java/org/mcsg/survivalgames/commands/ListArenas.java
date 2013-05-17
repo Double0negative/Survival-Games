@@ -34,12 +34,12 @@ public class ListArenas implements SubCommand{
         return false;
     }
     
-    @Override
+    
     public String help(Player p) {
         return "/sg listarenas - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.listarenas", "List all available arenas");
     }
 
-	@Override
+	
 	public String permission() {
 		return "sg.player.listarenas";
 	}

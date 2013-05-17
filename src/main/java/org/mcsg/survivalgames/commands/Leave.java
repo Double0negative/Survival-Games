@@ -20,12 +20,12 @@ public class Leave implements SubCommand {
         return true;
     }
 
-    @Override
+    
     public String help(Player p) {
         return "/sg leave - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.leave", "Leaves the game");
     }
 
-	@Override
+	
 	public String permission() {
 		return null;
 	}

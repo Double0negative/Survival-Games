@@ -97,7 +97,6 @@ public class CommandHandler implements CommandExecutor {
 		//helpinfo.put("sponsor", 1);
 	}
 
-	@Override
 	public boolean onCommand(CommandSender sender, Command cmd1, String commandLabel, String[] args) {
 		PluginDescriptionFile pdfFile = plugin.getDescription();
 		if (!(sender instanceof Player)) {
