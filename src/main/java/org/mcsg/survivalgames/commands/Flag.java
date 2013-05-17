@@ -13,7 +13,7 @@ import org.mcsg.survivalgames.SettingsManager;
 
 public class Flag implements SubCommand {
 
-    @Override
+    
     public boolean onCommand(Player player, String[] args) {
         
         if (!player.hasPermission(permission())) {
@@ -42,12 +42,12 @@ public class Flag implements SubCommand {
         return false;
     }
 
-    @Override
+    
     public String help(Player p) {
         return "/sg flag <id> <flag> <value> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.flag", "Modifies an arena-specific setting");
     }
 
-	@Override
+	
 	public String permission() {
 		return "sg.admin.flag";
 	}

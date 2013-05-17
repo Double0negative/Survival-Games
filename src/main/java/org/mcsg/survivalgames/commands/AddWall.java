@@ -9,7 +9,7 @@ import org.mcsg.survivalgames.SettingsManager;
 
 public class AddWall implements SubCommand{
 
-    @Override
+    
     public boolean onCommand(Player player, String[] args) {
         if(!player.hasPermission("sg.admin.setlobby") && !player.isOp()){
             MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.nopermission", player);
@@ -23,12 +23,12 @@ public class AddWall implements SubCommand{
        return true;
     }
 
-    @Override
+    
     public String help(Player p) {
         return "/sg addwall <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.addwall", "Add a lobby stats wall for Arena <id>");
     }
 
-	@Override
+	
 	public String permission() {
 		return "sg.admin.setlobby";
 	}

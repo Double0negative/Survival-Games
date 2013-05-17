@@ -19,12 +19,12 @@ public class CreateArena implements SubCommand{
         return true;
     }
 
-    @Override
+    
     public String help(Player p) {
         return "/sg createarena - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.createarena", "Create a new arena with the current WorldEdit selection");
     }
 
-	@Override
+	
 	public String permission() {
 		return "sg.admin.createarena";
 	}

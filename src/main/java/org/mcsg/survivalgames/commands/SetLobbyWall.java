@@ -9,7 +9,7 @@ import org.mcsg.survivalgames.SettingsManager;
 
 public class SetLobbyWall implements SubCommand{
 
-    @Override
+    
     public boolean onCommand(Player player, String[] args) {
     	//player.sendMessage(ChatColor.RED+"This command has been replaced by /sg addwall <arenaid>");
     	return true;/*
@@ -25,12 +25,12 @@ public class SetLobbyWall implements SubCommand{
        return true;*/
     }
 
-    @Override
+    
     public String help(Player p) {
         return "/sg addwall <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.addwall", "Add a lobby stats wall for Arena <id>");
     }
 
-	@Override
+	
 	public String permission() {
 		return "sg.admin.setlobby";
 	}

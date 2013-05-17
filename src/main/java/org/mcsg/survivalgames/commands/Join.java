@@ -37,12 +37,12 @@ public class Join implements SubCommand{
 		return true;
 	}
 
-	@Override
+	
 	public String help(Player p) {
                 return "/sg join - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.join", "Join the lobby");
 	}
 
-	@Override
+	
 	public String permission() {
 		return "sg.arena.join";
 	}

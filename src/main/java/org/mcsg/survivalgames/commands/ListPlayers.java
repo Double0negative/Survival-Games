@@ -10,7 +10,7 @@ import org.mcsg.survivalgames.SettingsManager;
 
 public class ListPlayers implements SubCommand{
 
-	@Override
+	
 	public boolean onCommand(Player player, String[] args) {
 		int gid = 0;
 		try{
@@ -32,12 +32,12 @@ public class ListPlayers implements SubCommand{
 		return false;
 	}
 
-	@Override
+	
 	public String help(Player p) {
         return "/list - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.listplayers","List all players in the arena you are playing in");
 	}
 
-	@Override
+	
 	public String permission() {
 		return "sg.player.list";
 	}
