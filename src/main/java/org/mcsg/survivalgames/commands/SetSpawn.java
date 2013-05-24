@@ -2,7 +2,6 @@ package org.mcsg.survivalgames.commands;
 
 import java.util.HashMap;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.Game;
