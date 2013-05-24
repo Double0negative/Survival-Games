@@ -46,6 +46,9 @@ permissions:
     sg.arena.join.*:
         description: Allows the player to join all arenas
         default: true
+    sg.arena.join:
+        description: Allows the player to join a game
+        default: true
     
     sg.staff.*:
         default: op
