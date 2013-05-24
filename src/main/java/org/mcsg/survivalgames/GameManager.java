@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -197,7 +196,7 @@ public class GameManager {
 		for (Game g : games) {
 			if (g.getAllPlayers().contains(p)) {
 				PlayerLeaveArenaEvent leavearena = new PlayerLeaveArenaEvent(p, g);
-				Bukkit.getServer().getPluginManager().callEvent(leavearena);
+				p.getServer().getPluginManager().callEvent(leavearena);
 			}
 		}
 		getGame(getPlayerGameId(p)).removePlayer(p, b);

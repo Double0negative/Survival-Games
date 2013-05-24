@@ -184,7 +184,7 @@ public class Game {
 			msgmgr.sendFMessage(PrefixType.WARNING, "error.nolobbyspawn", p);
 			return false;
 		}
-		if(!p.hasPermission("sg.arena.join."+gameID)){
+		if (!p.hasPermission("sg.arena.join."+gameID) && !p.hasPermission("sg.arena.join.*")){
 			debug("permission needed to join arena: " + "sg.arena.join."+gameID);
 			msgmgr.sendFMessage(PrefixType.WARNING, "game.nopermission", p);
 			return false;
@@ -352,9 +352,13 @@ public class Game {
 		}
 		vote++;
 		voted.add(pl);
-		msgmgr.sendFMessage(PrefixType.INFO, "game.playervote", pl, "player-"+pl.getName());
+		for (Player player : activePlayers)
+		{
+			msgmgr.sendFMessage(PrefixType.INFO, "game.playervote", player, "player-"+pl.getName(), "voted-"+vote, "players-"+getActivePlayers());
+		}
+		//msgmgr.sendFMessage(PrefixType.INFO, "game.playervote", pl, "player-"+pl.getName());
 		HookManager.getInstance().runHook("PLAYER_VOTE", "player-"+pl.getName());
-		/*for(Player p: activePlayers){
+		/*for(Player p: activePlayers) {
             p.sendMessage(ChatColor.AQUA+pl.getName()+" Voted to start the game! "+ Math.round((vote +0.0) / ((getActivePlayers() +0.0)*100)) +"/"+((c.getInt("auto-start-vote")+0.0))+"%");
         }*/
 		// Bukkit.getServer().broadcastPrefixType((vote +0.0) / (getActivePlayers() +0.0) +"% voted, needs "+(c.getInt("auto-start-vote")+0.0)/100);
