@@ -186,7 +186,7 @@ public class Game {
 		}
 		if(!p.hasPermission("sg.arena.join."+gameID)){
 			debug("permission needed to join arena: " + "sg.arena.join."+gameID);
-			msgmgr.sendFMessage(PrefixType.WARNING, "game.nopermission", p);
+			msgmgr.sendFMessage(PrefixType.WARNING, "game.nopermission", p, "arena-"+gameID);
 			return false;
 		}
 		HookManager.getInstance().runHook("GAME_PRE_ADDPLAYER", "arena-"+gameID, "player-"+p.getName(), "maxplayers-"+spawns.size(), "players-"+activePlayers.size());
