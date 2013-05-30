@@ -33,6 +33,6 @@ public class Vote implements SubCommand {
 
 	@Override
 	public String permission() {
-		return "sg.player.vote";
+		return "sg.arena.vote";
 	}
 }

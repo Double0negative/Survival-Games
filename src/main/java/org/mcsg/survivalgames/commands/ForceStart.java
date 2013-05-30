@@ -62,6 +62,6 @@ public class ForceStart implements SubCommand {
 
 	@Override
 	public String permission() {
-		return "sg.staff.forcestart";
+		return "sg.arena.start";
 	}
 }

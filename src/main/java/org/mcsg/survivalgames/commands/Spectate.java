@@ -46,7 +46,7 @@ public class Spectate implements SubCommand{
 
 	@Override
 	public String permission() {
-		return "sg.player.spectate";
+		return "sg.arena.spectate";
 	}
 
 }

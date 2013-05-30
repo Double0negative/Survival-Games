@@ -41,6 +41,6 @@ public class ListArenas implements SubCommand{
 
 	@Override
 	public String permission() {
-		return "sg.player.listarenas";
+		return "";
 	}
 }

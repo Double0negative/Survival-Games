@@ -11,7 +11,7 @@ public class AddWall implements SubCommand{
 
     @Override
     public boolean onCommand(Player player, String[] args) {
-        if(!player.hasPermission("sg.admin.setlobby") && !player.isOp()){
+        if(!player.hasPermission(permission()) && !player.isOp()){
             MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.nopermission", player);
             return true;
         }
@@ -30,7 +30,7 @@ public class AddWall implements SubCommand{
 
 	@Override
 	public String permission() {
-		return "sg.admin.setlobby";
+		return "sg.admin.addwall";
 	}
 
     //TODO: TAKE A W.E SELECTIONA AND SET THE LOBBY. ALSO SET LOBBY WALL

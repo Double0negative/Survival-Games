@@ -48,6 +48,6 @@ public class Enable implements SubCommand{
 
 	@Override
 	public String permission() {
-		return "sg.staff.enablearena";
+		return "sg.arena.enable";
 	}
 }
