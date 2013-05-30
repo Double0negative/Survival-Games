@@ -2,6 +2,8 @@ package org.mcsg.survivalgames.util;
 
 import java.util.Arrays;
 import java.util.HashMap;
+
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -65,6 +67,13 @@ public class ItemReader {
 		}
 	}
 	
+	public static String getFriendlyItemName(Material m){
+		String str = m.toString();
+		str = str.replace('_',' ');
+		str = str.substring(0, 1).toUpperCase() +
+				str.substring(1).toLowerCase();
+		return str;
+	}
 	
 	
 }

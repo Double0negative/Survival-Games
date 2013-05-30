@@ -18,6 +18,7 @@ import org.mcsg.survivalgames.api.PlayerJoinArenaEvent;
 import org.mcsg.survivalgames.hooks.HookManager;
 import org.mcsg.survivalgames.logging.QueueManager;
 import org.mcsg.survivalgames.stats.StatsManager;
+import org.mcsg.survivalgames.util.ItemReader;
 import org.mcsg.survivalgames.util.Kit;
 
 
@@ -543,7 +544,7 @@ public class Game {
 						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getEntityType(),
 								"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(),
 								"killer-"+((killer != null)?(SurvivalGames.auth.contains(killer.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + killer.getName():"Unknown"),
-								"item-"+((killer!=null)?killer.getItemInHand().getType() : "Unknown Item"));
+								"item-"+((killer!=null)?ItemReader.getFriendlyItemName(killer.getItemInHand().getType()) : "Unknown Item"));
 						if(killer != null && p != null)
 							sm.addKill(killer, p, gameID);
 					}
