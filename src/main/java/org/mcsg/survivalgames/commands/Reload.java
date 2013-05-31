@@ -23,7 +23,15 @@ public class Reload implements SubCommand{
 
 			}
 			if(args[0].equalsIgnoreCase("settings")){
-				SettingsManager.getInstance().setup(GameManager.getInstance().getPlugin());
+				SettingsManager.getInstance().reloadChest();
+				SettingsManager.getInstance().reloadKits();
+				SettingsManager.getInstance().reloadMessages();
+				SettingsManager.getInstance().reloadSpawns();
+				SettingsManager.getInstance().reloadSystem();
+				SettingsManager.getInstance().reloadConfig();
+				for(Game g: GameManager.getInstance().getGames()){
+					g.reloadConfig(); 
+				}
 				MessageManager.getInstance().sendMessage(PrefixType.INFO, "Settings Reloaded", player);
 			}
 			else if(args[0].equalsIgnoreCase("games")){	

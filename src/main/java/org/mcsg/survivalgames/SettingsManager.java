@@ -140,6 +140,10 @@ public class SettingsManager {
 		return p.getServer().getWorld(SettingsManager.getInstance().getSystemConfig().getString("sg-system.arenas." + game + ".world"));
 	}
 
+	public void reloadConfig(){
+		p.reloadConfig();
+	}
+	
 	public void reloadSpawns() {
 		spawns = YamlConfiguration.loadConfiguration(f);
 		if(spawns.getInt("version", 0) != SPAWN_VERSION){

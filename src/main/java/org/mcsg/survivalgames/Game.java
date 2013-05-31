@@ -47,7 +47,7 @@ public class Game {
 	private int gameID;
 	private int gcount = 0;
 	private FileConfiguration config;
-	private FileConfiguration s;
+	private FileConfiguration system;
 	private HashMap < Integer, Player > spawns = new HashMap < Integer, Player > ();
 	private HashMap < Player, ItemStack[][] > inv_store = new HashMap < Player, ItemStack[][] > ();
 	private int spawnCount = 0;
@@ -66,10 +66,13 @@ public class Game {
 
 	public Game(int gameid) {
 		gameID = gameid;
-		config = SettingsManager.getInstance().getConfig();
-
-		s = SettingsManager.getInstance().getSystemConfig();
+		reloadConfig();
 		setup();
+	}
+	
+	public void reloadConfig(){
+		config = SettingsManager.getInstance().getConfig();
+		system = SettingsManager.getInstance().getSystemConfig();
 	}
 
 	public void $(String msg){
@@ -82,13 +85,13 @@ public class Game {
 
 	public void setup() {
 		mode = GameMode.LOADING;
-		int x = s.getInt("sg-system.arenas." + gameID + ".x1");
-		int y = s.getInt("sg-system.arenas." + gameID + ".y1");
-		int z = s.getInt("sg-system.arenas." + gameID + ".z1");
+		int x = system.getInt("sg-system.arenas." + gameID + ".x1");
+		int y = system.getInt("sg-system.arenas." + gameID + ".y1");
+		int z = system.getInt("sg-system.arenas." + gameID + ".z1");
 		$(x + " " + y + " " + z);
-		int x1 = s.getInt("sg-system.arenas." + gameID + ".x2");
-		int y1 = s.getInt("sg-system.arenas." + gameID + ".y2");
-		int z1 = s.getInt("sg-system.arenas." + gameID + ".z2");
+		int x1 = system.getInt("sg-system.arenas." + gameID + ".x2");
+		int y1 = system.getInt("sg-system.arenas." + gameID + ".y2");
+		int z1 = system.getInt("sg-system.arenas." + gameID + ".z2");
 		$(x1 + " " + y1 + " " + z1);
 		Location max = new Location(SettingsManager.getGameWorld(gameID), Math.max(x, x1), Math.max(y, y1), Math.max(z, z1));
 		$(max.toString());
