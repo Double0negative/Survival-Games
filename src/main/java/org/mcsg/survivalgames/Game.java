@@ -21,6 +21,8 @@ import org.mcsg.survivalgames.stats.StatsManager;
 import org.mcsg.survivalgames.util.ItemReader;
 import org.mcsg.survivalgames.util.Kit;
 
+import com.sk89q.wepif.PluginPermissionsResolver;
+
 
 
 //Data container for a game
@@ -284,7 +286,9 @@ public class Game {
 		int a = 0;
 		int b = 0;
 
+		
 		ArrayList<Kit>kits = GameManager.getInstance().getKits(p);
+		SurvivalGames.debug(kits+"");
 		if(kits == null || kits.size() == 0 || !SettingsManager.getInstance().getKits().getBoolean("enabled")){
 			GameManager.getInstance().leaveKitMenu(p);
 			return;
