@@ -550,23 +550,28 @@ public class Game {
 						Player killer = p.getKiller();
 						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getEntityType(),
 								"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(),
-								"killer-"+((killer != null)?(SurvivalGames.auth.contains(killer.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + killer.getName():"Unknown"),
+								"killer-"+((killer != null)?(SurvivalGames.auth.contains(killer.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") 
+										+ killer.getName():"Unknown"),
 								"item-"+((killer!=null)?ItemReader.getFriendlyItemName(killer.getItemInHand().getType()) : "Unknown Item"));
 						if(killer != null && p != null)
 							sm.addKill(killer, p, gameID);
 					}
 					else{
-						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getEntityType(), "player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(), "killer-"+p.getLastDamageCause().getEntityType());
+						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getEntityType(), "player-"
+					+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") 
+					+ p.getName(), "killer-"+p.getLastDamageCause().getEntityType());
 					}
 					break;
 				default:
-					msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getCause(), "player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(), 
+					msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getCause(), 
+							"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(), 
 							"killer-"+p.getLastDamageCause().getCause());
 					break;
 				}
 				if (getActivePlayers() > 1) {
 					for (Player pl: getAllPlayers()) {
-						msgmgr.sendMessage(PrefixType.INFO, ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + "" + getActivePlayers() + ChatColor.DARK_AQUA + " players remaining!", pl);
+						msgmgr.sendMessage(PrefixType.INFO, ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + "" 
+					+ getActivePlayers() + ChatColor.DARK_AQUA + " players remaining!", pl);
 					}
 				}
 			}

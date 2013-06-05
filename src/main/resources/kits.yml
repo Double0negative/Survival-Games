@@ -24,7 +24,7 @@
 #
 
 #DONT TOUCH THIS
-version: 0
+version: 1
 
 
 enabled: false
@@ -44,14 +44,14 @@ kit-select-mode: 'SHOW_ALL'
 kits:
   test-kit:
     cost: 0
-    icon: '225'
+    icon: '399'
     contents:
     - '267,1, 0, sharpness:4, Blade'
     - '261'
     - '262, 64'
   kit2:
     cost: 0
-    icon: '33'
+    icon: '339'
     contents:
     - '276,1, 0, fire:2, Fire'
     - '261'

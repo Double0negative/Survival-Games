@@ -35,7 +35,7 @@ public class SettingsManager {
 	private File f4; //messages
 	private File f5; //chest
 	
-	private static final int KIT_VERSION = 0;
+	private static final int KIT_VERSION = 1;
 	private static final int MESSAGE_VERSION = 0;
 	private static final int CHEST_VERSION = 0;
 	private static final int SPAWN_VERSION = 0;
