@@ -174,6 +174,7 @@ public class SettingsManager {
 			loadFile("kits.yml");
 			reloadKits();
 		}
+
 	}
 	
 	

@@ -16,7 +16,7 @@ public class Reload implements SubCommand{
 	public boolean onCommand(final Player player, String[] args) {
 		if(player.hasPermission(permission())){
 			if(args.length != 1){
-				MessageManager.getInstance().sendMessage(PrefixType.INFO, "Valid reload types <Settings | Games >", player);
+				MessageManager.getInstance().sendMessage(PrefixType.INFO, "Valid reload types <Settings | Games |All>", player);
 				MessageManager.getInstance().sendMessage(PrefixType.INFO, "Settings will reload the settings configs and attempt to reapply them", player);
 				MessageManager.getInstance().sendMessage(PrefixType.INFO, "Games will reload all games currently running", player);
 				MessageManager.getInstance().sendMessage(PrefixType.INFO, "All will attempt to reload the entire plugin", player);
