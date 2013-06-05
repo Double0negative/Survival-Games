@@ -49,7 +49,9 @@ public class MessageManager {
 	 */
 	public void sendFMessage(PrefixType type, String input, Player player, String ... args) {
 		String msg = SettingsManager.getInstance().getMessageConfig().getString("messages."+input);
+		boolean enabled = SettingsManager.getInstance().getMessageConfig().getBoolean("messages."+input+".enabled", true);
 		if(msg == null)player.sendMessage(ChatColor.RED+"Failed to load message for messages."+input);
+		if(!enabled)return;
 		if(args != null && args.length != 0){msg = MessageUtil.replaceVars(msg, args);}
 		msg = MessageUtil.replaceColors(msg);
 		player.sendMessage(prefix.get(PrefixType.MAIN)+ " "+prefix.get(type)+ msg );
@@ -83,7 +85,9 @@ public class MessageManager {
 	
 	public void broadcastFMessage(PrefixType type, String input, String ...args ) {
 		String msg = SettingsManager.getInstance().getMessageConfig().getString("messages."+input);
+		boolean enabled = SettingsManager.getInstance().getMessageConfig().getBoolean("messages."+input+".enabled", true);
 		if(msg == null){Bukkit.broadcastMessage(ChatColor.RED+"Failed to load message for messages."+input);return;}
+		if(!enabled)return;
 		if(args != null && args.length != 0){msg = MessageUtil.replaceVars(msg, args);}
 		msg = MessageUtil.replaceColors(msg);
 		Bukkit.broadcastMessage(prefix.get(PrefixType.MAIN)+ prefix.get(type)+ " "+msg);
