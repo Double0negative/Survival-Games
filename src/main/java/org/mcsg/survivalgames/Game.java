@@ -156,7 +156,9 @@ public class Game {
 
 	public void enable() {
 		mode = GameMode.WAITING;
-
+		if(disabled){
+			MessageManager.getInstance().broadcastFMessage(PrefixType.INFO, "broadcast.gameenabled", "arena-"+gameID);
+		}
 		disabled = false;
 		int b = (SettingsManager.getInstance().getSpawnCount(gameID) > queue.size()) ? queue.size() : SettingsManager.getInstance().getSpawnCount(gameID);
 		for (int a = 0; a < b; a++) {
@@ -169,6 +171,8 @@ public class Game {
 		}
 
 		LobbyManager.getInstance().updateWall(gameID);
+		
+		MessageManager.getInstance().broadcastFMessage(PrefixType.INFO, "broadcast.gamewaiting", "arena-"+gameID);
 
 	}
 
@@ -432,6 +436,7 @@ public class Game {
 
 		mode = GameMode.INGAME;
 		LobbyManager.getInstance().updateWall(gameID);
+		MessageManager.getInstance().broadcastFMessage(PrefixType.INFO, "broadcast.gamestarted", "arena-"+gameID);
 
 	}
 	/*
@@ -451,6 +456,7 @@ public class Game {
 	int count = 20;
 	int tid = 0;
 	public void countdown(int time) {
+		MessageManager.getInstance().broadcastFMessage(PrefixType.INFO, "broadcast.gamestarting", "arena-"+gameID);
 		countdownRunning = true;
 		count = time;
 		Bukkit.getScheduler().cancelTask(tid);
@@ -636,6 +642,7 @@ public class Game {
 
 		loadspawns();
 		LobbyManager.getInstance().updateWall(gameID);
+		MessageManager.getInstance().broadcastFMessage(PrefixType.INFO, "broadcast.gameend", "arena-"+gameID);
 
 	}
 
@@ -684,6 +691,7 @@ public class Game {
 
 		endGame();
 		LobbyManager.getInstance().updateWall(gameID);
+		MessageManager.getInstance().broadcastFMessage(PrefixType.INFO, "broadcast.gamedisabled", "arena-"+gameID);
 
 	}
 	/*
@@ -717,7 +725,9 @@ public class Game {
 	}
 
 	public void resetCallback() {
-		if (!disabled) enable();
+		if (!disabled){
+			enable();
+		}
 		else mode = GameMode.DISABLED;
 		LobbyManager.getInstance().updateWall(gameID);
 	}
