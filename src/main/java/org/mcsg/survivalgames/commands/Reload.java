@@ -1,6 +1,8 @@
 package org.mcsg.survivalgames.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.mcsg.survivalgames.Game;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;
@@ -11,14 +13,14 @@ import org.mcsg.survivalgames.SettingsManager;
 public class Reload implements SubCommand{
 
 	@Override
-	public boolean onCommand(Player player, String[] args) {
+	public boolean onCommand(final Player player, String[] args) {
 		if(player.hasPermission(permission())){
 			if(args.length != 1){
 				MessageManager.getInstance().sendMessage(PrefixType.INFO, "Valid reload types <Settings | Games >", player);
 				MessageManager.getInstance().sendMessage(PrefixType.INFO, "Settings will reload the settings configs and attempt to reapply them", player);
 				MessageManager.getInstance().sendMessage(PrefixType.INFO, "Games will reload all games currently running", player);
 				MessageManager.getInstance().sendMessage(PrefixType.INFO, "All will attempt to reload the entire plugin", player);
-				
+
 				return true;
 
 			}
@@ -43,12 +45,12 @@ public class Reload implements SubCommand{
 				MessageManager.getInstance().sendMessage(PrefixType.INFO, "Games Reloaded", player);
 			}
 			else if(args[0].equalsIgnoreCase("all")){	
-				MessageManager.getInstance().sendMessage(PrefixType.WARNING, "NOT IMPLEMENTED", player);
-				return true;
-			//	GameManager.getInstance().getPlugin().onDisable();
-			//	GameManager.getInstance().getPlugin().onEnable();
+				final Plugin pinstance = GameManager.getInstance().getPlugin();
+				Bukkit.getPluginManager().disablePlugin(pinstance);
+				Bukkit.getPluginManager().enablePlugin(pinstance);
+				MessageManager.getInstance().sendMessage(PrefixType.INFO, "Plugin reloaded", player);
 			}
-			
+
 		} else {
 			MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.nopermission", player);
 		}
