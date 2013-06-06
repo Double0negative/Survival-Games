@@ -456,7 +456,8 @@ public class Game {
 	int count = 20;
 	int tid = 0;
 	public void countdown(int time) {
-		MessageManager.getInstance().broadcastFMessage(PrefixType.INFO, "broadcast.gamestarting", "arena-"+gameID);
+		//Bukkit.broadcastMessage(""+time);
+		MessageManager.getInstance().broadcastFMessage(PrefixType.INFO, "broadcast.gamestarting", "arena-"+gameID, "t-"+time);
 		countdownRunning = true;
 		count = time;
 		Bukkit.getScheduler().cancelTask(tid);
