@@ -36,7 +36,7 @@ public class SettingsManager {
 	private File f5; //chest
 	
 	private static final int KIT_VERSION = 1;
-	private static final int MESSAGE_VERSION = 0;
+	private static final int MESSAGE_VERSION = 1;
 	private static final int CHEST_VERSION = 0;
 	private static final int SPAWN_VERSION = 0;
 	private static final int SYSTEM_VERSION = 0;
@@ -144,11 +144,28 @@ public class SettingsManager {
 		p.reloadConfig();
 	}
 	
+	public boolean moveFile(File ff){
+		SurvivalGames.$("Moving outdated config file. "+f.getName());
+		String name = ff.getName();
+		File ff2 = new File(SurvivalGames.getPluginDataFolder(), getNextName(name, 0));
+		return ff.renameTo(ff2);
+	}
+	
+	public String getNextName(String name, int n){
+		File ff = new File(SurvivalGames.getPluginDataFolder(), name+".old"+n);
+		if(!ff.exists()){
+			return ff.getName();
+		}
+		else{
+			return getNextName(name, n+1);
+		}
+	}
+	
+	
 	public void reloadSpawns() {
 		spawns = YamlConfiguration.loadConfiguration(f);
 		if(spawns.getInt("version", 0) != SPAWN_VERSION){
-			SurvivalGames.$("Deleting outdated config file. "+f.getName());
-			f.delete();
+			moveFile(f);
 			reloadSpawns();
 		}
 		spawns.set("version", SPAWN_VERSION);
@@ -158,8 +175,7 @@ public class SettingsManager {
 	public void reloadSystem() {
 		system = YamlConfiguration.loadConfiguration(f2);
 		if(system.getInt("version", 0) != SYSTEM_VERSION){
-			SurvivalGames.$("Deleting outdated config file. "+f2.getName());
-			f2.delete();
+			moveFile(f2);
 			reloadSystem();
 		}
 		system.set("version", SYSTEM_VERSION);
@@ -169,8 +185,7 @@ public class SettingsManager {
 	public void reloadKits() {
 		kits = YamlConfiguration.loadConfiguration(f3);
 		if(kits.getInt("version", 0) != KIT_VERSION){
-			SurvivalGames.$("Deleting outdated config file. "+f3.getName());
-			f3.delete();
+			moveFile(f3);
 			loadFile("kits.yml");
 			reloadKits();
 		}
@@ -181,8 +196,7 @@ public class SettingsManager {
 	public void reloadMessages() {
 		messages = YamlConfiguration.loadConfiguration(f4);
 		if(messages.getInt("version", 0) != MESSAGE_VERSION){
-			SurvivalGames.$("Deleting outdated config file. "+f4.getName());
-			f4.delete();
+			moveFile(f4);
 			loadFile("messages.yml");
 			reloadKits();
 		}
@@ -193,8 +207,7 @@ public class SettingsManager {
 	public void reloadChest() {
 		chest = YamlConfiguration.loadConfiguration(f5);
 		if(chest.getInt("version", 0) != CHEST_VERSION){
-			SurvivalGames.$("Deleting outdated config file. "+f5.getName());
-			f5.delete();
+			moveFile(f5);
 			loadFile("chest.yml");
 			reloadKits();
 		}
