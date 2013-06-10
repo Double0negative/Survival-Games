@@ -66,6 +66,9 @@ permissions:
     sg.staff.nocmdblock:
         description: Allows user to bypass in-game command block.
         default: op
+    sg.staff.teleport:
+            description: Teleport to arena
+            default: op
 
     sg.admin.*:
         default: op
@@ -79,6 +82,8 @@ permissions:
             sg.admin.setlobby: true
             sg.admin.flag: true
             sg.admin.addwall: true
+            sg.admin.restart: true
+            sg.admin.reload: true
     sg.admin.createarena:
         description: Allows the user to create an arena.
         default: op
@@ -99,5 +104,11 @@ permissions:
         default: op
     sg.admin.addwall:
         description: Add a wall
+        default: op
+    sg.admin.restart:
+        description: Restart a game
+        default: op
+    sg.admin.reload:
+        description: Reload the config
         default: op
 

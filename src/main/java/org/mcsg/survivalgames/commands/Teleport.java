@@ -39,7 +39,7 @@ public class Teleport implements SubCommand{
 
 	@Override
 	public String permission() {
-		return "sg.arena.teleport";
+		return "sg.staff.teleport";
 	}
 
 }

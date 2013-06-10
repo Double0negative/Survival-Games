@@ -40,7 +40,7 @@ public class JoinEvent implements Listener {
                 }
             }, 5L);
         }
-        if((p.isOp() || p.hasPermission("sg.system.updatenotify")) && SettingsManager.getInstance().getConfig().getBoolean("check-for-update", true)){
+        if((p.isOp() || p.hasPermission("sg.admin.reload")) && SettingsManager.getInstance().getConfig().getBoolean("check-for-update", true)){
             Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
 
                 public void run() {
