@@ -29,7 +29,6 @@ public class Kit {
 		cost = c.getDouble("kits."+name+".cost", 0);
 		
 		icon = ItemReader.read(c.getString("kits."+name+".icon"));
-		System.out.println(icon);
 		List<String>cont = c.getStringList("kits."+name+".contents");
 		for(String s:cont){
 			items.add(ItemReader.read(s));
