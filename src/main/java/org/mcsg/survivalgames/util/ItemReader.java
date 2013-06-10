@@ -54,7 +54,6 @@ public class ItemReader {
 			ItemStack i =  new ItemStack(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Short.parseShort(split[2]));
 			String encs[] = split[3].split(" ");
 			for(String enc: encs){
-				System.out.println(enc);
 				String e[] = enc.split(":");
 				i.addUnsafeEnchantment(encids.get(e[0]), Integer.parseInt(e[1]));
 			}
