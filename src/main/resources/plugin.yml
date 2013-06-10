@@ -78,6 +78,7 @@ permissions:
             sg.admin.deletearena: true
             sg.admin.setlobby: true
             sg.admin.flag: true
+            sg.admin.addwall: true
     sg.admin.createarena:
         description: Allows the user to create an arena.
         default: op
@@ -96,3 +97,7 @@ permissions:
     sg.admin.flag:
         description: Allows the user to modify per-arena flags.
         default: op
+    sg.admin.addwall:
+        description: Add a wall
+        default: op
+
