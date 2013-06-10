@@ -96,11 +96,13 @@ block:
 #location of each player every x seconds to
 #notify the other players of their location
 endgame:
-  players: 3
+  players: 4
   fire-lighting:
-    enabled: true
+    enabled: false
     interval: 20
-  
+  deathmatch:
+      enabled: true
+      foodlevel: 2
   
 #If enabled, after x amount of time, each player
 #remaing will be teleported to the center of the
