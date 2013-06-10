@@ -9,19 +9,25 @@ import org.mcsg.survivalgames.Game;
 public class PlayerWinEvent extends Event {
 
 	private static final HandlerList handlers = new HandlerList();
-    private Player player;
+    private Player winner;
+	private Player killer;
     private Game game;
 
-    public PlayerWinEvent(Player p, Game g) {
-        player = p;
+    public PlayerWinEvent(Player winner, Player killer, Game g) {
+        this.winner = winner;
+		this.killer = killer;
         game = g;
     }
 
     public Player getPlayer() {
-        return player;
+        return winner;
     }
-    
-    public Game getGame() {
+
+	public Player getKiller() {
+		return killer;
+	}
+
+	public Game getGame() {
     	return game;
     }
  

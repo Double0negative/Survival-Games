@@ -636,7 +636,7 @@ public class Game {
 		win.setFireTicks(0);
 		win.setFallDistance(0);
 
-		PlayerWinEvent winEvent = new PlayerWinEvent(win, this);
+		PlayerWinEvent winEvent = new PlayerWinEvent(win, p, this);
 		Bukkit.getServer().getPluginManager().callEvent(winEvent);
 
 		sm.playerWin(win, gameID, new Date().getTime() - startTime);
