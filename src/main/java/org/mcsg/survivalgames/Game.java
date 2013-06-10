@@ -15,6 +15,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
 import org.mcsg.survivalgames.api.PlayerJoinArenaEvent;
+import org.mcsg.survivalgames.api.PlayerLeaveArenaEvent;
+import org.mcsg.survivalgames.api.PlayerWinEvent;
 import org.mcsg.survivalgames.hooks.HookManager;
 import org.mcsg.survivalgames.logging.QueueManager;
 import org.mcsg.survivalgames.stats.StatsManager;
@@ -633,6 +635,9 @@ public class Game {
 		win.setFoodLevel(20);
 		win.setFireTicks(0);
 		win.setFallDistance(0);
+
+		PlayerWinEvent winEvent = new PlayerWinEvent(p, this);
+		Bukkit.getServer().getPluginManager().callEvent(winEvent);
 
 		sm.playerWin(win, gameID, new Date().getTime() - startTime);
 		sm.saveGame(gameID, win, getActivePlayers() + getInactivePlayers(), new Date().getTime() - startTime);

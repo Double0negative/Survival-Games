@@ -10,7 +10,9 @@ commands:
         usage: /sg <command> <args>
         aliases: [sg, hungergames, hg]
 
-
+# Extra permissions:
+# sg.arena.<arena> - Needed to join an arena
+# sg.kit.<kit> - Needed to join an arena
 
 permissions:
     sg.player.*:
