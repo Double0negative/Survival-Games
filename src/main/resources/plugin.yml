@@ -23,6 +23,7 @@ permissions:
             sg.player.joinlobby: true
             sg.player.sponsor: true
             sg.player.listarenas: true
+            sg.player.list: true
     sg.player.play:
         description: Allows the user to click a sign to join a game.
         default: true
