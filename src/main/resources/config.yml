@@ -105,7 +105,7 @@ endgame:
 # arena for a death match. If they have not been 
 # killed after killtime, the game will end.
 
-deathmatch:
+timelimit:
   enabled: false
   time: 30
   killtime: 5

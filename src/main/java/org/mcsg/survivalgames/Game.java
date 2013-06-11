@@ -16,16 +16,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
 import org.mcsg.survivalgames.api.PlayerJoinArenaEvent;
-import org.mcsg.survivalgames.api.PlayerLeaveArenaEvent;
 import org.mcsg.survivalgames.api.PlayerWinEvent;
 import org.mcsg.survivalgames.hooks.HookManager;
 import org.mcsg.survivalgames.logging.QueueManager;
 import org.mcsg.survivalgames.stats.StatsManager;
 import org.mcsg.survivalgames.util.ItemReader;
 import org.mcsg.survivalgames.util.Kit;
-
-import com.sk89q.wepif.PluginPermissionsResolver;
-
 
 
 //Data container for a game
@@ -435,9 +431,9 @@ public class Game {
 					}
 				}, config.getInt("grace-period") * 20);
 			}
-			if(config.getBoolean("deathmatch.enabled")){
+			if(config.getBoolean("timelimit.enabled")){
 				tasks.add(Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), 
-						new DeathMatch(), config.getInt("deathmatch.time") * 20 * 60));
+						new TimeLimit(), config.getInt("timelimit.time") * 20 * 60));
 			}
 		}
 
@@ -905,7 +901,7 @@ public class Game {
 	}
 
 
-	class DeathMatch implements Runnable{
+	class TimeLimit implements Runnable{
 		public void run(){
 			for(Player p: activePlayers){
 				for(int a = 0; a < spawns.size(); a++){
@@ -921,7 +917,7 @@ public class Game {
 						p.getLocation().getWorld().strikeLightning(p.getLocation());
 					}
 				}
-			}, config.getInt("deathmatch.killtime") * 20 * 60));
+			}, config.getInt("timelimit.killtime") * 20 * 60));
 		}
 	}
 
