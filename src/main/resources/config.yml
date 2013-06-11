@@ -10,15 +10,18 @@
 ################################################
 
 # DO NOT touch this!
+
 config-version: 3
 
 # Enable debug messages
+
 debug: false
 
 # Enables the update checker. This will allow
 # anyone with the perm sg.admin.reload to
 # be notified when a new update is available.
-check-for-updates: true
+
+check-for-updates: false
 
 # Set how many players are needed for the game
 # to auto-start. Once the player limit is reached
@@ -26,64 +29,56 @@ check-for-updates: true
 # additional players. Auto start vote means that
 # x percent of players need to vote with /sg vote
 # for the game to begin.
-auto-start-players: 20
-auto-start-time: 20
-auto-start-vote: 75
+
+auto-start-players: 16
+auto-start-time: 60
+auto-start-vote: 80
 
 # If the player queue is enabled then if a player
 # tries to join a game that is not joinable
 # (ie ingame) the player will be added to a
 # queue line to join the next time the game
 # is open.
+
 enable-player-queue: true
 
 # If set to true, commands not associated with
 # the Survival Games will not be allowed to be run 
 # by players in-game.
-disallow-commands: true
+
+disallow-commands: false
+
 # If disallow-commands is set to true, you can use
 # the cmdwhitelist section below to whitelist certain
 # commands.
+
 cmdwhitelist: 
 - 'kit' 
 
 # Set how long the grace period should be after the 
 # start of the game in seconds.
-grace-period: 20
+
+grace-period: 60
 
 # Controls if chests should be restocked on the first
 # night. If set to true this will also have the side
 # effect of setting the world time to day at the start
 # of the game. This is only temporary until per-arena time
 # has been implemented.
+
 restock-chest: true
 
-# Here you can control block placing and breaking. 
+# Here you can control block placing and breaking.
+
 block:
   place:
-    whitelist:
-    - 18
-    - 105
-    - 31
-    - 37
-    - 38
-    - 50
-    - 103
-    - 43
+    whitelist: []
   break:
     whitelist:
     - 18
-    - 105
-    - 31
-    - 37
-    - 38
-    - 50
-    - 103
-    - 43
-
-
-
- 
+    - 106
+    - 39
+    - 40
 
 # Settings for when the game nears end. This runs
 # when there are only x amount of players
@@ -95,36 +90,37 @@ block:
 # then a lighting strike will be fired at the
 # location of each player every x seconds to
 # notify the other players of their location.
+
 endgame:
-  players: 4
+  players: 3
   fire-lighting:
     enabled: false
     interval: 20
   deathmatch:
       enabled: true
       foodlevel: 2
-  
+
 # If enabled, after x amount of time, each player
 # remaining will be teleported to the center of the
 # arena for a death match. If they have not been 
 # killed after killtime, the game will end.
+
 deathmatch:
   enabled: false
   time: 30
   killtime: 5
-  
 
 # If enabled, winner gets the specified reward.
 # Items are defined as 
 #    itemnumber, amount, durabilty, enchantments, name
 # Example: diamond sword with 1 item, full durabilty, sharpness 4, knockback 2 and the name killer
 #     276, 1, 0, sharpness: 4 knockback: 2, killer
+
 reward:
  enabled: false
  contents:
   - '267,1, 0, sharpness:4, Blade'
 
-  
 # Settings for connecting to and 
 # SQL server. These settings will
 # be used for  the online webstats
@@ -132,6 +128,7 @@ reward:
 # SurvivalGames will be
 # prefixed with. This should stay the same
 # for most cases.
+
 sql:
   host: 'localhost'
   port: 3306
@@ -140,17 +137,13 @@ sql:
   database: 'survivalgames'
   prefix: 'sg_'
 
-  
-  
 ###########################################################
 ####################### Stats #############################
 ###########################################################
-  
-  
+
 # Settings for the webstats. If enabled, stats 
 # such as k/d record, wins, win streaks, kill
 # streaks, etc. will be saved. 
-
 
 stats:
   enabled: false
