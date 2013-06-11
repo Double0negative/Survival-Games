@@ -39,7 +39,7 @@ public class ListPlayers implements SubCommand{
 
 	@Override
 	public String permission() {
-		return "";
+		return "sg.player.list";
 	}
 
 }
