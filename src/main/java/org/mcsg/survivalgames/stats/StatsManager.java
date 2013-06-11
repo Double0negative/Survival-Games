@@ -106,6 +106,8 @@ public class StatsManager {
     public void addKill(Player p, Player killed, int arenaid){
         PlayerStatsSession s = arenas.get(arenaid).get(p);
 
+		if (s == null) { return; }
+
         int kslevel = s.addKill(killed);
         if(kslevel > 3){
         	msgmgr.broadcastFMessage(PrefixType.INFO, "killstreak.level"+((kslevel>5)?5:kslevel), "player-"+p.getName());
