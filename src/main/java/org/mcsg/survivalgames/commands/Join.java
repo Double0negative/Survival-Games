@@ -26,7 +26,7 @@ public class Join implements SubCommand{
 			}
 		}
 		else{
-			if(player.hasPermission("sg.lobby.join")){
+			if(player.hasPermission("sg.player.joinlobby")){
 				if(GameManager.getInstance().getPlayerGameId(player)!=-1){
 					MessageManager.getInstance().sendMessage(PrefixType.ERROR, "error.alreadyingame", player);
 					return true;
@@ -48,7 +48,7 @@ public class Join implements SubCommand{
 
 	@Override
 	public String permission() {
-		return "sg.arena.join";
+		return "sg.player.play";
 	}
 }
 

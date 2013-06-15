@@ -3,6 +3,7 @@ package org.mcsg.survivalgames;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -15,14 +16,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
 import org.mcsg.survivalgames.api.PlayerJoinArenaEvent;
+import org.mcsg.survivalgames.api.PlayerWinEvent;
 import org.mcsg.survivalgames.hooks.HookManager;
 import org.mcsg.survivalgames.logging.QueueManager;
 import org.mcsg.survivalgames.stats.StatsManager;
 import org.mcsg.survivalgames.util.ItemReader;
 import org.mcsg.survivalgames.util.Kit;
-
-import com.sk89q.wepif.PluginPermissionsResolver;
-
 
 
 //Data container for a game
@@ -42,7 +41,6 @@ public class Game {
 	private HashMap < String, Object > flags = new HashMap < String, Object > ();
 	HashMap < Player, Integer > nextspec = new HashMap < Player, Integer > ();
 	private ArrayList<Integer>tasks = new ArrayList<Integer>();
-
 	private Arena arena;
 	private int gameID;
 	private int gcount = 0;
@@ -194,8 +192,8 @@ public class Game {
 			msgmgr.sendFMessage(PrefixType.WARNING, "error.nolobbyspawn", p);
 			return false;
 		}
-		if(!p.hasPermission("sg.arena.join."+gameID)){
-			debug("permission needed to join arena: " + "sg.arena.join."+gameID);
+		if(!p.hasPermission("sg.arena."+gameID)){
+			debug("permission needed to join arena: " + "sg.arena."+gameID);
 			msgmgr.sendFMessage(PrefixType.WARNING, "game.nopermission", p, "arena-"+gameID);
 			return false;
 		}
@@ -627,12 +625,21 @@ public class Game {
 		}, gameID);
 
 		mode = GameMode.FINISHING;
-
+		if(config.getBoolean("reward.enabled", false)){
+			List<String> items = config.getStringList("reward.contents");
+			for(int i=0; i<=(items.size()-1); i++){
+				ItemStack item = ItemReader.read(items.get(i));
+				win.getInventory().addItem(item);
+			}
+		}
 		clearSpecs();
 		win.setHealth(p.getMaxHealth());
 		win.setFoodLevel(20);
 		win.setFireTicks(0);
 		win.setFallDistance(0);
+
+		PlayerWinEvent winEvent = new PlayerWinEvent(win, p, this);
+		Bukkit.getServer().getPluginManager().callEvent(winEvent);
 
 		sm.playerWin(win, gameID, new Date().getTime() - startTime);
 		sm.saveGame(gameID, win, getActivePlayers() + getInactivePlayers(), new Date().getTime() - startTime);
@@ -883,7 +890,7 @@ public class Game {
 	}
 
 
-	class DeathMatch implements Runnable{
+	class TimeLimit implements Runnable{
 		public void run(){
 			for(Player p: activePlayers){
 				for(int a = 0; a < spawns.size(); a++){
