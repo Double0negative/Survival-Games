@@ -13,7 +13,7 @@ public class PlayerWinEvent extends Event {
     private Player player;
     private Game game;
 
-    public PlayerJoinArenaEvent(Player p, Game g) {
+    public PlayerWinEvent(Player p, Game g) {
         player = p;
         game = g;
     }
