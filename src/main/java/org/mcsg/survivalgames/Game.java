@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
 import org.mcsg.survivalgames.api.PlayerJoinArenaEvent;
+import org.mcsg.survivalgames.api.PlayerWinEvent;
 import org.mcsg.survivalgames.hooks.HookManager;
 import org.mcsg.survivalgames.logging.QueueManager;
 import org.mcsg.survivalgames.stats.StatsManager;
@@ -644,6 +645,9 @@ public class Game {
 		loadspawns();
 		LobbyManager.getInstance().updateWall(gameID);
 		MessageManager.getInstance().broadcastFMessage(PrefixType.INFO, "broadcast.gameend", "arena-"+gameID);
+		
+		PlayerWinEvent winEvent = new PlayerWinEvent(p, this);
+		Bukkit.getPluginManager().callEvent(winEvent);
 
 	}
 
