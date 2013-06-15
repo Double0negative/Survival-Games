@@ -644,6 +644,9 @@ public class Game {
 		loadspawns();
 		LobbyManager.getInstance().updateWall(gameID);
 		MessageManager.getInstance().broadcastFMessage(PrefixType.INFO, "broadcast.gameend", "arena-"+gameID);
+		
+		PlayerWinEvent winEvent = new PlayerWinEvent(p, this);
+		Bukkit.getPluginManager().callEvent(winEvent);
 
 	}
 
