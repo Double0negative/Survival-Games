@@ -10,6 +10,7 @@ public class Arena {
     public Arena(Location min, Location max) {
         this.max = max;
         this.min = min;
+        
     }
 
     public boolean containsBlock(Location v) {

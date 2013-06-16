@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
+import org.mcsg.survivalgames.api.PlayerGameDeathEvent;
 import org.mcsg.survivalgames.api.PlayerJoinArenaEvent;
 import org.mcsg.survivalgames.api.PlayerWinEvent;
 import org.mcsg.survivalgames.hooks.HookManager;
@@ -546,6 +547,8 @@ public class Game {
 		activePlayers.remove(p);
 		inactivePlayers.add(p);
 		if (left) {
+			PlayerGameDeathEvent leavearena = new PlayerGameDeathEvent(p, p, this);
+			Bukkit.getServer().getPluginManager().callEvent(leavearena);
 			msgFall(PrefixType.INFO, "game.playerleavegame","player-"+p.getName() );
 		} else {
 			if (mode != GameMode.WAITING && p.getLastDamageCause() != null && p.getLastDamageCause().getCause() != null) {
@@ -553,6 +556,8 @@ public class Game {
 				case ENTITY_ATTACK:
 					if(p.getLastDamageCause().getEntityType() == EntityType.PLAYER){
 						Player killer = p.getKiller();
+						PlayerGameDeathEvent leavearena = new PlayerGameDeathEvent(p, killer, this);
+						Bukkit.getServer().getPluginManager().callEvent(leavearena);
 						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getEntityType(),
 								"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(),
 								"killer-"+((killer != null)?(SurvivalGames.auth.contains(killer.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") 

@@ -1,6 +1,5 @@
 package org.mcsg.survivalgames.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.Game;
@@ -43,7 +42,8 @@ public class DelArena implements SubCommand{
         MessageManager.getInstance().sendFMessage(PrefixType.INFO, "info.deleted", player, "input-Arena");
         SettingsManager.getInstance().saveSystemConfig();
         GameManager.getInstance().hotRemoveArena(arena);
-        LobbyManager.getInstance().clearAllSigns();
+        //LobbyManager.getInstance().clearAllSigns();
+        LobbyManager.getInstance().updateall();
         return true;
     }
 
