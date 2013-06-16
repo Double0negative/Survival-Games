@@ -86,17 +86,7 @@ public class PlayerStatsSession {
         int level = ks;
         if(level>5)level = 5;
         kslist.put(level, kslist.get(level)+1);
-        if(level < 4){
-            for(Player p: GameManager.getInstance().getGame(arenaid).getAllPlayers()){
-                p.sendMessage(SettingsManager.getInstance().getConfig().getString("stats.killstreak.level"+level).replace("{player}", player.getName()).replaceAll("(&([a-fk-or0-9]))", "\u00A7$2"));
-            }
-        }
-        else{
-            Bukkit.getServer().broadcastMessage(SettingsManager.getInstance().getConfig().getString("stats.killstreak.level"+level).replace("{player}", player.getName()).replaceAll("(&([a-fk-or0-9]))", "\u00A7$2"));
-        }
         lastkill = new Date().getTime();
-
-
     }
 
 

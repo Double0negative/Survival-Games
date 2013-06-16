@@ -162,13 +162,7 @@ stats:
     killstreak:
       base: 10
       multiplier: 2
-  killstreak:
-    level1: '&e{player}&7 got a Double Kill!'
-    level2: '&e{player}&9 got a Multi Kill!'
-    level3: '&e{player}&5 got an Ultra Kill!'
-    level4: '&e{player}&4 got an Unbelievable Kill!'
-    level5: '&e{player}&a&kii&4&l Unbelievable+!&a&kii'
-    
+
     
     
 
