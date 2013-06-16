@@ -12,7 +12,7 @@ commands:
 
 # Extra permissions:
 # sg.arena.<arena> - Needed to join an arena
-# sg.kit.<kit> - Needed to join an arena
+# sg.kit.<kit> - Needed to use a kit
 
 permissions:
     sg.player.*:

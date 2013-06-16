@@ -100,8 +100,9 @@ public class StatsManager {
         arenas.get(arenaid).get(p).win(time);
     }
 
-
-
+	public PlayerStatsSession getPlayerStatsSession(Player p, int arenaid) {
+		return arenas.get(arenaid).get(p);
+	}
 
     public void addKill(Player p, Player killed, int arenaid){
         PlayerStatsSession s = arenas.get(arenaid).get(p);
