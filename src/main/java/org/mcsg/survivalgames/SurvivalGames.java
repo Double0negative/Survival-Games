@@ -33,7 +33,7 @@ public class SurvivalGames extends JavaPlugin {
 	public static int config_version = 3;
 
 	public static List < String > auth = Arrays.asList(new String[] {
-			"Double0negative", "iMalo", "Medic0987", "alex_markey", "skitscape", "AntVenom", "YoshiGenius", "pimpinpsp", "WinryR", "Jazed2011",
+			"Double0negative", "iMalo", "Medic0987", "CBlondie2014", "alex_markey", "skitscape", "AntVenom", "YoshiGenius", "pimpinpsp", "WinryR", "Jazed2011",
 			"KiwiPantz", "blackracoon", "CuppingCakes", "4rr0ws", "Fawdz", "Timothy13", "rich91", "ModernPrestige", "Snowpool", "egoshk", 
 			"nickm140",  "chaseoes", "Oceangrass", "GrailMore", "iAngelic", "Lexonia", "IngeniousGamer" , "ChaskyT", "Anon232"
 	});
