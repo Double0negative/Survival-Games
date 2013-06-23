@@ -166,7 +166,7 @@ public class QueueManager {
 				int a = data.size()-1;
 				int rb = 0;
 				while(a>=0 && (rb < 100 || shutdown)){
-					SurvivalGames.debug("Reseting "+a);
+					SurvivalGames.debug("Resetting "+a);
 					BlockData result = data.get(a);
 					if(result.getGameId() == game.getID()){
 

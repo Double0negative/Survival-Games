@@ -27,7 +27,7 @@ public class ListPlayers implements SubCommand{
                 } catch (NumberFormatException ex) {
                     MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.notanumber", player, "input-Arena");
                 } catch (NullPointerException ex) {
-                    MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.gamenoexist", player);
+                    MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.gamenoexist", player);
                 }
 		return false;
 	}
@@ -39,7 +39,7 @@ public class ListPlayers implements SubCommand{
 
 	@Override
 	public String permission() {
-		return "";
+		return "sg.player.list";
 	}
 
 }

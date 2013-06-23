@@ -42,6 +42,6 @@ public class Disable implements SubCommand{
     }
 	@Override
 	public String permission() {
-		return "sg.arena.disable";
+		return "sg.staff.disablearena";
 	}
 }

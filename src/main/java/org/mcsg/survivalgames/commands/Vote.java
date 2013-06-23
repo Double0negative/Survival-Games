@@ -17,7 +17,7 @@ public class Vote implements SubCommand {
         }
         int game = GameManager.getInstance().getPlayerGameId(player);
         if(game == -1){
-            MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.notinarena", player);
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.notinarena", player);
             return true;
         }
 
@@ -33,6 +33,6 @@ public class Vote implements SubCommand {
 
 	@Override
 	public String permission() {
-		return "sg.arena.vote";
+		return "sg.player.vote";
 	}
 }

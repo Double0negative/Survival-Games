@@ -3,6 +3,7 @@ package org.mcsg.survivalgames;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -14,15 +15,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
+import org.mcsg.survivalgames.api.PlayerGameDeathEvent;
 import org.mcsg.survivalgames.api.PlayerJoinArenaEvent;
+import org.mcsg.survivalgames.api.PlayerWinEvent;
 import org.mcsg.survivalgames.hooks.HookManager;
 import org.mcsg.survivalgames.logging.QueueManager;
 import org.mcsg.survivalgames.stats.StatsManager;
 import org.mcsg.survivalgames.util.ItemReader;
 import org.mcsg.survivalgames.util.Kit;
-
-import com.sk89q.wepif.PluginPermissionsResolver;
-
 
 
 //Data container for a game
@@ -31,7 +31,7 @@ public class Game {
 
 	public static enum GameMode {
 		DISABLED, LOADING, INACTIVE, WAITING,
-		STARTING, INGAME, FINISHING, RESETING, ERROR
+		STARTING, INGAME, FINISHING, RESETTING, ERROR
 	}
 
 	private GameMode mode = GameMode.DISABLED;
@@ -42,7 +42,6 @@ public class Game {
 	private HashMap < String, Object > flags = new HashMap < String, Object > ();
 	HashMap < Player, Integer > nextspec = new HashMap < Player, Integer > ();
 	private ArrayList<Integer>tasks = new ArrayList<Integer>();
-
 	private Arena arena;
 	private int gameID;
 	private int gcount = 0;
@@ -141,6 +140,9 @@ public class Game {
 		return arena;
 	}
 
+	public StatsManager getStatsManager() {
+		return sm;
+	}
 
 	/*
 	 * 
@@ -194,8 +196,8 @@ public class Game {
 			msgmgr.sendFMessage(PrefixType.WARNING, "error.nolobbyspawn", p);
 			return false;
 		}
-		if(!p.hasPermission("sg.arena.join."+gameID)){
-			debug("permission needed to join arena: " + "sg.arena.join."+gameID);
+		if(!p.hasPermission("sg.arena."+gameID)){
+			debug("permission needed to join arena: " + "sg.arena."+gameID);
 			msgmgr.sendFMessage(PrefixType.WARNING, "game.nopermission", p, "arena-"+gameID);
 			return false;
 		}
@@ -279,7 +281,7 @@ public class Game {
 		}
 		if (mode == GameMode.INGAME) msgmgr.sendFMessage(PrefixType.WARNING, "error.alreadyingame", p);
 		else if (mode == GameMode.DISABLED) msgmgr.sendFMessage(PrefixType.WARNING, "error.gamedisabled", p, "arena-"+gameID);
-		else if (mode == GameMode.RESETING) msgmgr.sendFMessage(PrefixType.WARNING, "error.gamereseting", p);
+		else if (mode == GameMode.RESETTING) msgmgr.sendFMessage(PrefixType.WARNING, "error.gameresetting", p);
 		else msgmgr.sendMessage(PrefixType.INFO, "Cannot join game!", p);
 		LobbyManager.getInstance().updateWall(gameID);
 		return false;
@@ -509,7 +511,8 @@ public class Game {
 			restoreInv(p);
 			activePlayers.remove(p);
 			inactivePlayers.remove(p);
-			for (Object in : spawns.keySet().toArray()) {
+
+			for (Object in : spawns.keySet()) {
 				if (spawns.get(in) == p) spawns.remove(in);
 			}
 			LobbyManager.getInstance().clearSigns(gameID);
@@ -548,6 +551,8 @@ public class Game {
 		activePlayers.remove(p);
 		inactivePlayers.add(p);
 		if (left) {
+			PlayerGameDeathEvent leavearena = new PlayerGameDeathEvent(p, p, this);
+			Bukkit.getServer().getPluginManager().callEvent(leavearena);
 			msgFall(PrefixType.INFO, "game.playerleavegame","player-"+p.getName() );
 		} else {
 			if (mode != GameMode.WAITING && p.getLastDamageCause() != null && p.getLastDamageCause().getCause() != null) {
@@ -555,6 +560,8 @@ public class Game {
 				case ENTITY_ATTACK:
 					if(p.getLastDamageCause().getEntityType() == EntityType.PLAYER){
 						Player killer = p.getKiller();
+						PlayerGameDeathEvent leavearena = new PlayerGameDeathEvent(p, killer, this);
+						Bukkit.getServer().getPluginManager().callEvent(leavearena);
 						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getEntityType(),
 								"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(),
 								"killer-"+((killer != null)?(SurvivalGames.auth.contains(killer.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") 
@@ -627,12 +634,21 @@ public class Game {
 		}, gameID);
 
 		mode = GameMode.FINISHING;
-
+		if(config.getBoolean("reward.enabled", false)){
+			List<String> items = config.getStringList("reward.contents");
+			for(int i=0; i<=(items.size()-1); i++){
+				ItemStack item = ItemReader.read(items.get(i));
+				win.getInventory().addItem(item);
+			}
+		}
 		clearSpecs();
 		win.setHealth(p.getMaxHealth());
 		win.setFoodLevel(20);
 		win.setFireTicks(0);
 		win.setFallDistance(0);
+
+		PlayerWinEvent winEvent = new PlayerWinEvent(win, p, this);
+		Bukkit.getServer().getPluginManager().callEvent(winEvent);
 
 		sm.playerWin(win, gameID, new Date().getTime() - startTime);
 		sm.saveGame(gameID, win, getActivePlayers() + getInactivePlayers(), new Date().getTime() - startTime);
@@ -715,7 +731,7 @@ public class Game {
 		vote = 0;
 		voted.clear();
 
-		mode = GameMode.RESETING;
+		mode = GameMode.RESETTING;
 		endgameRunning = false;
 
 		Bukkit.getScheduler().cancelTask(endgameTaskID);

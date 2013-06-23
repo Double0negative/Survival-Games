@@ -97,7 +97,7 @@ public class LobbyWall {
         //live update line s1
         if (game.getMode() == Game.GameMode.STARTING) {
             s1.setLine(3, game.getCountdownTime() + "");
-        } else if (game.getMode() == Game.GameMode.RESETING || game.getMode() == Game.GameMode.FINISHING) {
+        } else if (game.getMode() == Game.GameMode.RESETTING || game.getMode() == Game.GameMode.FINISHING) {
             s1.setLine(3, game.getRBStatus());
             if (game.getRBPercent() > 100) {
                 s1.setLine(1, "Saving Queue");

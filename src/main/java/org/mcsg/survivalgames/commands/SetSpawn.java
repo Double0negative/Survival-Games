@@ -38,7 +38,7 @@ public class SetSpawn implements SubCommand{
         int game = GameManager.getInstance().getBlockGameId(l);
         System.out.println(game+" "+next.size());
         if(game == -1){
-            MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.notinarena", player);
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.notinarena", player);
             return true;
         }
         int i = 0;
@@ -57,12 +57,12 @@ public class SetSpawn implements SubCommand{
                 next.put(game, next.get(game)+1);
             }
             }catch(Exception e){
-                MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.badinput", player);
+                MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.badinput", player);
                 return false;
             }
         }
         if(i == -1){
-            MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.notinside", player);
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.notinside", player);
             return true;
         }
         SettingsManager.getInstance().setSpawn(game, i, l.toVector());
