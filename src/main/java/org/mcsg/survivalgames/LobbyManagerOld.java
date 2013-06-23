@@ -342,7 +342,7 @@ public class LobbyManagerOld implements Listener {
                 signs[b][1].setLine(1, game.getMode() + "");
                 signs[b][1].setLine(2, game.getActivePlayers() + "/" + ChatColor.GRAY + game.getInactivePlayers() + ChatColor.BLACK + "/" + SettingsManager.getInstance().getSpawnCount(game.getID()));
                 if (game.getMode() == Game.GameMode.STARTING) signs[b][1].setLine(3, game.getCountdownTime() + "");
-                else if (game.getMode() == Game.GameMode.RESETING || game.getGameMode() == Game.GameMode.FINISHING) {
+                else if (game.getMode() == Game.GameMode.RESETTING || game.getGameMode() == Game.GameMode.FINISHING) {
                     signs[b][2].setLine(3, game.getRBStatus());
                     if (game.getRBPercent() > 100) {
                         signs[b][a].setLine(1, "Saving Queue");
