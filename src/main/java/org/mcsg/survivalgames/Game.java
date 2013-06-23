@@ -511,7 +511,8 @@ public class Game {
 			restoreInv(p);
 			activePlayers.remove(p);
 			inactivePlayers.remove(p);
-			for (Object in : spawns.keySet().toArray()) {
+
+			for (Object in : spawns.keySet()) {
 				if (spawns.get(in) == p) spawns.remove(in);
 			}
 			LobbyManager.getInstance().clearSigns(gameID);
