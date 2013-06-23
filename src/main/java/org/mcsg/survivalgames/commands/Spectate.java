@@ -28,11 +28,11 @@ public class Spectate implements SubCommand{
             }
         }
         if(SettingsManager.getInstance().getSpawnCount(Integer.parseInt(args[0])) == 0){
-            MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.nospawns", player);
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.nospawns", player);
             return true;
         }
         if(GameManager.getInstance().isPlayerActive(player)){
-            MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.specingame", player);
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.specingame", player);
             return true;
         }
         GameManager.getInstance().getGame(Integer.parseInt(args[0])).addSpectator(player);

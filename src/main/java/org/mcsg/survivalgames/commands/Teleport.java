@@ -16,7 +16,7 @@ public class Teleport implements SubCommand{
 					try{
 						player.teleport(SettingsManager.getInstance().getSpawnPoint(a, 1));
 					}catch(Exception e){
-						MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.nospawns", player);
+						MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.nospawns", player);
 					}
 				}catch(NumberFormatException e){
 					MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.notanumber", player, "input-" + args[0]);
