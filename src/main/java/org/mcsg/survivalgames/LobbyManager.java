@@ -79,7 +79,7 @@ public class LobbyManager {
 		}
 	}*/
 
-	public void updateall() {
+	public void updateAll() {
 		for (ArrayList < LobbyWall > lws: signs.values()) {
 			for (LobbyWall lw: lws) {
 				lw.update();
@@ -93,6 +93,12 @@ public class LobbyManager {
 				lw.update();
 			}
 		}
+	}
+	
+	public void removeSignsForArena(int a){
+		clearAllSigns();
+		signs.remove(a);
+		updateAll();
 	}
 
 	public void clearSigns(int a) {

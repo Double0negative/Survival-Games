@@ -81,8 +81,12 @@ block:
     - 103
     - 43
 
-
-
+#How many blocks to rollback per-tick
+#The higher this settings the fast each
+#arena will be reset but will cause more
+#lag
+rollback:
+  per-tick: 100
  
 
 #Settings for when the game nears end. This runs
