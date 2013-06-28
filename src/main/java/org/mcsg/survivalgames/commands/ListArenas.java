@@ -12,11 +12,12 @@ import org.mcsg.survivalgames.SettingsManager;
 
 public class ListArenas implements SubCommand{
 	
+    @Override
     public boolean onCommand(Player player, String[] args) {
     	StringBuilder arenas = new StringBuilder();
     	try{
     	if(args.length == 0 || Integer.parseInt(args[0]) < 0 || Integer.parseInt(args[0]) > GameManager.getInstance().getGameCount()){
-    		MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.gamenoexist", player);
+    		MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.gamenotexist", player);
     	}
     	if (GameManager.getInstance().getGames().isEmpty()) {
     		arenas.append(SettingsManager.getInstance().getMessageConfig().getString("messages.words.noarenas", "No arenas")).append(": ");
@@ -29,7 +30,7 @@ public class ListArenas implements SubCommand{
         }
         player.sendMessage(ChatColor.GREEN + arenas.toString());
     	}catch(Exception e){
-    		MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.gamenoexist", player);
+    		MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.gamenotexist", player);
     	}
         return false;
     }

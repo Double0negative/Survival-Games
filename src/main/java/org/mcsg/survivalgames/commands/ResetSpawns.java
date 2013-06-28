@@ -1,15 +1,15 @@
 package org.mcsg.survivalgames.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.MessageManager;
-import org.mcsg.survivalgames.SettingsManager;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
+import org.mcsg.survivalgames.SettingsManager;
 
 
 
 public class ResetSpawns implements SubCommand{
 
+    @Override
     public boolean onCommand(Player player, String[] args) {
         
         if (!player.hasPermission(permission()) && !player.isOp()) {
@@ -22,7 +22,7 @@ public class ResetSpawns implements SubCommand{
                 } catch (NumberFormatException e) {
                     MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.notanumber", player, "input-Arena");
                 } catch (NullPointerException e) {
-                    MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.gamenoexist", player);
+                    MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.gamenotexist", player);
                 }
         return true;
     }   
