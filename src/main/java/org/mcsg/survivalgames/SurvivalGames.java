@@ -14,7 +14,19 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcsg.survivalgames.events.*;
+import org.mcsg.survivalgames.events.BandageUse;
+import org.mcsg.survivalgames.events.BreakEvent;
+import org.mcsg.survivalgames.events.ChestReplaceEvent;
+import org.mcsg.survivalgames.events.CommandCatch;
+import org.mcsg.survivalgames.events.DeathEvent;
+import org.mcsg.survivalgames.events.JoinEvent;
+import org.mcsg.survivalgames.events.KitEvents;
+import org.mcsg.survivalgames.events.LogoutEvent;
+import org.mcsg.survivalgames.events.MoveEvent;
+import org.mcsg.survivalgames.events.PlaceEvent;
+import org.mcsg.survivalgames.events.SignClickEvent;
+import org.mcsg.survivalgames.events.SpectatorEvents;
+import org.mcsg.survivalgames.events.TeleportEvent;
 import org.mcsg.survivalgames.hooks.HookManager;
 import org.mcsg.survivalgames.logging.LoggingManager;
 import org.mcsg.survivalgames.logging.QueueManager;
@@ -56,7 +68,8 @@ public class SurvivalGames extends JavaPlugin {
 		logger.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " has now been disabled and reset");
 	}
 
-	public void onEnable() {
+	@Override
+    public void onEnable() {
 		logger = p.getLogger();
 
 		//ensure that all worlds are loaded. Fixes some issues with Multiverse loading after this plugin had started
@@ -72,7 +85,8 @@ public class SurvivalGames extends JavaPlugin {
 	}
 
 	class Startup implements Runnable {
-		public void run() {
+		@Override
+        public void run() {
 			datafolder = p.getDataFolder();
 
 			PluginManager pm = getServer().getPluginManager();

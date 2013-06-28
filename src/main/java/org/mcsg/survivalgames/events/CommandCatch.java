@@ -21,6 +21,7 @@ public class CommandCatch implements Listener{
             event.getPlayer().sendMessage(
             		GameManager.getInstance().getStringList(
             				GameManager.getInstance().getPlayerGameId(event.getPlayer())));
+            event.setCancelled(true);
             return;
         }
         if(!SettingsManager.getInstance().getConfig().getBoolean("disallow-commands"))

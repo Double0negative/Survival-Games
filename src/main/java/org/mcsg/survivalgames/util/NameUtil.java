@@ -7,7 +7,7 @@ import org.mcsg.survivalgames.SurvivalGames;
 
 public class NameUtil {
 
-	
+	 
 	public static String stylize(String name, boolean s, boolean r){
 
 		if(SurvivalGames.auth.contains(name) && r){
