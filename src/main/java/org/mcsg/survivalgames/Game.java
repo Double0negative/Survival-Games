@@ -576,6 +576,26 @@ public class Game {
 					+ p.getName(), "killer-"+p.getLastDamageCause().getEntityType());
 					}
 					break;
+                case FIRE:
+                case FIRE_TICK:
+                case MAGIC:
+                case THORNS:
+                case PROJECTILE:
+                    if(p.getKiller() != null) {
+                        Player killer = p.getKiller();
+                        PlayerGameDeathEvent leavearena = new PlayerGameDeathEvent(p, killer, this);
+                        Bukkit.getServer().getPluginManager().callEvent(leavearena);
+                        msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getCause(), 
+                                "player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(), 
+                                "killer-"+p.getKiller().getName());
+                        if(killer != null && p != null)
+                            sm.addKill(killer, p, gameID);
+                    } else {
+                        msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getCause(), 
+                                "player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(), 
+                                "killer-"+p.getLastDamageCause().getCause());
+                    }
+                    break;
 				default:
 					msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getCause(), 
 							"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(), 
