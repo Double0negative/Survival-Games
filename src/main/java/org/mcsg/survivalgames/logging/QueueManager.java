@@ -72,18 +72,27 @@ public class QueueManager {
 			}
 		}
 	        final Iterator<Entity> ent = removelist.iterator();
-		Bukkit.getScheduler().runTaskLater(GameManager.getInstance().getPlugin(), new Runnable() {
-
-                    @Override
-                    public void run() {
-                        while(ent.hasNext()){
-                            Entity e = ent.next();
-                            if(e.isValid())
-                                e.remove();
-                            ent.remove();
-                        }
+	        if(!shutdown) {
+        		Bukkit.getScheduler().runTaskLater(GameManager.getInstance().getPlugin(), new Runnable() {
+        
+                            @Override
+                            public void run() {
+                                while(ent.hasNext()){
+                                    Entity e = ent.next();
+                                    if(e.isValid())
+                                        e.remove();
+                                    ent.remove();
+                                }
+                            }
+        		}, 2);
+	        } else {
+                    while(ent.hasNext()){
+                        Entity e = ent.next();
+                        if(e.isValid())
+                            e.remove();
+                        ent.remove();
                     }
-		}, 2);
+	        }
 	}
 
 
