@@ -14,7 +14,6 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.Game;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.SettingsManager;
@@ -66,19 +65,25 @@ public class QueueManager {
 		ArrayList<Entity>removelist = new ArrayList<Entity>();
 
 		for(Entity e:SettingsManager.getGameWorld(id).getEntities()){
-			if(!(e instanceof Player) && !(e instanceof HumanEntity)){
+			if(!(e instanceof HumanEntity)){
 				if(GameManager.getInstance().getBlockGameId(e.getLocation()) == id){
 					removelist.add(e);
 				}
 			}
 		}
-		Iterator<Entity> ent = removelist.iterator();
-		while(ent.hasNext()){
-		    Entity e = ent.next();
-		    e.remove();
-		    ent.remove();
-		}
+	        final Iterator<Entity> ent = removelist.iterator();
+		Bukkit.getScheduler().runTaskLater(GameManager.getInstance().getPlugin(), new Runnable() {
 
+                    @Override
+                    public void run() {
+                        while(ent.hasNext()){
+                            Entity e = ent.next();
+                            if(e.isValid())
+                                e.remove();
+                            ent.remove();
+                        }
+                    }
+		}, 2);
 	}
 
 
