@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
@@ -65,14 +66,17 @@ public class QueueManager {
 		ArrayList<Entity>removelist = new ArrayList<Entity>();
 
 		for(Entity e:SettingsManager.getGameWorld(id).getEntities()){
-			if((!(e instanceof Player)) && (!(e instanceof HumanEntity))){
+			if(!(e instanceof Player) && !(e instanceof HumanEntity)){
 				if(GameManager.getInstance().getBlockGameId(e.getLocation()) == id){
 					removelist.add(e);
 				}
 			}
 		}
-		for(int a = 0; a < removelist.size(); a = 0){
-			try{removelist.remove(0).remove();}catch(Exception e){}
+		Iterator<Entity> ent = removelist.iterator();
+		while(ent.hasNext()){
+		    Entity e = ent.next();
+		    e.remove();
+		    ent.remove();
 		}
 
 	}
@@ -100,7 +104,8 @@ public class QueueManager {
 	}
 
 	class DataDumper implements Runnable{
-		public void run(){
+		@Override
+        public void run(){
 			for(int id: queue.keySet()){
 				try{
 
@@ -159,7 +164,8 @@ public class QueueManager {
 
 
 
-		public void run(){
+		@Override
+        public void run(){
 
 			ArrayList<BlockData>data = queue.get(id);
 			if(data != null){
