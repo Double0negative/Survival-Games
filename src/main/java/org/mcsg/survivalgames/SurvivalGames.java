@@ -16,6 +16,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcsg.survivalgames.events.BandageUse;
 import org.mcsg.survivalgames.events.BreakEvent;
+import org.mcsg.survivalgames.events.ChatEvent;
 import org.mcsg.survivalgames.events.ChestReplaceEvent;
 import org.mcsg.survivalgames.events.CommandCatch;
 import org.mcsg.survivalgames.events.DeathEvent;
@@ -127,6 +128,7 @@ public class SurvivalGames extends JavaPlugin {
 			pm.registerEvents(new SpectatorEvents(), p);
 			pm.registerEvents(new BandageUse(), p);
 			pm.registerEvents(new KitEvents(), p);
+			pm.registerEvents(new ChatEvent(), p);
 
 			for (Player p: Bukkit.getOnlinePlayers()) {
 				if (GameManager.getInstance().getBlockGameId(p.getLocation()) != -1) {

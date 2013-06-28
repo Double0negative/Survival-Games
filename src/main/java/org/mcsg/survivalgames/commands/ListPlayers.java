@@ -3,7 +3,6 @@ package org.mcsg.survivalgames.commands;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;
-import org.mcsg.survivalgames.MessageManager.PrefixType;
 import org.mcsg.survivalgames.SettingsManager;
 
 
@@ -20,7 +19,7 @@ public class ListPlayers implements SubCommand{
 			else{
 				gid =  Integer.parseInt(args[0]);
 			}
-
+ 
 			String[] msg = GameManager.getInstance().getStringList(gid).split("\n");
 			player.sendMessage(msg);
 			return false;
