@@ -34,8 +34,8 @@ public class ItemReader {
 		encids.put("fireprotection", Enchantment.PROTECTION_FIRE);
 		encids.put("featherfall", Enchantment.PROTECTION_FALL);
 		encids.put("featherfalling", Enchantment.PROTECTION_FALL);
-		encids.put("blastprot", Enchantment.PROTECTION_EXPLOSION);
-		encids.put("blastprotection", Enchantment.PROTECTION_EXPLOSION);
+		encids.put("blastprot", Enchantment.PROTECTION_EXPLOSIONS);
+		encids.put("blastprotection", Enchantment.PROTECTION_EXPLOSIONS);
 		encids.put("projectileprot", Enchantment.PROTECTION_PROJECTILE);
 		encids.put("projectileprotection", Enchantment.PROTECTION_PROJECTILE);
 		encids.put("aquaaffinity", Enchantment.WATER_WORKER);
@@ -43,7 +43,7 @@ public class ItemReader {
 		
 		//Weapon Enchants
 		encids.put("smite", Enchantment.DAMAGE_UNDEAD);
-		encids.put("baneofarthropods", Enchantment.DAMAGE_ARTHROPODS)
+		encids.put("baneofarthropods", Enchantment.DAMAGE_ARTHROPODS);
 		encids.put("sharpness", Enchantment.DAMAGE_ALL);
 		encids.put("dmg", Enchantment.DAMAGE_ALL);
 		encids.put("fire", Enchantment.FIRE_ASPECT);
