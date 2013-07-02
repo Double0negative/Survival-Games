@@ -60,7 +60,7 @@ public class ItemReader {
 		encids.put("power", Enchantment.ARROW_DAMAGE);
 		encids.put("infinity", Enchantment.ARROW_INFINITE);
 		encids.put("flame", Enchantment.ARROW_FIRE);
-
+		
 	}
 	
 	
@@ -72,7 +72,7 @@ public class ItemReader {
 		String split[] = str.split(",");
 		SurvivalGames.debug("ItemReader: reading : "+Arrays.toString(split));
 		for(int a = 0; a < split.length; a++){
-			split[a] = split[a].toLowerCase().trim();
+			split[a] = split[a].trim();
 		}
 		if(split.length < 1){
 			return null;
@@ -85,7 +85,7 @@ public class ItemReader {
 		}else{
 			ItemStack i =  new ItemStack(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Short.parseShort(split[2]));
 			if (!split[3].equalsIgnoreCase("none")) {
-				String encs[] = split[3].split(" ");
+				String encs[] = split[3].toLowerCase().split(" ");
 				for(String enc: encs){
 					System.out.println(enc);
 					String e[] = enc.split(":");
