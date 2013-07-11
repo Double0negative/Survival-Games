@@ -57,27 +57,46 @@ public class QueueManager {
 	public void rollback(final int id, final boolean shutdown){
 		loadSave(id);
 		if(!shutdown){
-		Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(),
-				new Rollback(id, shutdown,0,1,0));
+			Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(),
+					new Rollback(id, shutdown,0,1,0));
 		}
 		else{
 			new Rollback(id, shutdown,0,1,0).run();
 		}
-		ArrayList<Entity>removelist = new ArrayList<Entity>();
 
-		for(Entity e:SettingsManager.getGameWorld(id).getEntities()){
-			if((!(e instanceof Player)) && (!(e instanceof HumanEntity))){
-				if(GameManager.getInstance().getBlockGameId(e.getLocation()) == id){
-					removelist.add(e);
-				}
-			}
+		if(shutdown){
+			new RemoveEntities(id);
 		}
-		for(int a = 0; a < removelist.size(); a = 0){
-			try{removelist.remove(0).remove();}catch(Exception e){}
+		else{ 
+			Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), 
+					new RemoveEntities(id), 5);
 		}
+
 
 	}
 
+	class RemoveEntities implements Runnable{
+		private int id;
+
+		protected RemoveEntities(int id){
+			this.id = id;
+		}
+
+		public void run(){
+			ArrayList<Entity>removelist = new ArrayList<Entity>();
+
+			for(Entity e:SettingsManager.getGameWorld(id).getEntities()){
+				if((!(e instanceof Player)) && (!(e instanceof HumanEntity))){
+					if(GameManager.getInstance().getBlockGameId(e.getLocation()) == id){
+						removelist.add(e);
+					}
+				}
+			}
+			for(int a = 0; a < removelist.size(); a = 0){
+				try{removelist.remove(0).remove();}catch(Exception e){}
+			}
+		}
+	}
 
 
 	public void add(BlockData data){
@@ -151,13 +170,14 @@ public class QueueManager {
 		int id, totalRollback, iteration;
 		Game game;
 		long time;
-		
+
 		boolean shutdown;
 
 		public Rollback(int id, boolean shutdown, int trb, int it, long time){
 			this.id = id;
 			this.totalRollback = trb;
 			this.iteration = it;
+			this.time = time;
 			game = GameManager.getInstance().getGame(id);
 			this.shutdown = shutdown;
 		}
@@ -200,7 +220,7 @@ public class QueueManager {
 							new Rollback(id, shutdown, totalRollback + rb, iteration+1, time), 1);
 				}
 				else{
-					SurvivalGames.$ ("Arena "+id+" reset. Rolled back "+totalRollback+" blocks in "+iteration+" iterations ("+pt+" blocks per iteration Total time spent rolling back was "+time+"ms");
+					SurvivalGames.$ ("Arena "+id+" reset. Rolled back "+(totalRollback+rb)+" blocks in "+iteration+" iterations ("+pt+" blocks per iteration Total time spent rolling back was "+time+"ms");
 					game.resetCallback();
 				}
 			}else{
