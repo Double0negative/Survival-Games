@@ -194,12 +194,6 @@ public class GameManager {
 	}
 
 	public void removePlayer(Player p, boolean b) {
-		for (Game g : games) {
-			if (g.getAllPlayers().contains(p)) {
-				PlayerLeaveArenaEvent leavearena = new PlayerLeaveArenaEvent(p, g);
-				Bukkit.getServer().getPluginManager().callEvent(leavearena);
-			}
-		}
 		getGame(getPlayerGameId(p)).removePlayer(p, b);
 	}
 

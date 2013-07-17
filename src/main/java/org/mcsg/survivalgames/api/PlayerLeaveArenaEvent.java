@@ -12,8 +12,9 @@ public class PlayerLeaveArenaEvent extends Event {
 	private static final HandlerList handlers = new HandlerList();
     private Player player;
     private Game game;
-
-    public PlayerLeaveArenaEvent(Player p, Game g) {
+    private boolean logout;
+    
+    public PlayerLeaveArenaEvent(Player p, Game g, boolean logout) {
         player = p;
         game = g;
     }
@@ -28,6 +29,10 @@ public class PlayerLeaveArenaEvent extends Event {
  
     public HandlerList getHandlers() {
         return handlers;
+    }
+    
+    public boolean isLogout(){
+    	return logout;
     }
  
     public static HandlerList getHandlerList() {

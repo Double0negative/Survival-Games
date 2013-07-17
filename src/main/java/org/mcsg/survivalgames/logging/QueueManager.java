@@ -70,7 +70,7 @@ public class QueueManager {
 		else{ 
 			Bukkit.getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), 
 					new RemoveEntities(id), 5);
-		}
+		}//
 
 
 	}
@@ -220,7 +220,7 @@ public class QueueManager {
 							new Rollback(id, shutdown, totalRollback + rb, iteration+1, time), 1);
 				}
 				else{
-					SurvivalGames.$ ("Arena "+id+" reset. Rolled back "+(totalRollback+rb)+" blocks in "+iteration+" iterations ("+pt+" blocks per iteration Total time spent rolling back was "+time+"ms");
+					SurvivalGames.$ ("Arena "+id+" reset. Rolled back "+(totalRollback+rb)+" blocks in "+iteration+" iterations ("+pt+" blocks per iteration Total time spent rolling back was "+time+"ms)");
 					game.resetCallback();
 				}
 			}else{

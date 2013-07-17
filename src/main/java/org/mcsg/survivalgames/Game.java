@@ -15,6 +15,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
 import org.mcsg.survivalgames.api.PlayerJoinArenaEvent;
+import org.mcsg.survivalgames.api.PlayerKilledEvent;
+import org.mcsg.survivalgames.api.PlayerLeaveArenaEvent;
 import org.mcsg.survivalgames.hooks.HookManager;
 import org.mcsg.survivalgames.logging.QueueManager;
 import org.mcsg.survivalgames.stats.StatsManager;
@@ -218,6 +220,7 @@ public class Game {
 				msgmgr.sendMessage(PrefixType.INFO, "Joining Arena " + gameID, p);
 				PlayerJoinArenaEvent joinarena = new PlayerJoinArenaEvent(p, GameManager.getInstance().getGame(gameID));
 				Bukkit.getServer().getPluginManager().callEvent(joinarena);
+				if(joinarena.isCancelled()) return false;
 				boolean placed = false;
 				int spawnCount = SettingsManager.getInstance().getSpawnCount(gameID);
 
@@ -517,6 +520,7 @@ public class Game {
 
 		HookManager.getInstance().runHook("PLAYER_REMOVED", "player-"+p.getName());
 
+		PlayerLeaveArenaEvent pl = new PlayerLeaveArenaEvent(p, this, b);
 
 		LobbyManager.getInstance().updateWall(gameID);
 	}
@@ -547,6 +551,7 @@ public class Game {
 
 		activePlayers.remove(p);
 		inactivePlayers.add(p);
+		PlayerKilledEvent pk = null;
 		if (left) {
 			msgFall(PrefixType.INFO, "game.playerleavegame","player-"+p.getName() );
 		} else {
@@ -562,19 +567,26 @@ public class Game {
 								"item-"+((killer!=null)?ItemReader.getFriendlyItemName(killer.getItemInHand().getType()) : "Unknown Item"));
 						if(killer != null && p != null)
 							sm.addKill(killer, p, gameID);
+						pk = new PlayerKilledEvent(p, this, killer, p.getLastDamageCause().getCause());
 					}
 					else{
 						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getEntityType(), "player-"
 					+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") 
 					+ p.getName(), "killer-"+p.getLastDamageCause().getEntityType());
+						pk = new PlayerKilledEvent(p, this, null, p.getLastDamageCause().getCause());
+
 					}
 					break;
 				default:
 					msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getCause(), 
 							"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(), 
 							"killer-"+p.getLastDamageCause().getCause());
+					pk = new PlayerKilledEvent(p, this, null, p.getLastDamageCause().getCause());
+
 					break;
 				}
+				Bukkit.getServer().getPluginManager().callEvent(pk);
+
 				if (getActivePlayers() > 1) {
 					for (Player pl: getAllPlayers()) {
 						msgmgr.sendMessage(PrefixType.INFO, ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + "" 
