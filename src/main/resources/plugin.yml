@@ -9,4 +9,19 @@ commands:
         description: Survival Games Command
         usage: /sg <command> <args>
         aliases: [sg, hungergames, hg]
-
+permissions:
+    sg.*:
+        description: Gives access to all doorman commands
+        children:
+            sg.arena.join: true
+            sg.arena.vote: true
+            sg.lobby.join: true
+    sg.arena.join:
+        description: Joins a game
+        default: true
+    sg.arena.vote:
+        description: Votes for the game to start
+        default: true
+    sg.lobby.join:
+        description: Joins the lobby
+        default: true
