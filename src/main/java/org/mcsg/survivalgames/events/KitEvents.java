@@ -1,6 +1,7 @@
 package org.mcsg.survivalgames.events;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -15,6 +16,11 @@ public class KitEvents implements Listener  {
 			Player p = (Player)e.getWhoClicked();
 			if(GameManager.getInstance().isInKitMenu(p)){
 				if(e.getRawSlot() == e.getSlot()){
+                    if (!GameManager.getInstance().kitCheck(p, e.getRawSlot() % 9)){
+                        e.setResult(Event.Result.DENY);
+                        e.setCancelled(true);
+                        return;
+                    }
 					GameManager.getInstance().selectKit(p, e.getRawSlot() % 9);
 				}
 				e.setCancelled(true);

@@ -164,7 +164,28 @@ public class GameManager {
 	public void openKitMenu(Player p){
 		kitsel.add(p);
 	}
-
+    public boolean kitCheck(Player p, int i){
+        ArrayList<Kit>kits = getKits(p);
+        if(i <= kits.size()){
+            Kit k = getKits(p).get(i);
+            if(k!=null){
+                if (k.getCost() > 0){
+                    if (SurvivalGames.econOn){
+                        if (SurvivalGames.econ.getBalance(p.getName()) < k.getCost()){
+                            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "You can not afford to buy this kit!", p);
+                            return false;
+                        }
+                        SurvivalGames.econ.withdrawPlayer(p.getName(), k.getCost());
+                        msgmgr.sendMessage(MessageManager.PrefixType.INFO, k.getCost() + " have been withdrawn from your funds.", p);
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 	@SuppressWarnings("deprecation")
 	public void selectKit(Player p, int i) {
 		p.getInventory().clear();
@@ -172,16 +193,6 @@ public class GameManager {
 		if(i <= kits.size()){
 			Kit k = getKits(p).get(i);
 			if(k!=null){
-                if (k.getCost() > 0){
-                    if (SurvivalGames.econOn){
-                        if (SurvivalGames.econ.getBalance(p.getName()) < k.getCost()){
-                            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "You can not afford to buy this kit!", p);
-                            return;
-                        }
-                        SurvivalGames.econ.withdrawPlayer(p.getName(), k.getCost());
-                        msgmgr.sendMessage(MessageManager.PrefixType.INFO, k.getCost() + " have been withdrawn from your funds.", p);
-                    }
-                }
 				p.getInventory().setContents(k.getContents().toArray(new ItemStack[0]));
 			}
 		}
