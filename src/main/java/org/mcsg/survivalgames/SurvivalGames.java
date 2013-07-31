@@ -3,16 +3,20 @@ package org.mcsg.survivalgames;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcsg.survivalgames.events.*;
 import org.mcsg.survivalgames.hooks.HookManager;
@@ -31,6 +35,9 @@ public class SurvivalGames extends JavaPlugin {
 	public static boolean dbcon = false;
 	public static boolean config_todate = false;
 	public static int config_version = 3;
+    public static Economy econ = null;
+    public static boolean econOn = false;
+    public static Map<String, Double> econPoints = new HashMap<String, Double>();
 
 	public static List < String > auth = Arrays.asList(new String[] {
 			"Double0negative", "iMalo", "Medic0987", "alex_markey", "skitscape", "AntVenom", "YoshiGenius", "pimpinpsp", "WinryR", "Jazed2011",
@@ -52,7 +59,7 @@ public class SurvivalGames extends JavaPlugin {
 			}
 			QueueManager.getInstance().rollback(g.getID(), true);
 		}
-
+        econPoints.clear();
 		logger.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " has now been disabled and reset");
 	}
 
@@ -67,10 +74,20 @@ public class SurvivalGames extends JavaPlugin {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+        econOn = setupEconomy();
 
 	}
-
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
+    }
 	class Startup implements Runnable {
 		public void run() {
 			datafolder = p.getDataFolder();
@@ -84,6 +101,13 @@ public class SurvivalGames extends JavaPlugin {
 
 			try { // try loading everything that uses SQL. 
 				FileConfiguration c = SettingsManager.getInstance().getConfig();
+
+                if (econOn && c.getBoolean("Econ.Enabled")){
+                    if (c.getBoolean("Econ.Join Cost.Enabled"))econPoints.put("join", c.getDouble("Econ.Join Cost.Price"));
+                    if (c.getBoolean("Econ.Player Kill Payout.Enabled"))econPoints.put("kill", c.getDouble("Econ.Player Kill Payout.Reward"));
+                    if (c.getBoolean("Econ.Winner Payout.Enabled"))econPoints.put("win", c.getDouble("Econ.Winner Payout.Reward"));
+                    if (c.getBoolean("Econ.Vote Cost.Enabled"))econPoints.put("vote", c.getDouble("Econ.Vote Cost.Price"));
+                }
 				if (c.getBoolean("stats.enabled")) DatabaseManager.getInstance().setup(p);
 				QueueManager.getInstance().setup();
 				StatsManager.getInstance().setup(p, c.getBoolean("stats.enabled"));

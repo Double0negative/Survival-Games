@@ -7,13 +7,22 @@ import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;
 import org.mcsg.survivalgames.SettingsManager;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
+import org.mcsg.survivalgames.SurvivalGames;
 
 
 public class Join implements SubCommand{
-
+    private MessageManager msgmgr = MessageManager.getInstance();
 	public boolean onCommand(Player player, String[] args) {
 		if(args.length == 1){
 			if(player.hasPermission(permission())){
+                if (SurvivalGames.econOn && SurvivalGames.econPoints.containsKey("join")){
+                    if (SurvivalGames.econ.getBalance(player.getName()) <= SurvivalGames.econPoints.get("join") -0.01){
+                        msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "You can not afford to join this game!", player);
+                        return true;
+                    }
+                    SurvivalGames.econ.withdrawPlayer(player.getName(), SurvivalGames.econPoints.get("join"));
+                    msgmgr.sendMessage(MessageManager.PrefixType.INFO, SurvivalGames.econPoints.get("join") + " have been withdrawn from your funds.", player);
+                }
 				try {
 					int a = Integer.parseInt(args[0]);
 					GameManager.getInstance().addPlayer(player, a);

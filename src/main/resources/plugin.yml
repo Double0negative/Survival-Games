@@ -2,6 +2,7 @@ name: SurvivalGames
 version: ${project.version}.${BUILD_NUMBER}
 main: org.mcsg.survivalgames.SurvivalGames
 authors: [Double0negative]
+softdepend: [Vault]
 description: Fully Automated Hunger Games Plugin!
 
 commands:

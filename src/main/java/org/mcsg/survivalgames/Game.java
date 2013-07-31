@@ -365,6 +365,14 @@ public class Game {
 			msgmgr.sendMessage(PrefixType.WARNING, "You already voted!", pl);
 			return;
 		}
+        if (SurvivalGames.econOn && SurvivalGames.econPoints.containsKey("vote")){
+            if (SurvivalGames.econ.getBalance(pl.getName()) <= SurvivalGames.econPoints.get("vote") -0.01){
+                msgmgr.sendMessage(PrefixType.WARNING, "You can not afford to vote!", pl);
+                return;
+            }
+            SurvivalGames.econ.withdrawPlayer(pl.getName(), SurvivalGames.econPoints.get("vote"));
+            msgmgr.sendMessage(PrefixType.INFO, SurvivalGames.econPoints.get("vote") + " have been withdrawn from your funds.", pl);
+        }
 		vote++;
 		voted.add(pl);
 		msgmgr.sendFMessage(PrefixType.INFO, "game.playervote", pl, "player-"+pl.getName());
@@ -560,6 +568,10 @@ public class Game {
 				case ENTITY_ATTACK:
 					if(p.getLastDamageCause().getEntityType() == EntityType.PLAYER){
 						Player killer = p.getKiller();
+                        if (SurvivalGames.econOn && SurvivalGames.econPoints.containsKey("kill")){
+                            SurvivalGames.econ.depositPlayer(killer.getName(), SurvivalGames.econPoints.get("kill"));
+                            msgmgr.sendMessage(PrefixType.INFO, SurvivalGames.econPoints.get("kill") + " has been added yo your funds for killing " + p.getName() + ".", killer);
+                        }
 						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getEntityType(),
 								"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(),
 								"killer-"+((killer != null)?(SurvivalGames.auth.contains(killer.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") 
@@ -645,7 +657,10 @@ public class Game {
 		win.setFoodLevel(20);
 		win.setFireTicks(0);
 		win.setFallDistance(0);
-
+        if (SurvivalGames.econOn && SurvivalGames.econPoints.containsKey("win")){
+            SurvivalGames.econ.depositPlayer(win.getName(), SurvivalGames.econPoints.get("win"));
+            msgmgr.sendMessage(PrefixType.INFO, SurvivalGames.econPoints.get("win") + " has been added to your funds for winning the game.", win);
+        }
 		sm.playerWin(win, gameID, new Date().getTime() - startTime);
 		sm.saveGame(gameID, win, getActivePlayers() + getInactivePlayers(), new Date().getTime() - startTime);
 
