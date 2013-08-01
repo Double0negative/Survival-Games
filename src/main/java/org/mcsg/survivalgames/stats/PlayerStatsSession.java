@@ -5,11 +5,16 @@ import java.util.Date;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.SettingsManager;
-
+import org.mcsg.survivalgames.SurvivalGames;
 
 
 public class PlayerStatsSession {
@@ -59,6 +64,11 @@ public class PlayerStatsSession {
     public int addKill(Player p){
         killed.add(p);
         kills++;
+        Scoreboard board = SurvivalGames.playerBoards.get(p.getName());
+        Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
+        Score kill = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Kills:"));
+        kill.setScore(kills);
+        p.setScoreboard(board);
         checkKS();
         lastkill = new Date().getTime();
         return kslevel;
@@ -120,11 +130,20 @@ public class PlayerStatsSession {
         if(15000 > new Date().getTime() - lastkill){
             kslevel++;
             addkillStreak(kslevel);
-
+            Scoreboard board = SurvivalGames.playerBoards.get(player.getName());
+            Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
+            Score kill = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Kill Streak:"));
+            kill.setScore(kslevel);
+            player.setScoreboard(board);
             return true;
         }
 
         kslevel = 0;
+        Scoreboard board = SurvivalGames.playerBoards.get(player.getName());
+        Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
+        Score kill = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Kill Streak:"));
+        kill.setScore(kslevel);
+        player.setScoreboard(board);
         return false;
     }
 

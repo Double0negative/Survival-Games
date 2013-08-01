@@ -13,10 +13,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
 import org.mcsg.survivalgames.api.PlayerJoinArenaEvent;
 import org.mcsg.survivalgames.api.PlayerKilledEvent;
 import org.mcsg.survivalgames.api.PlayerLeaveArenaEvent;
+import org.mcsg.survivalgames.events.JoinEvent;
 import org.mcsg.survivalgames.hooks.HookManager;
 import org.mcsg.survivalgames.logging.QueueManager;
 import org.mcsg.survivalgames.stats.StatsManager;
@@ -233,7 +238,22 @@ public class Game {
 						p.teleport(SettingsManager.getInstance().getLobbySpawn());
 						saveInv(p);clearInv(p);	
 						p.teleport(SettingsManager.getInstance().getSpawnPoint(gameID, a));
-
+                        Scoreboard board = SurvivalGames.playerBoards.get(p.getName());
+                        board.getObjective(DisplaySlot.SIDEBAR).unregister();
+                        Objective obj = board.registerNewObjective("SG Stats", "dummy");
+                        obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+                        obj.setDisplayName(ChatColor.DARK_GREEN + "S.G. Stats");
+                        Score players = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Remaining:"));
+                        players.setScore(activePlayers.size());
+                        Score kills = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Kills:"));
+                        kills.setScore(0);
+                        Score wins = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Kill Streak:"));
+                        wins.setScore(0);
+                        if (SurvivalGames.econOn){
+                            Score kill = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Coins:"));
+                            kill.setScore((int)SurvivalGames.econ.getBalance(p.getName()));
+                        }
+                        p.setScoreboard(board);
 						p.setHealth(p.getMaxHealth());p.setFoodLevel(20);clearInv(p);
 
 						activePlayers.add(p);sm.addPlayer(p, gameID);
@@ -291,7 +311,7 @@ public class Game {
 
 	public void showMenu(Player p){
 		GameManager.getInstance().openKitMenu(p);
-		Inventory i = Bukkit.getServer().createInventory(p, 90, ChatColor.RED+""+ChatColor.BOLD+"Kit Selection");
+		Inventory i = Bukkit.getServer().createInventory(p, 45, ChatColor.RED+""+ChatColor.BOLD+"Kit Selection");
 
 		int a = 0;
 		int b = 0;
@@ -372,6 +392,11 @@ public class Game {
             }
             SurvivalGames.econ.withdrawPlayer(pl.getName(), SurvivalGames.econPoints.get("vote"));
             msgmgr.sendMessage(PrefixType.INFO, SurvivalGames.econPoints.get("vote") + " have been withdrawn from your funds.", pl);
+            Scoreboard board = SurvivalGames.playerBoards.get(pl.getName());
+            Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
+            Score kill = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Coins:"));
+            kill.setScore((int)SurvivalGames.econ.getBalance(pl.getName()));
+            pl.setScoreboard(board);
         }
 		vote++;
 		voted.add(pl);
@@ -511,7 +536,8 @@ public class Game {
 
 	public void removePlayer(Player p, boolean b) {
 		p.teleport(SettingsManager.getInstance().getLobbySpawn());
-		///$("Teleporting to lobby");
+        JoinEvent.playerBoardSetter(p);
+        ///$("Teleporting to lobby");
 		if (mode == GameMode.INGAME) {
 			killPlayer(p, b);
 		} else {
@@ -520,6 +546,13 @@ public class Game {
 			restoreInv(p);
 			activePlayers.remove(p);
 			inactivePlayers.remove(p);
+            for (Player pl1 : activePlayers){
+                Scoreboard board = SurvivalGames.playerBoards.get(pl1.getName());
+                Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
+                Score players = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Remaining:"));
+                players.setScore(activePlayers.size());
+                pl1.setScoreboard(board);
+            }
 			for (Object in : spawns.keySet().toArray()) {
 				if (spawns.get(in) == p) spawns.remove(in);
 			}
@@ -568,10 +601,21 @@ public class Game {
 				case ENTITY_ATTACK:
 					if(p.getLastDamageCause().getEntityType() == EntityType.PLAYER){
 						Player killer = p.getKiller();
+                        int i = SurvivalGames.playerKills.get(killer.getName()) + 1;
+                        SurvivalGames.playerKills.remove(killer.getName());
+                        SurvivalGames.playerKills.put(killer.getName(), i);
+                        Scoreboard board = SurvivalGames.playerBoards.get(killer.getName());
+                        Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
+                        Score kills = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Kills:"));
+                        kills.setScore(i);
                         if (SurvivalGames.econOn && SurvivalGames.econPoints.containsKey("kill")){
                             SurvivalGames.econ.depositPlayer(killer.getName(), SurvivalGames.econPoints.get("kill"));
                             msgmgr.sendMessage(PrefixType.INFO, SurvivalGames.econPoints.get("kill") + " has been added yo your funds for killing " + p.getName() + ".", killer);
+
+                            Score kill = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Coins:"));
+                            kill.setScore((int)SurvivalGames.econ.getBalance(killer.getName()));
                         }
+                        killer.setScoreboard(board);
 						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getEntityType(),
 								"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(),
 								"killer-"+((killer != null)?(SurvivalGames.auth.contains(killer.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") 
@@ -660,7 +704,19 @@ public class Game {
         if (SurvivalGames.econOn && SurvivalGames.econPoints.containsKey("win")){
             SurvivalGames.econ.depositPlayer(win.getName(), SurvivalGames.econPoints.get("win"));
             msgmgr.sendMessage(PrefixType.INFO, SurvivalGames.econPoints.get("win") + " has been added to your funds for winning the game.", win);
+            Scoreboard board = SurvivalGames.playerBoards.get(win.getName());
+            Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
+            Score kill = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Coins:"));
+            kill.setScore((int)SurvivalGames.econ.getBalance(win.getName()));
         }
+        int i = SurvivalGames.playerWins.get(win.getName()) + 1;
+        SurvivalGames.playerWins.remove(win.getName());
+        SurvivalGames.playerWins.put(win.getName(), i);
+        Scoreboard board = SurvivalGames.playerBoards.get(p.getName());
+        Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
+        Score kills = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Wins:"));
+        kills.setScore(i);
+        win.setScoreboard(board);
 		sm.playerWin(win, gameID, new Date().getTime() - startTime);
 		sm.saveGame(gameID, win, getActivePlayers() + getInactivePlayers(), new Date().getTime() - startTime);
 

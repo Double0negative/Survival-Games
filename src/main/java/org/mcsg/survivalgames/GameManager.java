@@ -13,6 +13,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
 import org.mcsg.survivalgames.Game.GameMode;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
 import org.mcsg.survivalgames.api.PlayerLeaveArenaEvent;
@@ -177,6 +181,10 @@ public class GameManager {
                         }
                         SurvivalGames.econ.withdrawPlayer(p.getName(), k.getCost());
                         msgmgr.sendMessage(MessageManager.PrefixType.INFO, k.getCost() + " have been withdrawn from your funds.", p);
+                        Scoreboard board = SurvivalGames.playerBoards.get(p.getName());
+                        Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
+                        Score kill = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Coins:"));
+                        kill.setScore((int)SurvivalGames.econ.getBalance(p.getName()));
                         return true;
                     }
                 } else {
