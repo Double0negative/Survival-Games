@@ -1,19 +1,26 @@
 package org.mcsg.survivalgames.commands;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;
 import org.mcsg.survivalgames.SettingsManager;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
+import org.mcsg.survivalgames.SurvivalGames;
 
 
 public class Join implements SubCommand{
-
+    private MessageManager msgmgr = MessageManager.getInstance();
 	public boolean onCommand(Player player, String[] args) {
 		if(args.length == 1){
 			if(player.hasPermission(permission())){
+
 				try {
 					int a = Integer.parseInt(args[0]);
 					GameManager.getInstance().addPlayer(player, a);
@@ -32,6 +39,19 @@ public class Join implements SubCommand{
 					return true;
 				}
 				player.teleport(SettingsManager.getInstance().getLobbySpawn());
+                if (SurvivalGames.econOn && SurvivalGames.econPoints.containsKey("join")){
+                    if (SurvivalGames.econ.getBalance(player.getName()) <= SurvivalGames.econPoints.get("join") -0.01){
+                        msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "You can not afford to join this game!", player);
+                        return true;
+                    }
+                    SurvivalGames.econ.withdrawPlayer(player.getName(), SurvivalGames.econPoints.get("join"));
+                    msgmgr.sendMessage(MessageManager.PrefixType.INFO, SurvivalGames.econPoints.get("join") + " have been withdrawn from your funds.", player);
+                    Scoreboard board = SurvivalGames.playerBoards.get(player.getName());
+                    Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
+                    Score kill = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Coins:"));
+                    kill.setScore((int)SurvivalGames.econ.getBalance(player.getName()));
+                    player.setScoreboard(board);
+                }
 				return true;
 			}
 			else{

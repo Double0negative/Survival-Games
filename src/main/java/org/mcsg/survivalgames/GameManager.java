@@ -13,6 +13,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
 import org.mcsg.survivalgames.Game.GameMode;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
 import org.mcsg.survivalgames.api.PlayerLeaveArenaEvent;
@@ -164,7 +168,32 @@ public class GameManager {
 	public void openKitMenu(Player p){
 		kitsel.add(p);
 	}
-
+    public boolean kitCheck(Player p, int i){
+        ArrayList<Kit>kits = getKits(p);
+        if(i <= kits.size()){
+            Kit k = getKits(p).get(i);
+            if(k!=null){
+                if (k.getCost() > 0){
+                    if (SurvivalGames.econOn){
+                        if (SurvivalGames.econ.getBalance(p.getName()) < k.getCost()){
+                            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "You can not afford to buy this kit!", p);
+                            return false;
+                        }
+                        SurvivalGames.econ.withdrawPlayer(p.getName(), k.getCost());
+                        msgmgr.sendMessage(MessageManager.PrefixType.INFO, k.getCost() + " have been withdrawn from your funds.", p);
+                        Scoreboard board = SurvivalGames.playerBoards.get(p.getName());
+                        Objective obj = board.getObjective(DisplaySlot.SIDEBAR);
+                        Score kill = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.DARK_RED + "Coins:"));
+                        kill.setScore((int)SurvivalGames.econ.getBalance(p.getName()));
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 	@SuppressWarnings("deprecation")
 	public void selectKit(Player p, int i) {
 		p.getInventory().clear();

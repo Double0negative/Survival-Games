@@ -162,6 +162,29 @@ stats:
     level4: '&e{player}&4 got an Unbelievable Kill!'
     level5: '&e{player}&a&kii&4&l Unbelievable+!&a&kii'
     
+###########################################################
+#######################  Economy ##########################
+###########################################################
+
+#These settings are for economy support for charging to enter
+#a game, rewarding money for player kills, and giving money 
+#to the winner.
+
+Econ:
+  Enabled: true
+  Join Cost:
+    Enabled: true
+    Price: 10
+  Player Kill Payout:
+    Enabled: true
+    Reward: 10
+  Winner Payout:
+    Enabled: true
+    Reward: 100
+  Vote Cost:
+    Enabled: true
+    Price: 5
+    
     
     
 
