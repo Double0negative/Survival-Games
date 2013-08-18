@@ -367,15 +367,14 @@ public class SettingsManager {
 			
 			try {
 				t.createNewFile();
-				FileWriter out = new FileWriter(t);
-				System.out.println(file);
+				FileWriter out = new FileWriter(t);				
 				InputStream is = getClass().getResourceAsStream("/"+file);
 				InputStreamReader isr = new InputStreamReader(is);
 				BufferedReader br = new BufferedReader(isr);
 				String line;
 				while ((line = br.readLine()) != null) {
 					out.write(line+"\n");
-					System.out.println(line);
+					SurvivalGames.debug(line);
 				}
 				out.flush();
 				is.close();
