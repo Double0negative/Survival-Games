@@ -2,31 +2,20 @@ package org.mcsg.survivalgames.stats;
 
 public class StatsDataManager {
 
-	private static StatsDataManager instance = new StatsDataManager();
-	
-	private StatsDataManager(){
-		
-	}
-	
-	
-	
-	
-	
-	public static StatsDataManager getInstance(){
-		return instance;
-	}
-	
-	public void setup(){
-		
-		
-	}
-	
-	
-	
-	
-	
-	class PlayerData{
-		
+	class PlayerData {
+
+		private String name;
+
+		private int pos;
+
+		private int score;
+
+		public PlayerData(String name, int pos, int score) {
+			this.name = name;
+			this.pos = pos;
+			this.score = score;
+		}
+
 		public String getName() {
 			return name;
 		}
@@ -39,20 +28,20 @@ public class StatsDataManager {
 			return score;
 		}
 
-		private String name;
-		private int pos;
-		private int score;
-		
-		public PlayerData(String name, int pos, int score){
-			this.name = name;
-			this.pos = pos;
-			this.score = score;
-		}
-		
-		
 	}
-	
-	
-	
-	
+
+	private static StatsDataManager instance = new StatsDataManager();
+
+	public static StatsDataManager getInstance() {
+		return instance;
+	}
+
+	private StatsDataManager() {
+
+	}
+
+	public void setup() {
+
+	}
+
 }

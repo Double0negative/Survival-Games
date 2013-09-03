@@ -12,12 +12,17 @@ public class BandageUse implements Listener {
 
 	@EventHandler
 	public void onBandageUse(PlayerInteractEvent e) {
-		if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+		if (e.getAction() == Action.RIGHT_CLICK_AIR
+				|| e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			if (e.getPlayer().getItemInHand() == new ItemStack(Material.PAPER)) {
-				e.getPlayer().getInventory().removeItem(new ItemStack(Material.PAPER, 1));
+				e.getPlayer().getInventory()
+						.removeItem(new ItemStack(Material.PAPER, 1));
 				e.getPlayer().setHealth(e.getPlayer().getHealth() + 10);
-				e.getPlayer().sendMessage(ChatColor.GREEN + "You used a bandage and got 5 hearts.");
+				e.getPlayer().sendMessage(
+						ChatColor.GREEN
+								+ "You used a bandage and got 5 hearts.");
 			}
 		}
 	}
+
 }

@@ -7,22 +7,21 @@ import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.util.EconomyManager;
 
 /**
+ * A {@link Hook} for the Vault economy plugin.
  * 
- * 
- * something wrote by pogo.
- *
+ * @author pogo
  */
-public class EconHook implements HookBase {
+public class EconHook implements Hook {
 
 	@Override
 	public void executehook(String player, String[] s2) {
-		if(EconomyManager.getInstance().econPresent()){
+		if (EconomyManager.getInstance().econPresent()) {
 			Economy econ = EconomyManager.getInstance().getEcon();
 			String split[] = s2[1].split(" ");
-			if(split.length == 3){
+			if (split.length == 3) {
 				Player p = Bukkit.getServer().getPlayer(split[1]);
 				int funds = Integer.parseInt(split[2]);
-				if(split[0].equals("remove")){
+				if (split[0].equals("remove")) {
 					econ.bankWithdraw(p.getName(), funds);
 				}
 			}

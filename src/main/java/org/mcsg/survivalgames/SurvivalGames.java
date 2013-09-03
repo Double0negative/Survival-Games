@@ -14,7 +14,19 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcsg.survivalgames.events.*;
+import org.mcsg.survivalgames.events.BandageUse;
+import org.mcsg.survivalgames.events.BreakEvent;
+import org.mcsg.survivalgames.events.ChestReplaceEvent;
+import org.mcsg.survivalgames.events.CommandCatch;
+import org.mcsg.survivalgames.events.DeathEvent;
+import org.mcsg.survivalgames.events.JoinEvent;
+import org.mcsg.survivalgames.events.KitEvents;
+import org.mcsg.survivalgames.events.LogoutEvent;
+import org.mcsg.survivalgames.events.MoveEvent;
+import org.mcsg.survivalgames.events.PlaceEvent;
+import org.mcsg.survivalgames.events.SignClickEvent;
+import org.mcsg.survivalgames.events.SpectatorEvents;
+import org.mcsg.survivalgames.events.TeleportEvent;
 import org.mcsg.survivalgames.hooks.HookManager;
 import org.mcsg.survivalgames.logging.LoggingManager;
 import org.mcsg.survivalgames.logging.QueueManager;
@@ -25,53 +37,8 @@ import org.mcsg.survivalgames.util.DatabaseManager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 public class SurvivalGames extends JavaPlugin {
-	public static Logger logger;
-	private static File datafolder;
-	private static boolean disabling = false;
-	public static boolean dbcon = false;
-	public static boolean config_todate = false;
-	public static int config_version = 3;
-
-	public static List < String > auth = Arrays.asList(new String[] {
-			"Double0negative", "iMalo", "Medic0987", "alex_markey", "skitscape", "AntVenom", "YoshiGenius", "pimpinpsp", "WinryR", "Jazed2011",
-			"KiwiPantz", "blackracoon", "CuppingCakes", "4rr0ws", "Fawdz", "Timothy13", "rich91", "ModernPrestige", "Snowpool", "egoshk", 
-			"nickm140",  "chaseoes", "Oceangrass", "GrailMore", "iAngelic", "Lexonia", "ChaskyT", "Anon232"
-	});
-
-	SurvivalGames p = this;
-	public void onDisable() {
-		disabling = false;
-		PluginDescriptionFile pdfFile = p.getDescription();
-		SettingsManager.getInstance().saveSpawns();
-		SettingsManager.getInstance().saveSystemConfig();
-		for (Game g: GameManager.getInstance().getGames()) {
-			try{
-				g.disable();
-			}catch(Exception e){
-				//will throw useless "tried to register task blah blah error." Use the method below to reset the arena without a task.
-			}
-			QueueManager.getInstance().rollback(g.getID(), true);
-		}
-
-		logger.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " has now been disabled and reset");
-	}
-
-	public void onEnable() {
-		logger = p.getLogger();
-
-		//ensure that all worlds are loaded. Fixes some issues with Multiverse loading after this plugin had started
-		getServer().getScheduler().scheduleSyncDelayedTask(this, new Startup(), 10);
-		try {
-			new Metrics(this).start();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-	}
-
 	class Startup implements Runnable {
+		@Override
 		public void run() {
 			datafolder = p.getDataFolder();
 
@@ -79,14 +46,16 @@ public class SurvivalGames extends JavaPlugin {
 			setCommands();
 
 			SettingsManager.getInstance().setup(p);
-			MessageManager.getInstance().setup();
 			GameManager.getInstance().setup(p);
 
-			try { // try loading everything that uses SQL. 
+			try { // try loading everything that uses SQL.
 				FileConfiguration c = SettingsManager.getInstance().getConfig();
-				if (c.getBoolean("stats.enabled")) DatabaseManager.getInstance().setup(p);
+				if (c.getBoolean("stats.enabled")) {
+					DatabaseManager.getInstance().setup(p);
+				}
 				QueueManager.getInstance().setup();
-				StatsManager.getInstance().setup(p, c.getBoolean("stats.enabled"));
+				StatsManager.getInstance().setup(p,
+						c.getBoolean("stats.enabled"));
 				dbcon = true;
 			} catch (Exception e) {
 				dbcon = false;
@@ -114,22 +83,67 @@ public class SurvivalGames extends JavaPlugin {
 			pm.registerEvents(new BandageUse(), p);
 			pm.registerEvents(new KitEvents(), p);
 
-			for (Player p: Bukkit.getOnlinePlayers()) {
+			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (GameManager.getInstance().getBlockGameId(p.getLocation()) != -1) {
 					p.teleport(SettingsManager.getInstance().getLobbySpawn());
 				}
 			}
 
-			//   new Webserver().start();
+			// new Webserver().start();
 		}
 	}
 
-	public void setCommands() {
-		getCommand("survivalgames").setExecutor(new CommandHandler(p));
+	public static Logger logger;
+	private static File datafolder;
+	private static boolean disabling = false;
+	public static boolean dbcon = false;
+	public static boolean UPDATED_CONFIG = false;
+
+	public static int CONFIG_VERSION = 3;
+
+	public static List<String> AUTH = Arrays.asList(new String[] {
+			"Double0negative", "iMalo", "Medic0987", "alex_markey",
+			"skitscape", "AntVenom", "YoshiGenius", "pimpinpsp", "WinryR",
+			"Jazed2011", "KiwiPantz", "blackracoon", "CuppingCakes", "4rr0ws",
+			"Fawdz", "Timothy13", "rich91", "ModernPrestige", "Snowpool",
+			"egoshk", "nickm140", "chaseoes", "Oceangrass", "GrailMore",
+			"iAngelic", "Lexonia", "ChaskyT", "Anon232" });
+
+	/**
+	 * Logs a message with the specified {@link Level}.
+	 * 
+	 * @param level
+	 *            The level.
+	 * @param message
+	 *            The message.
+	 */
+	public static void log(Level level, String message) {
+		logger.log(level, message);
 	}
 
+	/**
+	 * Logs a message with a message identifier of {@link Level#INFO}.
+	 * 
+	 * @param message
+	 *            The message to log.
+	 */
+	public static void log(String message) {
+		log(Level.INFO, message);
+	}
 
+	public static void debug(int a) {
+		if (SettingsManager.getInstance().getConfig()
+				.getBoolean("debug", false)) {
+			debug(a + "");
+		}
+	}
 
+	public static void debug(String msg) {
+		if (SettingsManager.getInstance().getConfig()
+				.getBoolean("debug", false)) {
+			log("[Debug] " + msg);
+		}
+	}
 
 	public static File getPluginDataFolder() {
 		return datafolder;
@@ -139,8 +153,11 @@ public class SurvivalGames extends JavaPlugin {
 		return disabling;
 	}
 
+	SurvivalGames p = this;
+
 	public WorldEditPlugin getWorldEdit() {
-		Plugin worldEdit = getServer().getPluginManager().getPlugin("WorldEdit");
+		Plugin worldEdit = getServer().getPluginManager()
+				.getPlugin("WorldEdit");
 		if (worldEdit instanceof WorldEditPlugin) {
 			return (WorldEditPlugin) worldEdit;
 		} else {
@@ -148,21 +165,44 @@ public class SurvivalGames extends JavaPlugin {
 		}
 	}
 
-	public static void $(String msg){
-		logger.log(Level.INFO, msg);
+	@Override
+	public void onDisable() {
+		disabling = false;
+		PluginDescriptionFile pdfFile = p.getDescription();
+		SettingsManager.getInstance().saveSpawns();
+		SettingsManager.getInstance().saveSystemConfig();
+		for (Game g : GameManager.getInstance().getGames()) {
+			try {
+				g.disable();
+			} catch (Exception e) {
+				// will throw useless "tried to register task blah blah error."
+				// Use the method below to reset the arena without a task.
+			}
+			QueueManager.getInstance().rollback(g.getID(), true);
+		}
+
+		logger.info(pdfFile.getName() + " version " + pdfFile.getVersion()
+				+ " has now been disabled and reset");
 	}
 
-	public static void $(Level l, String msg){
-		logger.log(l, msg);
+	@Override
+	public void onEnable() {
+		logger = p.getLogger();
+
+		// ensure that all worlds are loaded. Fixes some issues with Multiverse
+		// loading after this plugin had started
+		getServer().getScheduler().scheduleSyncDelayedTask(this, new Startup(),
+				10);
+		try {
+			new Metrics(this).start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
-	public static void debug(String msg){
-		if(SettingsManager.getInstance().getConfig().getBoolean("debug", false))
-			$("[Debug] "+msg);
+	public void setCommands() {
+		getCommand("survivalgames").setExecutor(new CommandHandler(p));
 	}
 
-	public static void debug(int a) {
-		if(SettingsManager.getInstance().getConfig().getBoolean("debug", false))
-			debug(a+"");
-	}
 }
