@@ -2,31 +2,57 @@ package org.mcsg.survivalgames;
 
 import org.bukkit.Location;
 
+/**
+ * Represents a hunger games arena.
+ * 
+ * @author Double0negative
+ */
 public class Arena {
 
-    Location min;
-    Location max;
+	private final Location min;
+	private final Location max;
 
-    public Arena(Location min, Location max) {
-        this.max = max;
-        this.min = min;
-        
-    }
+	/**
+	 * Creates a new Arena.
+	 * 
+	 * @param min
+	 *            The minimum point in the Arena.
+	 * @param max
+	 *            The maximum point in the Arena.
+	 */
+	public Arena(Location min, Location max) {
+		this.max = max;
+		this.min = min;
+	}
 
-    public boolean containsBlock(Location v) {
-        if (v.getWorld() != min.getWorld()) return false;
-        final double x = v.getX();
-        final double y = v.getY();
-        final double z = v.getZ();
-        return x >= min.getBlockX() && x < max.getBlockX() + 1 && y >= min.getBlockY() && y < max.getBlockY() + 1 && z >= min.getBlockZ() && z < max.getBlockZ() + 1;  
-    }
+	public boolean containsBlock(Location location) {
+		if (location.getWorld() != min.getWorld()) {
+			return false;
+		}
+		final double x = location.getX();
+		final double y = location.getY();
+		final double z = location.getZ();
+		return x >= min.getBlockX() && x < max.getBlockX() + 1
+				&& y >= min.getBlockY() && y < max.getBlockY() + 1
+				&& z >= min.getBlockZ() && z < max.getBlockZ() + 1;
+	}
 
-    public Location getMax() {
-    	Runtime.getRuntime().freeMemory();
-        return max;
-    }
+	/**
+	 * Gets the maximum point in the Arena.
+	 * 
+	 * @return The maximum point.
+	 */
+	public Location getMax() {
+		return max;
+	}
 
-    public Location getMin() {
-        return min;
-    }
+	/**
+	 * Gets the minimum point in the Arena.
+	 * 
+	 * @return The minimum point.
+	 */
+	public Location getMin() {
+		return min;
+	}
+
 }
