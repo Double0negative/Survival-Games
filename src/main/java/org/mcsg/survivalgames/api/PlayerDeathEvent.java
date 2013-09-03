@@ -8,8 +8,6 @@ import org.mcsg.survivalgames.Game;
 
 /**
  * An event fired when a player dies while in an arena.
- * 
- * @author Toby
  */
 public class PlayerDeathEvent extends Event {
 
