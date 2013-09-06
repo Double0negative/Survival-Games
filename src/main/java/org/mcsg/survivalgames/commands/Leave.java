@@ -12,7 +12,7 @@ public class Leave implements SubCommand {
 	
     public boolean onCommand(Player player, String[] args) {
         if (GameManager.getInstance().getPlayerGameId(player) == -1) {
-            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.nopermission", player);
+            MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.notinarena", player);
         }
         else{
             GameManager.getInstance().removePlayer(player, false);
