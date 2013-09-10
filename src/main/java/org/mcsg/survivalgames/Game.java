@@ -621,10 +621,12 @@ public class Game {
 		}catch (Exception e){
 			SurvivalGames.$("???????????????????????");
 			e.printStackTrace();
+			SurvivalGames.$("ID"+gameID);
+			SurvivalGames.$(left+"");
 			SurvivalGames.$(activePlayers.size()+"");
 			SurvivalGames.$(activePlayers.toString());
 			SurvivalGames.$(p.getName());
-			SurvivalGames.$(p.getLastDamageCause().toString());
+			SurvivalGames.$(p.getLastDamageCause().getCause().name());
 		}
 	}
 
