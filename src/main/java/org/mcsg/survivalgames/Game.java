@@ -71,7 +71,7 @@ public class Game {
 		reloadConfig();
 		setup();
 	}
-	
+
 	public void reloadConfig(){
 		config = SettingsManager.getInstance().getConfig();
 		system = SettingsManager.getInstance().getSystemConfig();
@@ -173,7 +173,7 @@ public class Game {
 		}
 
 		LobbyManager.getInstance().updateWall(gameID);
-		
+
 		MessageManager.getInstance().broadcastFMessage(PrefixType.INFO, "broadcast.gamewaiting", "arena-"+gameID);
 
 	}
@@ -296,7 +296,7 @@ public class Game {
 		int a = 0;
 		int b = 0;
 
-		
+
 		ArrayList<Kit>kits = GameManager.getInstance().getKits(p);
 		SurvivalGames.debug(kits+"");
 		if(kits == null || kits.size() == 0 || !SettingsManager.getInstance().getKits().getBoolean("enabled")){
@@ -540,81 +540,88 @@ public class Game {
 	 * 
 	 */
 	public void killPlayer(Player p, boolean left) {
-		clearInv(p);
-		if (!left) {
-			p.teleport(SettingsManager.getInstance().getLobbySpawn());
-		}
-		sm.playerDied(p, activePlayers.size(), gameID, new Date().getTime() - startTime);
+		try{
+			clearInv(p);
+			if (!left) {
+				p.teleport(SettingsManager.getInstance().getLobbySpawn());
+			}
+			sm.playerDied(p, activePlayers.size(), gameID, new Date().getTime() - startTime);
 
-		if (!activePlayers.contains(p)) return;
-		else restoreInv(p);
+			if (!activePlayers.contains(p)) return;
+			else restoreInv(p);
 
-		activePlayers.remove(p);
-		inactivePlayers.add(p);
-		PlayerKilledEvent pk = null;
-		if (left) {
-			msgFall(PrefixType.INFO, "game.playerleavegame","player-"+p.getName() );
-		} else {
-			if (mode != GameMode.WAITING && p.getLastDamageCause() != null && p.getLastDamageCause().getCause() != null) {
-				switch (p.getLastDamageCause().getCause()) {
-				case ENTITY_ATTACK:
-					if(p.getLastDamageCause().getEntityType() == EntityType.PLAYER){
-						Player killer = p.getKiller();
-						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getEntityType(),
-								"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(),
-								"killer-"+((killer != null)?(SurvivalGames.auth.contains(killer.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") 
-										+ killer.getName():"Unknown"),
-								"item-"+((killer!=null)?ItemReader.getFriendlyItemName(killer.getItemInHand().getType()) : "Unknown Item"));
-						if(killer != null && p != null)
-							sm.addKill(killer, p, gameID);
-						pk = new PlayerKilledEvent(p, this, killer, p.getLastDamageCause().getCause());
-					}
-					else{
-						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getEntityType(), "player-"
-					+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") 
-					+ p.getName(), "killer-"+p.getLastDamageCause().getEntityType());
+			activePlayers.remove(p);
+			inactivePlayers.add(p);
+			PlayerKilledEvent pk = null;
+			if (left) {
+				msgFall(PrefixType.INFO, "game.playerleavegame","player-"+p.getName() );
+			} else {
+				if (mode != GameMode.WAITING && p.getLastDamageCause() != null && p.getLastDamageCause().getCause() != null) {
+					switch (p.getLastDamageCause().getCause()) {
+					case ENTITY_ATTACK:
+						if(p.getLastDamageCause().getEntityType() == EntityType.PLAYER){
+							Player killer = p.getKiller();
+							msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getEntityType(),
+									"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(),
+									"killer-"+((killer != null)?(SurvivalGames.auth.contains(killer.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") 
+											+ killer.getName():"Unknown"),
+											"item-"+((killer!=null)?ItemReader.getFriendlyItemName(killer.getItemInHand().getType()) : "Unknown Item"));
+							if(killer != null && p != null)
+								sm.addKill(killer, p, gameID);
+							pk = new PlayerKilledEvent(p, this, killer, p.getLastDamageCause().getCause());
+						}
+						else{
+							msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getEntityType(), "player-"
+									+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") 
+									+ p.getName(), "killer-"+p.getLastDamageCause().getEntityType());
+							pk = new PlayerKilledEvent(p, this, null, p.getLastDamageCause().getCause());
+
+						}
+						break;
+					default:
+						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getCause(), 
+								"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(), 
+								"killer-"+p.getLastDamageCause().getCause());
 						pk = new PlayerKilledEvent(p, this, null, p.getLastDamageCause().getCause());
 
+						break;
 					}
-					break;
-				default:
-					msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getCause(), 
-							"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(), 
-							"killer-"+p.getLastDamageCause().getCause());
-					pk = new PlayerKilledEvent(p, this, null, p.getLastDamageCause().getCause());
+					Bukkit.getServer().getPluginManager().callEvent(pk);
 
-					break;
-				}
-				Bukkit.getServer().getPluginManager().callEvent(pk);
-
-				if (getActivePlayers() > 1) {
-					for (Player pl: getAllPlayers()) {
-						msgmgr.sendMessage(PrefixType.INFO, ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + "" 
-					+ getActivePlayers() + ChatColor.DARK_AQUA + " players remaining!", pl);
+					if (getActivePlayers() > 1) {
+						for (Player pl: getAllPlayers()) {
+							msgmgr.sendMessage(PrefixType.INFO, ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + "" 
+									+ getActivePlayers() + ChatColor.DARK_AQUA + " players remaining!", pl);
+						}
 					}
 				}
+
 			}
-		}
 
-		for (Player pe: activePlayers) {
-			Location l = pe.getLocation();
-			l.setY(l.getWorld().getMaxHeight());
-			l.getWorld().strikeLightningEffect(l);
-		}
+			for (Player pe: activePlayers) {
+				Location l = pe.getLocation();
+				l.setY(l.getWorld().getMaxHeight());
+				l.getWorld().strikeLightningEffect(l);
+			}
 
-		if (getActivePlayers() <= config.getInt("endgame.players") && config.getBoolean("endgame.fire-lighting.enabled") && !endgameRunning) {
+			if (getActivePlayers() <= config.getInt("endgame.players") && config.getBoolean("endgame.fire-lighting.enabled") && !endgameRunning) {
 
-			tasks.add(Bukkit.getScheduler().scheduleSyncRepeatingTask(GameManager.getInstance().getPlugin(),
-					new EndgameManager(),
-					0,
-					config.getInt("endgame.fire-lighting.interval") * 20));
-		}
+				tasks.add(Bukkit.getScheduler().scheduleSyncRepeatingTask(GameManager.getInstance().getPlugin(),
+						new EndgameManager(),
+						0,
+						config.getInt("endgame.fire-lighting.interval") * 20));
+			}
 
-		if (activePlayers.size() < 2 && mode != GameMode.WAITING) {
-			playerWin(p);
-			endGame();
+			if (activePlayers.size() < 2 && mode != GameMode.WAITING) {
+				playerWin(p);
+				endGame();
+			}
+			LobbyManager.getInstance().updateWall(gameID);
+			
+		}catch (Exception e){
+			SurvivalGames.$("???????????????????????");
+			e.printStackTrace();
 		}
-		LobbyManager.getInstance().updateWall(gameID);
 	}
 
 	/*
