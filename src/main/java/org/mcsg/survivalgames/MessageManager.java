@@ -41,7 +41,7 @@ public class MessageManager {
 	 * 
 	 * Loads a Message from messages.yml, converts its colors and replaces vars in the form of {$var} with its correct values, 
 	 * then sends to the player, adding the correct prefix 
-	 * 
+	 *  
 	 * @param type
 	 * @param input
 	 * @param player
