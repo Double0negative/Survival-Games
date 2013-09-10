@@ -12,7 +12,9 @@ public class MessageUtil {
 
 
 	public static String replaceColors(String s){
-	//	System.out.println(s);
+		if(s == null){
+			return null;
+		}
 		return s.replaceAll("(&([a-fk-or0-9]))", "\u00A7$2");
 	}
 

@@ -579,7 +579,7 @@ public class Game {
 						}
 						break;
 					default:
-						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getCause(), 
+						msgFall(PrefixType.INFO, "death."+p.getLastDamageCause().getCause().name(), 
 								"player-"+(SurvivalGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(), 
 								"killer-"+p.getLastDamageCause().getCause());
 						pk = new PlayerKilledEvent(p, this, null, p.getLastDamageCause().getCause());
