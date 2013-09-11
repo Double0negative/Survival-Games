@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.mcsg.survivalgames.Game;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.Game.GameMode;
+import org.mcsg.survivalgames.SurvivalGames;
 import org.mcsg.survivalgames.util.ChestRatioStorage;
 
 
@@ -27,22 +28,30 @@ public class ChestReplaceEvent implements Listener{
 	
     @EventHandler(priority = EventPriority.HIGHEST)
     public void ChestListener(PlayerInteractEvent e){
+    	SurvivalGames.debug("Interact");
     	if(e.getAction() == Action.RIGHT_CLICK_BLOCK){
     		Block clicked = e.getClickedBlock();
     		if(clicked instanceof Chest || clicked instanceof DoubleChest){
+    			SurvivalGames.debug("clicked chest");
     			int gameid = GameManager.getInstance().getPlayerGameId(e.getPlayer());
     			if(gameid != -1){
+    				SurvivalGames.debug("In a game");
     				Game game = GameManager.getInstance().getGame(gameid);
     				if(game.getMode() == GameMode.INGAME){
+        				SurvivalGames.debug("Game in INGAME");    					
     					HashSet<Block>openedChest = GameManager.openedChest.get(gameid);
     					openedChest = (openedChest == null)? new HashSet<Block>() : openedChest;
     					if(!openedChest.contains(clicked)){
+    						SurvivalGames.debug("New Chest");
     						Inventory[] invs = ((clicked instanceof Chest))? new Inventory[] {((Chest) clicked).getBlockInventory()}
     						: new Inventory[] {((DoubleChest)clicked).getLeftSide().getInventory(), ((DoubleChest)clicked).getRightSide().getInventory()};
     						ItemStack item = invs[0].getItem(0);
     						int level = (item.getType() == Material.WOOL)? item.getData().getData() + 1 : 1;
+    						SurvivalGames.debug(invs +" "+level);
     						for(Inventory inv : invs){
+    							SurvivalGames.debug("Looping inv");
     				            for(ItemStack i: ChestRatioStorage.getInstance().getItems(level)){
+    				            	SurvivalGames.debug("Looping items");
     				                int l = rand.nextInt(26);
     				                while(inv.getItem(l) != null)
     				                    l = rand.nextInt(26);
