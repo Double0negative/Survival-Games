@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.event.EventHandler;
@@ -30,7 +31,9 @@ public class ChestReplaceEvent implements Listener{
     public void ChestListener(PlayerInteractEvent e){
     	SurvivalGames.debug("Interact");
     	if(e.getAction() == Action.RIGHT_CLICK_BLOCK){
-    		Block clicked = e.getClickedBlock();
+    		SurvivalGames.debug("RIGHT CLICKED");
+    		BlockState clicked = e.getClickedBlock().getState();
+    		System.out.println(clicked.getType());
     		if(clicked instanceof Chest || clicked instanceof DoubleChest){
     			SurvivalGames.debug("clicked chest");
     			int gameid = GameManager.getInstance().getPlayerGameId(e.getPlayer());
@@ -41,12 +44,12 @@ public class ChestReplaceEvent implements Listener{
         				SurvivalGames.debug("Game in INGAME");    					
     					HashSet<Block>openedChest = GameManager.openedChest.get(gameid);
     					openedChest = (openedChest == null)? new HashSet<Block>() : openedChest;
-    					if(!openedChest.contains(clicked)){
+    					if(!openedChest.contains(e.getClickedBlock())){
     						SurvivalGames.debug("New Chest");
     						Inventory[] invs = ((clicked instanceof Chest))? new Inventory[] {((Chest) clicked).getBlockInventory()}
     						: new Inventory[] {((DoubleChest)clicked).getLeftSide().getInventory(), ((DoubleChest)clicked).getRightSide().getInventory()};
     						ItemStack item = invs[0].getItem(0);
-    						int level = (item.getType() == Material.WOOL)? item.getData().getData() + 1 : 1;
+    						int level = (item != null && item.getType() == Material.WOOL)? item.getData().getData() + 1 : 1;
     						SurvivalGames.debug(invs +" "+level);
     						for(Inventory inv : invs){
     							SurvivalGames.debug("Looping inv");
@@ -59,7 +62,7 @@ public class ChestReplaceEvent implements Listener{
     				            }
     						}
     					}
-    					openedChest.add(clicked);
+    					openedChest.add(e.getClickedBlock());
     					GameManager.openedChest.put(gameid, openedChest);
     				} else {
     					e.setCancelled(true);

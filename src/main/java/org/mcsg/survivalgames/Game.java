@@ -397,7 +397,7 @@ public class Game {
 			return;
 		}
 
-		if (activePlayers.size() <= 1) {
+		if (activePlayers.size() <= 0) {
 			for (Player pl: activePlayers) {
 				msgmgr.sendMessage(PrefixType.WARNING, "Not enough players!", pl);
 				mode = GameMode.WAITING;
