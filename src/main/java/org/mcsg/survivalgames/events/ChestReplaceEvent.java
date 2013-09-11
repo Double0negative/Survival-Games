@@ -13,13 +13,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.mcsg.survivalgames.Game;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.Game.GameMode;
 import org.mcsg.survivalgames.util.ChestRatioStorage;
-import org.mcsg.survivalgames.util.ChestRatioStorageOLD;
 
 
 
