@@ -5,12 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.mcsg.survivalgames.SettingsManager;
 
