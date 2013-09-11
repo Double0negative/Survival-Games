@@ -19,6 +19,7 @@ import org.mcsg.survivalgames.hooks.HookManager;
 import org.mcsg.survivalgames.logging.LoggingManager;
 import org.mcsg.survivalgames.logging.QueueManager;
 import org.mcsg.survivalgames.stats.StatsManager;
+import org.mcsg.survivalgames.util.ChestRatioStorage;
 import org.mcsg.survivalgames.util.ChestRatioStorageOLD;
 import org.mcsg.survivalgames.util.DatabaseManager;
 
@@ -97,7 +98,7 @@ public class SurvivalGames extends JavaPlugin {
 				LobbyManager.getInstance().setup(p);
 			}
 
-			ChestRatioStorageOLD.getInstance().setup();
+			ChestRatioStorage.getInstance().setup();
 			HookManager.getInstance().setup();
 			pm.registerEvents(new PlaceEvent(), p);
 			pm.registerEvents(new BreakEvent(), p);
