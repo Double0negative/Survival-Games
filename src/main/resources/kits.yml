@@ -27,7 +27,7 @@
 version: 1
 
 
-enabled: false
+enabled: true
 
 
 ## Kit Display Mode 
@@ -36,24 +36,35 @@ enabled: false
 #  SHOW_ICON    = Show only the icon
 #  AUTO_SELECT  = Auto select the top level kit
 
-kit-select-mode: 'SHOW_ALL'
+kit-select-mode: 'SHOW_ICON'
 
 
 
 
 kits:
-  test-kit:
+  Joker:
     cost: 0
-    icon: '399'
+    icon: '51'
     contents:
-    - '267,1, 0, sharpness:4, Blade'
-    - '261'
-    - '262, 64'
-  kit2:
+    - '272'
+    - '373:16484'
+    - '373:16428'
+    - '46'
+  Miner:
     cost: 0
-    icon: '339'
+    icon: '257'
     contents:
-    - '276,1, 0, fire:2, Fire'
-    - '261'
-    - '262, 64'
+    - '257,1, 0, digspeed:2 pickets:3, Drill'
+    - '373:16454'
+    - '54'
+    - '61'
+    - '301'
+  Sniper:
+    cost: 0
+    icon: '261'
+    contents:
+    - '261,1, 0, fire:2 arrowdamage:1 arrowfire:1, ArrowFire'
+    - '262,32'
+    - '299'
+
     

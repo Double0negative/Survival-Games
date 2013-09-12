@@ -35,7 +35,7 @@ public class SurvivalGames extends JavaPlugin {
 	public static List < String > auth = Arrays.asList(new String[] {
 			"Double0negative", "iMalo", "Medic0987", "alex_markey", "skitscape", "AntVenom", "YoshiGenius", "pimpinpsp", "WinryR", "Jazed2011",
 			"KiwiPantz", "blackracoon", "CuppingCakes", "4rr0ws", "Fawdz", "Timothy13", "rich91", "ModernPrestige", "Snowpool", "egoshk", 
-			"nickm140",  "chaseoes", "Oceangrass", "GrailMore", "iAngelic", "Lexonia", "ChaskyT", "Anon232"
+			"nickm140",  "chaseoes", "Oceangrass", "GrailMore", "iAngelic", "Lexonia", "ChaskyT", "Anon232", "hitech95"
 	});
 
 	SurvivalGames p = this;
@@ -104,7 +104,7 @@ public class SurvivalGames extends JavaPlugin {
 			pm.registerEvents(new DeathEvent(), p);
 			pm.registerEvents(new MoveEvent(), p);
 			pm.registerEvents(new CommandCatch(), p);
-			pm.registerEvents(new SignClickEvent(), p);
+			pm.registerEvents(new ItemClickEvent(), p);
 			pm.registerEvents(new ChestReplaceEvent(), p);
 			pm.registerEvents(new LogoutEvent(), p);
 			pm.registerEvents(new JoinEvent(p), p);
@@ -113,6 +113,7 @@ public class SurvivalGames extends JavaPlugin {
 			pm.registerEvents(new SpectatorEvents(), p);
 			pm.registerEvents(new BandageUse(), p);
 			pm.registerEvents(new KitEvents(), p);
+                        pm.registerEvents(new KeepLobbyLoadedEvent(), p); 
 
 			for (Player p: Bukkit.getOnlinePlayers()) {
 				if (GameManager.getInstance().getBlockGameId(p.getLocation()) != -1) {
@@ -127,9 +128,6 @@ public class SurvivalGames extends JavaPlugin {
 	public void setCommands() {
 		getCommand("survivalgames").setExecutor(new CommandHandler(p));
 	}
-
-
-
 
 	public static File getPluginDataFolder() {
 		return datafolder;

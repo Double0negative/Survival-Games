@@ -51,10 +51,8 @@ public class BreakEvent implements Listener {
         }
         Arena a = g.getArena();
         if(!a.useGeneral()){
-            System.out.println("This arena don't use general config");
             if(!a.canBreak(event.getBlock().getTypeId()))event.setCancelled(true);
         }else{
-            System.out.println("This arena use general config");
             if(allowedBreak.contains(-1) || !allowedBreak.contains(event.getBlock().getTypeId())){
                 event.setCancelled(true);
             }

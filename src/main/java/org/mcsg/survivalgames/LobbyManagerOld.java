@@ -79,7 +79,7 @@ public class LobbyManagerOld implements Listener {
         int vdiff = (y1 - y2) + 1;
 
 
-        System.out.println(vdiff + "              " + hdiff);
+        //System.out.println(vdiff + "              " + hdiff);
         signs = new Sign[vdiff][hdiff];
         for (int y = vdiff - 1; y >= 0; y--) {
             for (int x = hdiff - 1; x >= 0; x--) {

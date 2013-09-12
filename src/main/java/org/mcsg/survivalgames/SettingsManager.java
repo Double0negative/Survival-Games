@@ -122,7 +122,6 @@ public class SettingsManager {
 	}
 	
 	public FileConfiguration getMessageConfig() {
-		//System.out.println("asdf"+messages.getString("prefix.main"));
 		return messages;
 	}
 

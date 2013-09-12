@@ -24,7 +24,9 @@ import org.mcsg.survivalgames.util.ItemReader;
 import org.mcsg.survivalgames.util.Kit;
 
 import com.sk89q.wepif.PluginPermissionsResolver;
+import java.util.Collection;
 import java.util.List;
+import org.bukkit.potion.PotionEffect;
 
 //Data container for a game
 public class Game {
@@ -49,6 +51,7 @@ public class Game {
     private FileConfiguration system;
     private HashMap< Integer, Player> spawns = new HashMap< Integer, Player>();
     private HashMap< Player, ItemStack[][]> inv_store = new HashMap< Player, ItemStack[][]>();
+    private HashMap<Player, Player> compassTargets = new HashMap<Player, Player>();
     private int spawnCount = 0;
     private int vote = 0;
     private boolean disabled = false;
@@ -82,31 +85,30 @@ public class Game {
     }
 
     public void setup() {
-        System.out.println("called game setup");
-        
+
         mode = GameMode.LOADING;
         int x = system.getInt("sg-system.arenas." + gameID + ".x1");
         int y = system.getInt("sg-system.arenas." + gameID + ".y1");
         int z = system.getInt("sg-system.arenas." + gameID + ".z1");
-        $(x + " " + y + " " + z);
+        //$(x + " " + y + " " + z);
         int x1 = system.getInt("sg-system.arenas." + gameID + ".x2");
         int y1 = system.getInt("sg-system.arenas." + gameID + ".y2");
         int z1 = system.getInt("sg-system.arenas." + gameID + ".z2");
-        $(x1 + " " + y1 + " " + z1);
+        //$(x1 + " " + y1 + " " + z1);
         Location max = new Location(SettingsManager.getGameWorld(gameID), Math.max(x, x1), Math.max(y, y1), Math.max(z, z1));
-        $(max.toString());
+        //$(max.toString());
         Location min = new Location(SettingsManager.getGameWorld(gameID), Math.min(x, x1), Math.min(y, y1), Math.min(z, z1));
-        $(min.toString());       
-        
-        
-        if (system.isSet("sg-system.arenas." + gameID +".block.break")) {
-            List<Integer> bBreak = system.getIntegerList("sg-system.arenas." + gameID +".block.break");
-            List<Integer> bPlace = system.getIntegerList("sg-system.arenas." + gameID +".block.place");
-            
-            if(system.isSet("sg-system.arenas." + gameID +".block.isWhitelist")){
-                boolean isWhitelist = system.getBoolean("sg-system.arenas." + gameID +".block.isWhitelist");
+        //$(min.toString());
+
+
+        if (system.isSet("sg-system.arenas." + gameID + ".block.break")) {
+            List<Integer> bBreak = system.getIntegerList("sg-system.arenas." + gameID + ".block.break");
+            List<Integer> bPlace = system.getIntegerList("sg-system.arenas." + gameID + ".block.place");
+
+            if (system.isSet("sg-system.arenas." + gameID + ".block.isWhitelist")) {
+                boolean isWhitelist = system.getBoolean("sg-system.arenas." + gameID + ".block.isWhitelist");
                 arena = new Arena(min, max, bBreak, bPlace, isWhitelist);
-            }else{
+            } else {
                 arena = new Arena(min, max, bBreak, bPlace);
             }
         } else {
@@ -312,18 +314,19 @@ public class Game {
 
     public void showMenu(Player p) {
         GameManager.getInstance().openKitMenu(p);
-        Inventory i = Bukkit.getServer().createInventory(p, 90, ChatColor.RED + "" + ChatColor.BOLD + "Kit Selection");
+        Inventory i = Bukkit.getServer().createInventory(p, 36, ChatColor.RED + "" + ChatColor.BOLD + "Kit Selection");
 
         int a = 0;
         int b = 0;
 
 
         ArrayList<Kit> kits = GameManager.getInstance().getKits(p);
-        SurvivalGames.debug(kits + "");
         if (kits == null || kits.size() == 0 || !SettingsManager.getInstance().getKits().getBoolean("enabled")) {
             GameManager.getInstance().leaveKitMenu(p);
             return;
         }
+        String kitMode = SettingsManager.getInstance().getKits().getString("kit-select-mode");
+        boolean showCont = (kitMode.equalsIgnoreCase("SHOW_ALL")) ? true : false;
 
         for (Kit k : kits) {
             ItemStack i1 = k.getIcon();
@@ -334,17 +337,27 @@ public class Game {
             im.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + k.getName());
             i1.setItemMeta(im);
             i.setItem((9 * a) + b, i1);
-            a = 2;
 
-            for (ItemStack s2 : k.getContents()) {
-                if (s2 != null) {
-                    i.setItem((9 * a) + b, s2);
-                    a++;
+            if (showCont && kits.size() <= 9) {
+                a = 2;
+
+                for (ItemStack s2 : k.getContents()) {
+                    if (s2 != null) {
+                        i.setItem((9 * a) + b, s2);
+                        a++;
+                    }
                 }
+
+                a = 0;
             }
 
-            a = 0;
-            b++;
+            if (b == 8) {
+                a++;
+                b = 0;
+            } else {
+                b++;
+            }
+
         }
         p.openInventory(i);
         debug("Showing menu");
@@ -616,6 +629,16 @@ public class Game {
             }
         }
 
+        compassTargets.remove(p);
+        for (Player pe : activePlayers) {
+            Player compassTarget = compassTargets.get(pe);
+
+            if (compassTarget == p) {
+                MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.INFO, "game.targetleft", pe);
+                compassTargets.remove(pe);
+            }
+        }
+
         for (Player pe : activePlayers) {
             Location l = pe.getLocation();
             l.setY(l.getWorld().getMaxHeight());
@@ -663,10 +686,15 @@ public class Game {
         mode = GameMode.FINISHING;
 
         clearSpecs();
-        win.setHealth(p.getMaxHealth());
+        win.setHealth(win.getMaxHealth());
         win.setFoodLevel(20);
         win.setFireTicks(0);
         win.setFallDistance(0);
+
+        Collection<PotionEffect> activePotionEffects = win.getActivePotionEffects();
+        for (PotionEffect i : activePotionEffects) {
+            win.removePotionEffect(i.getType());
+        }
 
         sm.playerWin(win, gameID, new Date().getTime() - startTime);
         sm.saveGame(gameID, win, getActivePlayers() + getInactivePlayers(), new Date().getTime() - startTime);
@@ -1026,6 +1054,18 @@ public class Game {
         for (Player p : getAllPlayers()) {
             msgmgr.sendFMessage(type, msg, p, vars);
         }
+    }
+
+    public void setCompassTarget(Player p, Player targ) {
+        compassTargets.put(p, targ);
+    }
+
+    public Player getCompassTarget(Player p) {        
+        return compassTargets.get(p);
+    }
+
+    public void removeCompassTarget(Player p) {
+        compassTargets.remove(p);
     }
 
     /*public void randomTrap() {

@@ -28,10 +28,10 @@ public class AddWall implements SubCommand{
         return "/sg addwall <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.addwall", "Add a lobby stats wall for Arena <id>");
     }
 
-	@Override
-	public String permission() {
-		return "sg.admin.addwall";
-	}
+    @Override
+    public String permission() {
+            return "sg.admin.addwall";
+    }
 
     //TODO: TAKE A W.E SELECTIONA AND SET THE LOBBY. ALSO SET LOBBY WALL
 }

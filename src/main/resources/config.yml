@@ -49,7 +49,7 @@ cmdwhitelist:
 
 #Set how long the grace period for be after the start of 
 #the game in seconds.
-grace-period: 20
+grace-period: 120
 
 #Controlls if chests should be restocked on the first
 #night. If set to true this will also have the side
@@ -57,6 +57,9 @@ grace-period: 20
 #of the game. This is only temporary until per-arena time
 #has been implemented.
 restock-chest: true
+
+#Enable Compass Traking of Ingame Player.
+compass-track: true
 
 #Here you can control block placing and breaking. 
 block:

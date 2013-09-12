@@ -48,7 +48,7 @@ public class ArenaDuplicator {
         background = new background(Math.abs(v2.getBlockX()-v1.getBlockX()) * Math.abs(v2.getBlockY()-v1.getBlockY()) * Math.abs(v1.getBlockZ()-v2.getBlockZ()));
         background.start();
         for(int a = 1; a<=factor; a++){
-            System.out.println(xspan);
+            //System.out.println(xspan);
             int sp1 = divf * a + v1.getBlockX();
             int sp2 = divf * (a+1) + v1.getBlockX();
             int y1  =  v1.getBlockY();
@@ -59,8 +59,8 @@ public class ArenaDuplicator {
 
             Vector s1 = new Vector((sp1<sp2)?sp1:sp2 , (y1<y2)?y1:y2 , (z1<z2)?z1:z2);
             Vector s2 = new Vector((sp1>sp2)?sp1:sp2 , (y1>y2)?y1:y2 , (z1>z2)?z1:z2);
-            System.out.println(s1);
-            System.out.println(s2);
+            //System.out.println(s1);
+            //System.out.println(s2);
             new DupeThread(s1,s2, maxx - v1.getBlockX(), 0, a).start();
         }
 
@@ -137,7 +137,7 @@ public class ArenaDuplicator {
 
         public void run(){
             while(true){
-                System.out.println(fin+"/"+x+" "+((fin - prev) / 2 )+" "+((fin + 0.0)/(x + 0.0))*100);
+                //System.out.println(fin+"/"+x+" "+((fin - prev) / 2 )+" "+((fin + 0.0)/(x + 0.0))*100);
                 prev = fin;
                 try{sleep(2000);}catch(Exception e){}
             }

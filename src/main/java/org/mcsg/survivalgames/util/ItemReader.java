@@ -21,7 +21,8 @@ public class ItemReader {
 		encids =  new HashMap<String, Enchantment>();
 		
 		for(Enchantment e:Enchantment.values()){
-			encids.put(e.toString().toLowerCase().replace("_", ""), e);
+                        String ench = (e.toString().toLowerCase().replace("_", "").split(","))[1].trim();
+			encids.put(ench.substring(0, ench.length() - 1), e);
 		}
 		
 		
