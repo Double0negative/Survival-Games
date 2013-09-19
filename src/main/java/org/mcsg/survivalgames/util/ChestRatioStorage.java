@@ -43,7 +43,20 @@ public class ChestRatioStorage {
 				break;
 			}
 		}
+		
+		ratio = conf.getInt("chest.ratio", ratio);
+		
 	}
+	
+	public int getLevel(int base){
+		Random rand = new Random();
+		int max = Math.min(base + 5, maxlevel);
+		while(rand.nextInt(ratio) == 0 && base < max){
+			base++;
+		}
+		return base;
+	}
+	
 	public ArrayList<ItemStack> getItems(int level){
 		Random r = new Random();
 		ArrayList<ItemStack>items = new ArrayList<ItemStack>();

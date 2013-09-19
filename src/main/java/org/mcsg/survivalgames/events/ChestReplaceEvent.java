@@ -43,6 +43,7 @@ public class ChestReplaceEvent implements Listener{
     						: new Inventory[] {((DoubleChest)clicked).getLeftSide().getInventory(), ((DoubleChest)clicked).getRightSide().getInventory()};
     						ItemStack item = invs[0].getItem(0);
     						int level = (item != null && item.getType() == Material.WOOL)? item.getData().getData() + 1 : 1;
+    						level = ChestRatioStorage.getInstance().getLevel(level);
     						SurvivalGames.debug(invs +" "+level);
     						for(Inventory inv : invs){
     							inv.setContents(new ItemStack[inv.getContents().length]);
