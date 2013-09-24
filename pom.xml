@@ -15,11 +15,11 @@
     <repository>
       <id>bukkit-repo</id>
       <url>http://repo.bukkit.org/content/groups/public</url>
-    </repository> <!-- 
-    <repository>
-        <id>mcstats-repo</id>
-        <url>http://repo.mcstats.org/content/repositories/public</url>
-    </repository> -->
+    </repository> <!--
+<repository>
+<id>mcstats-repo</id>
+<url>http://repo.mcstats.org/content/repositories/public</url>
+</repository> -->
     <repository>
       <id>drtshock-repo</id>
       <url>http://ci.drtshock.com/plugin/repository/everything</url>
@@ -30,33 +30,33 @@
     </repository>
   </repositories>
   <build>
-    <plugins> <!-- 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>1.5</version>
-        <configuration>
-          <artifactSet>
-            <includes>
-              <include>org.mcstats:Metrics</include>
-            </includes>
-          </artifactSet>
-          <relocations>
-            <relocation>
-              <pattern>org.mcstats</pattern>
-              <shadedPattern>libilibigot.utilzbiznatch.metrics</shadedPattern>
-            </relocation>
-          </relocations>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin> -->
+    <plugins> <!--
+<plugin>
+<groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-shade-plugin</artifactId>
+<version>1.5</version>
+<configuration>
+<artifactSet>
+<includes>
+<include>org.mcstats:Metrics</include>
+</includes>
+</artifactSet>
+<relocations>
+<relocation>
+<pattern>org.mcstats</pattern>
+<shadedPattern>libilibigot.utilzbiznatch.metrics</shadedPattern>
+</relocation>
+</relocations>
+</configuration>
+<executions>
+<execution>
+<phase>package</phase>
+<goals>
+<goal>shade</goal>
+</goals>
+</execution>
+</executions>
+</plugin> -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -114,4 +114,3 @@
     </dependency>
   </dependencies>
 </project>
-

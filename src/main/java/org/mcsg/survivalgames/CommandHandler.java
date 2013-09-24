@@ -32,6 +32,7 @@ import org.mcsg.survivalgames.commands.SetSpawn;
 import org.mcsg.survivalgames.commands.Spectate;
 import org.mcsg.survivalgames.commands.SubCommand;
 import org.mcsg.survivalgames.commands.Teleport;
+import org.mcsg.survivalgames.commands.Test;
 import org.mcsg.survivalgames.commands.Vote;
 
 
@@ -71,6 +72,7 @@ public class CommandHandler implements CommandExecutor {
 		commands.put("list", new ListPlayers());
 		commands.put("tp", new Teleport());
 		commands.put("reload", new Reload());
+		commands.put("test", new Test());
 
 		// commands.put("sponsor", new Sponsor());
 	}
