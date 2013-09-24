@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.mcsg.survivalgames.Arena;
 import org.mcsg.survivalgames.Game;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.SettingsManager;
@@ -50,10 +51,14 @@ public class PlaceEvent implements Listener {
             return;
 
         }
-
-        if(!allowedPlace.contains(event.getBlock().getTypeId())){
-            event.setCancelled(true);
+        
+        Arena a = g.getArena();
+        if(!a.useGeneral()){
+            if(!a.canPlace(event.getBlock().getTypeId()))event.setCancelled(true);
+        }else{
+            if(allowedPlace.contains(-1) || !allowedPlace.contains(event.getBlock().getTypeId())){
+                event.setCancelled(true);
+            }
         }
-
     }
 }

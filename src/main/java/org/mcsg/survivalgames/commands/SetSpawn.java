@@ -33,10 +33,10 @@ public class SetSpawn implements SubCommand{
         }
         
         loadNextSpawn();
-        System.out.println("settings spawn");
+        //System.out.println("settings spawn");
         Location l = player.getLocation();
         int game = GameManager.getInstance().getBlockGameId(l);
-        System.out.println(game+" "+next.size());
+        //System.out.println(game+" "+next.size());
         if(game == -1){
             MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.notinarena", player);
             return true;

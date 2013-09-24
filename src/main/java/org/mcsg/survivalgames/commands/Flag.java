@@ -47,8 +47,8 @@ public class Flag implements SubCommand {
         return "/sg flag <id> <flag> <value> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.flag", "Modifies an arena-specific setting");
     }
 
-	@Override
-	public String permission() {
-		return "sg.admin.flag";
-	}
+    @Override
+    public String permission() {
+            return "sg.admin.flag";
+    }
 }

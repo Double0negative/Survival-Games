@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.mcsg.survivalgames.Arena;
 import org.mcsg.survivalgames.Game;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.SettingsManager;
@@ -15,7 +16,7 @@ import org.mcsg.survivalgames.SettingsManager;
 
 public class BreakEvent implements Listener {
 
-    public ArrayList<Integer> allowedBreak =  new ArrayList<Integer>();;
+    public ArrayList<Integer> allowedBreak =  new ArrayList<Integer>();
 
     public BreakEvent(){
         allowedBreak.addAll( SettingsManager.getInstance().getConfig().getIntegerList("block.break.whitelist"));
@@ -48,7 +49,13 @@ public class BreakEvent implements Listener {
             event.setCancelled(true);
             return;
         }
-
-        if(!allowedBreak.contains(event.getBlock().getTypeId()))event.setCancelled(true);
+        Arena a = g.getArena();
+        if(!a.useGeneral()){
+            if(!a.canBreak(event.getBlock().getTypeId()))event.setCancelled(true);
+        }else{
+            if(allowedBreak.contains(-1) || !allowedBreak.contains(event.getBlock().getTypeId())){
+                event.setCancelled(true);
+            }
+        }
     }
 }

@@ -21,7 +21,8 @@ public class ItemReader {
 		encids =  new HashMap<String, Enchantment>();
 		
 		for(Enchantment e:Enchantment.values()){
-			encids.put(e.toString().toLowerCase().replace("_", ""), e);
+                        String ench = (e.toString().toLowerCase().replace("_", "").split(","))[1].trim();
+			encids.put(ench.substring(0, ench.length() - 1), e);
 		}
 		
 		
@@ -54,7 +55,7 @@ public class ItemReader {
 			ItemStack i =  new ItemStack(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Short.parseShort(split[2]));
 			String encs[] = split[3].split(" ");
 			for(String enc: encs){
-				System.out.println(enc);
+				SurvivalGames.debug(enc);
 				String e[] = enc.split(":");
 				i.addUnsafeEnchantment(encids.get(e[0]), Integer.parseInt(e[1]));
 			}

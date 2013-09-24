@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.mcsg.survivalgames.SettingsManager;
+import org.mcsg.survivalgames.SurvivalGames;
 
 public class Kit {
 
@@ -29,7 +30,7 @@ public class Kit {
 		cost = c.getDouble("kits."+name+".cost", 0);
 		
 		icon = ItemReader.read(c.getString("kits."+name+".icon"));
-		System.out.println(icon);
+		SurvivalGames.debug(icon.toString());
 		List<String>cont = c.getStringList("kits."+name+".contents");
 		for(String s:cont){
 			items.add(ItemReader.read(s));
