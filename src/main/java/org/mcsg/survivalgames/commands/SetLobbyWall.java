@@ -11,7 +11,7 @@ public class SetLobbyWall implements SubCommand{
 
     @Override
     public boolean onCommand(Player player, String[] args) {
-    	//player.sendMessage(ChatColor.RED+"This command has been replaced by /sg addwall <arenaid>");
+    	player.sendMessage(ChatColor.RED+"This command has been replaced by /sg addwall <arenaid>");
     	return true;/*
         if(!player.hasPermission("sg.admin.setlobby") && !player.isOp()){
             player.sendMessage(ChatColor.RED+"No Permission");
