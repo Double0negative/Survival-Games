@@ -314,11 +314,14 @@ public class SettingsManager {
 	}
 
 	public Location getLobbySpawn() {
-		try{
-			return new Location(Bukkit.getWorld(system.getString("sg-system.lobby.spawn.world")),
-				system.getInt("sg-system.lobby.spawn.x"),
-				system.getInt("sg-system.lobby.spawn.y"),
-				system.getInt("sg-system.lobby.spawn.z"));
+		try {
+			return new Location(Bukkit.getWorld(
+					system.getString("sg-system.lobby.spawn.world")),
+					system.getInt("sg-system.lobby.spawn.x"),
+					system.getInt("sg-system.lobby.spawn.y"),
+					system.getInt("sg-system.lobby.spawn.z"),
+					system.getInt("sg-system.lobby.spawn.yaw"),
+					system.getInt("sg-system.lobby.spawn.pitch"));
 		}catch(Exception e){
 			return null;
 		}
@@ -328,21 +331,27 @@ public class SettingsManager {
 		return new Location(getGameWorld(gameid),
 				spawns.getInt("spawns." + gameid + "." + spawnid + ".x"),
 				spawns.getInt("spawns." + gameid + "." + spawnid + ".y"),
-				spawns.getInt("spawns." + gameid + "." + spawnid + ".z"));
+				spawns.getInt("spawns." + gameid + "." + spawnid + ".z"),
+				spawns.getInt("spawns." + gameid + "." + spawnid + ".yaw"),
+				spawns.getInt("spawns." + gameid + "." + spawnid + ".pitch"));
 	}
-	
+
 	public void setLobbySpawn(Location l) {
 		system.set("sg-system.lobby.spawn.world", l.getWorld().getName());
 		system.set("sg-system.lobby.spawn.x", l.getBlockX());
 		system.set("sg-system.lobby.spawn.y", l.getBlockY());
 		system.set("sg-system.lobby.spawn.z", l.getBlockZ());
+		system.set("sg-system.lobby.spawn.yaw", l.getYaw());
+		system.set("sg-system.lobby.spawn.pitch", l.getPitch());
 	}
 
 
-	public void setSpawn(int gameid, int spawnid, Vector v) {
+	public void setSpawn(int gameid, int spawnid, Vector v, float yaw, float pitch) {
 		spawns.set("spawns." + gameid + "." + spawnid + ".x", v.getBlockX());
 		spawns.set("spawns." + gameid + "." + spawnid + ".y", v.getBlockY());
 		spawns.set("spawns." + gameid + "." + spawnid + ".z", v.getBlockZ());
+		spawns.set("spawns." + gameid + "." + spawnid + ".yaw", yaw);
+		spawns.set("spawns." + gameid + "." + spawnid + ".pitch", pitch);
 		if (spawnid > spawns.getInt("spawns." + gameid + ".count")) {
 			spawns.set("spawns." + gameid + ".count", spawnid);
 		}
@@ -386,5 +395,32 @@ public class SettingsManager {
 				e.printStackTrace();
 			}
 		
+	}
+	public boolean modifyList(String type, Location loc, int pos) {
+		FileConfiguration cfg = SettingsManager.getInstance().getSystemConfig();
+		List<String> objs = cfg.getStringList(type);
+		String conStr = loc.getWorld().getName() + ";" +
+				loc.getX() + ";" +
+				loc.getY() + ";" +
+				loc.getZ() + ";" +
+				loc.getYaw() + ";" +
+				loc.getPitch();
+		for (String str : objs) {
+			if (str.startsWith(conStr)) {
+				if (pos == 0) {
+					objs.remove(str);
+					cfg.set(type, objs);
+					getInstance().saveConfig();
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		if (pos == 0) { return false; }
+		objs.add(conStr + ";" + pos);
+		cfg.set(type, objs);
+		getInstance().saveConfig();
+		return true;
 	}
 }
