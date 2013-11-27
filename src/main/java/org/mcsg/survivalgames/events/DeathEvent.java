@@ -1,8 +1,8 @@
 package org.mcsg.survivalgames.events;
 
-import net.minecraft.server.v1_6_R2.Packet205ClientCommand;
+import net.minecraft.server.v1_6_R3.Packet205ClientCommand;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.mcsg.survivalgames.Game;
 import org.mcsg.survivalgames.GameManager;
+import org.mcsg.survivalgames.SurvivalGames;
 
 public class DeathEvent implements Listener {
 
@@ -50,14 +51,26 @@ public class DeathEvent implements Listener {
 
     //Start AEM
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerDeath(PlayerDeathEvent e){
-        Player player = e.getEntity();
+    public void onPlayerDeath(final PlayerDeathEvent e){
+        final Player player = e.getEntity();
+        final EntityDamageEvent lastDamage = e.getEntity().getLastDamageCause();
+	    final Player killer = e.getEntity().getKiller();
         int gameid = GameManager.getInstance().getPlayerGameId(player);
         if (gameid <= 0) {
             return;
         }
-        respawn(e.getEntity());
-        GameManager.getInstance().getGame(GameManager.getInstance().getPlayerGameId(player)).killPlayer(player, false);
+        for(ItemStack i : e.getDrops()){
+            e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation().clone(), i);
+        }
+        e.getDrops().removeAll(e.getDrops());
+        SurvivalGames.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(SurvivalGames.getInstance(), new Runnable(){
+            @Override
+            public void run(){
+                respawn(e.getEntity());
+                e.getEntity().setLastDamageCause(lastDamage);
+                GameManager.getInstance().getGame(GameManager.getInstance().getPlayerGameId(player)).killPlayer(player, false);
+            }
+        }, 1L);
     }
 
     //NMS
