@@ -72,7 +72,7 @@ public class CommandHandler implements CommandExecutor {
 		commands.put("list", new ListPlayers());
 		commands.put("tp", new Teleport());
 		commands.put("reload", new Reload());
-		commands.put("test", new Test());
+//		commands.put("test", new Test());
 
 		// commands.put("sponsor", new Sponsor());
 	}
