@@ -65,7 +65,7 @@ public class SetSpawn implements SubCommand{
             MessageManager.getInstance().sendMessage(MessageManager.PrefixType.ERROR, "error.notinside", player);
             return true;
         }
-        SettingsManager.getInstance().setSpawn(game, i, l.toVector());
+        SettingsManager.getInstance().setSpawn(game, i, l);
         MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.INFO, "info.spawnset", player, "num-" + i, "arena-" + game);
         return true;
     }
