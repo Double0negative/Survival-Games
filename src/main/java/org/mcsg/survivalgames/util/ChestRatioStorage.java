@@ -8,6 +8,7 @@ import java.util.Random;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.mcsg.survivalgames.SettingsManager;
+import org.mcsg.survivalgames.SurvivalGames;
 
 
 
@@ -32,18 +33,24 @@ public class ChestRatioStorage {
 			ArrayList<ItemStack> lvl = new ArrayList<ItemStack>();
 			List<String>list = conf.getStringList("chest.lvl"+clevel);
 
-			if(list != null){
+	        SurvivalGames.debug("CheckLevel: " + clevel);
+
+			if(list != null && !list.isEmpty()){
 				for(int b = 0; b<list.size();b++){
 					ItemStack i = ItemReader.read(list.get(b));
 					lvl.add(i);
 				}
 				lvlstore.put(clevel, lvl);
+                maxlevel = clevel;
+                
 			} else {
-				maxlevel = clevel;
 				break;
 			}
 		}
 		
+        SurvivalGames.debug("MaxLevel: " + maxlevel);
+        SurvivalGames.debug("LvlStore: " + lvlstore);
+
 		ratio = conf.getInt("chest.ratio", ratio);
 		
 	}
@@ -51,6 +58,9 @@ public class ChestRatioStorage {
 	public int getLevel(int base){
 		Random rand = new Random();
 		int max = Math.min(base + 5, maxlevel);
+        SurvivalGames.debug("RandMax: " + max);
+        SurvivalGames.debug("Ratio: " + ratio);
+        SurvivalGames.debug("BaseLevel: " + base);
 		while(rand.nextInt(ratio) == 0 && base < max){
 			base++;
 		}
