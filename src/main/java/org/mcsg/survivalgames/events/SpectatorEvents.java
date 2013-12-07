@@ -23,24 +23,21 @@ public class SpectatorEvents implements Listener {
     
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockPlace(BlockPlaceEvent event) {
-        Player player = event.getPlayer();
-        if (GameManager.getInstance().isSpectator(player)) {
+        if (GameManager.getInstance().isSpectator(event.getPlayer())) {
             event.setCancelled(true);
         }
     }
     
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockDamage(BlockDamageEvent event) {
-        Player player = event.getPlayer();
-        if (GameManager.getInstance().isSpectator(player)) {
+        if (GameManager.getInstance().isSpectator(event.getPlayer())) {
             event.setCancelled(true);
         }
     }
     
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
-        Player player = event.getPlayer();
-        if (GameManager.getInstance().isSpectator(player)) {
+        if (GameManager.getInstance().isSpectator(event.getPlayer())) {
             event.setCancelled(true);
         }
     }
@@ -85,8 +82,7 @@ public class SpectatorEvents implements Listener {
     
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSignChange(PlayerPickupItemEvent event) {
-        Player player = event.getPlayer();
-        if (GameManager.getInstance().isSpectator(player)) {
+        if (GameManager.getInstance().isSpectator(event.getPlayer())) {
             event.setCancelled(true);
         }
     }

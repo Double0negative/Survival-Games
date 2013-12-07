@@ -18,14 +18,15 @@ public class SignClickEvent implements Listener{
     @EventHandler(priority = EventPriority.HIGHEST)
     public void clickHandler(PlayerInteractEvent e){
 
-        if(!(e.getAction()==Action.RIGHT_CLICK_BLOCK || e.getAction()==Action.LEFT_CLICK_BLOCK)) return;
-        
-
+        if(!(e.getAction()==Action.RIGHT_CLICK_BLOCK || e.getAction()==Action.LEFT_CLICK_BLOCK)) 
+        	return;
+        	
         Block clickedBlock = e.getClickedBlock(); 
-        if(!(clickedBlock.getType()==Material.SIGN || clickedBlock.getType()==Material.SIGN_POST || clickedBlock.getType()==Material.WALL_SIGN)) return;
-        Sign thisSign = (Sign) clickedBlock.getState();
+        if(!(clickedBlock.getType()==Material.SIGN || clickedBlock.getType()==Material.SIGN_POST || clickedBlock.getType()==Material.WALL_SIGN)) 
+        	return;
+    	
         //System.out.println("Clicked sign");
-        String[] lines = thisSign.getLines();
+        String[] lines = ((Sign) clickedBlock.getState()).getLines();
         if(lines.length<3) return;
         if(lines[0].equalsIgnoreCase("[SurvivalGames]")) {
             e.setCancelled(true);

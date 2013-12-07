@@ -25,11 +25,8 @@ public class PlaceEvent implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockPlace(BlockPlaceEvent event) {
         Player p = event.getPlayer();
-        int id  = GameManager.getInstance().getPlayerGameId(p);
-
-        if(id == -1){
-            int gameblockid = GameManager.getInstance().getBlockGameId(event.getBlock().getLocation());
-            if(gameblockid != -1){
+        if(GameManager.getInstance().getPlayerGameId(p) == -1){
+            if(GameManager.getInstance().getBlockGameId(event.getBlock().getLocation()) != -1){
                 if(GameManager.getInstance().getGame(gameblockid).getGameMode() != Game.GameMode.DISABLED){
                     event.setCancelled(true);
                 }
