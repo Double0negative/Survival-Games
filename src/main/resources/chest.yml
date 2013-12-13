@@ -12,7 +12,7 @@
 version: 0
 
 chest:
-  ratio: 2
+  ratio: 10
   lvl1:
   - 268,1
   - 298,1
