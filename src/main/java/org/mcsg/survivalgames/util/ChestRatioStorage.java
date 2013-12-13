@@ -32,14 +32,14 @@ public class ChestRatioStorage {
 			ArrayList<ItemStack> lvl = new ArrayList<ItemStack>();
 			List<String>list = conf.getStringList("chest.lvl"+clevel);
 
-			if(list != null){
+			if(!list.isEmpty()){
 				for(int b = 0; b<list.size();b++){
 					ItemStack i = ItemReader.read(list.get(b));
 					lvl.add(i);
 				}
 				lvlstore.put(clevel, lvl);
 			} else {
-				maxlevel = clevel;
+				maxlevel = clevel-1;
 				break;
 			}
 		}
