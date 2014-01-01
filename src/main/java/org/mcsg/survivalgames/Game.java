@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.mcsg.survivalgames.MessageManager.PrefixType;
+import org.mcsg.survivalgames.api.PlayerEnterArenaEvent;
 import org.mcsg.survivalgames.api.PlayerJoinArenaEvent;
 import org.mcsg.survivalgames.api.PlayerKilledEvent;
 import org.mcsg.survivalgames.api.PlayerLeaveArenaEvent;
@@ -243,6 +244,8 @@ public class Game {
 						showMenu(p);
 						HookManager.getInstance().runHook("GAME_POST_ADDPLAYER", "activePlayers-"+activePlayers.size());
 
+						Bukkit.getServer().getPluginManager().callEvent(new PlayerEnterArenaEvent(p, GameManager.getInstance().getGame(gameID)));
+						
 						if(spawnCount == activePlayers.size()){
 							countdown(5);
 						}
