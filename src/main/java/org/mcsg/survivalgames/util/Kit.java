@@ -43,7 +43,8 @@ public class Kit {
 	
 	
 	public boolean canUse(Player p){
-		return p.hasPermission("sg.kit."+name);
+		String permName = name.replace(" ", "_")
+		return p.hasPermission("sg.kit."+permName);
 	}
 
 
