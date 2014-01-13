@@ -86,8 +86,8 @@ public class LobbyWall {
 
         //sign 0
         s0.setLine(0, "[SurvivalGames]");
-        s0.setLine(1, "Click to join");
-        s0.setLine(2, "Arena " + gameid);
+        s0.setLine(1, "Clica e entra");
+        s0.setLine(2, "SG " + gameid);
 
         //sign 1
         s1.setLine(0, game.getName());
