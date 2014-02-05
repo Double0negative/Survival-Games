@@ -299,7 +299,7 @@ public class GameManager {
 
 		SettingsManager.getInstance().saveSystemConfig();
 		hotAddArena(no);
-		pl.sendMessage(ChatColor.GREEN + "Arena ID " + no + " Succesfully added");
+		pl.sendMessage(ChatColor.GREEN + "Arena ID " + no + " Successfully added");
 
 	}
 
