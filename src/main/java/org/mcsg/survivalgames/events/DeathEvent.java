@@ -20,8 +20,7 @@ public class DeathEvent implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerDieEvent(EntityDamageEvent event) {
-		if(event.getEntity() instanceof Player){}
-		else 
+		if(!(event.getEntity() instanceof Player))
 			return;
 		Player player = (Player)event.getEntity();
 		int gameid = GameManager.getInstance().getPlayerGameId(player);
@@ -56,8 +55,6 @@ public class DeathEvent implements Listener {
 			}
 
 			GameManager.getInstance().getGame(GameManager.getInstance().getPlayerGameId(player)).killPlayer(player, false);
-
-
 
 		}
 	}
