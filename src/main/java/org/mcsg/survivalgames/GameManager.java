@@ -128,7 +128,7 @@ public class GameManager {
 
 	public boolean isPlayerInactive(Player player) {
 		for (Game g: games) {
-			if (g.isPlayerActive(player)) {
+			if (g.isPlayerInactive(player)) {
 				return true;
 			}
 		}
