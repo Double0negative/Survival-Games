@@ -6,7 +6,7 @@
 #to spawn in. a ratio of 2 means that it is twice as unlikley
 #for the next level to spawn in.
 ##FORMAT
-# <itemid>,<max amount per slot>
+# <itemid>[:<data>],<max amount per slot>, [<enchant>[:<level>]], <displayname>, <lore>, <lore>, <lore>
 
 #DONT TOUCH THIS
 version: 0
