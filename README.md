@@ -11,7 +11,7 @@ Before installing this plugin, a few things are required.
 Conflicts
 ---------
  - Any plugin that modifies damage amounts by applying more damage can sometimes cause issues and make the player actually die (ie McMMO).
- - Some locking plugins such as LWC have been reported to have issues with the lobby signs, but should work normally if protection is turned of for those signs.
+ - Some locking plugins such as LWC have been reported to have issues with the lobby signs, but should work normally if protection is turned off for those signs.
  - WORLD PORTAL will make this plugin completely break if the lobby is not in a world that is loaded at start!  
 
 Features
