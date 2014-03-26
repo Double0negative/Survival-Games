@@ -521,7 +521,7 @@ public class Game {
 		HookManager.getInstance().runHook("PLAYER_REMOVED", "player-"+p.getName());
 
 		PlayerLeaveArenaEvent pl = new PlayerLeaveArenaEvent(p, this, b);
-
+		Bukkit.getServer().getPluginManager().callEvent(pl);		
 		LobbyManager.getInstance().updateWall(gameID);
 	}
 
@@ -587,6 +587,8 @@ public class Game {
 						break;
 					}
 					Bukkit.getServer().getPluginManager().callEvent(pk);
+					PlayerLeaveArenaEvent pleave = new PlayerLeaveArenaEvent(p, this, false);
+					Bukkit.getServer().getPluginManager().callEvent(pleave);
 
 					if (getActivePlayers() > 1) {
 						for (Player pl: getAllPlayers()) {
@@ -669,7 +671,8 @@ public class Game {
 		loadspawns();
 		LobbyManager.getInstance().updateWall(gameID);
 		MessageManager.getInstance().broadcastFMessage(PrefixType.INFO, "broadcast.gameend", "arena-"+gameID);
-
+		PlayerLeaveArenaEvent pleave = new PlayerLeaveArenaEvent(win, this, false);
+		Bukkit.getServer().getPluginManager().callEvent(pleave);		
 	}
 
 	public void endGame() {
