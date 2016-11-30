@@ -1,7 +1,6 @@
 package org.mcsg.survivalgames.commands;
 
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.mcsg.survivalgames.GameManager;
 import org.mcsg.survivalgames.MessageManager;

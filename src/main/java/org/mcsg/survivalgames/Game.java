@@ -23,8 +23,6 @@ import org.mcsg.survivalgames.stats.StatsManager;
 import org.mcsg.survivalgames.util.ItemReader;
 import org.mcsg.survivalgames.util.Kit;
 
-import com.sk89q.wepif.PluginPermissionsResolver;
-
 
 
 //Data container for a game
