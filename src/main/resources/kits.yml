@@ -1,6 +1,5 @@
 
 
-
     
 ###########################################################
 #######################  Kits #############################
@@ -27,7 +26,7 @@
 version: 1
 
 
-enabled: false
+enabled: true
 
 
 ## Kit Display Mode 
@@ -36,7 +35,7 @@ enabled: false
 #  SHOW_ICON    = Show only the icon
 #  AUTO_SELECT  = Auto select the top level kit
 
-kit-select-mode: 'SHOW_ALL'
+kit-select-mode: 'AUTO_SELECT'
 
 
 
